@@ -11,6 +11,7 @@ function Dashboard(){
     const [addQuantity, setAddQuantity] = useState('');
     const [remveQuantity, setRemveQuantity] = useState('');
 
+    //jhvhgcgvbjhbh
     //input krna dewal hriyta catch krgnnwa
     const [items, setItems] = useState([]);
     const [newItem, setNewItem]= useState({
