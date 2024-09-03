@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import ProductManagement from './pages/ProductManagement';
+import ProductWastageManagement from './pages/ProductWastageManagement';
+import RequestStaff from './pages/RequestStaff';
+import ProductionForm from './components/ProductionForm';
+import IngredientRequest from './pages/IngredientRequest';
+import UpdateProduct from './pages/updateProduct';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route index element={<ProductWastageManagement />} />
+                <Route path="/product-management" element={<ProductManagement />} />
+                <Route path="/request-staff" element={<RequestStaff />} />
+                <Route path='/request-ingredient' element={<IngredientRequest />} />
+                <Route path='/daily-production' element={<ProductionForm />} />
+                <Route path='/updateProduct/:id' element={<UpdateProduct />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
