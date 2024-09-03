@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import './Inventory.css'
-import Reports from './Images/reports.jpg';
-import Inventory from './Images/inventory.jpg';
-import MainImg from './Images/top-image.jpg';
-import Header from './Components/Header.js';
+import Reports from './images/reports.jpg';
+import Inventory from './images/inventory.jpg';
+import MainImg from './images/top-image.jpg';
+import Header from './components/Header.js';
 
 
 function InventoryUI(){

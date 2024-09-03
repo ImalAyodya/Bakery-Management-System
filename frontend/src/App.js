@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Dashboard from './Dashboard';
-import AddQuantity from './AddQuantity';
+// import AddQuantity from './AddQuantity';
 import Inventory from './Inventory';
 import OrderRequest from './OrderRequest';
 
@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter>
   <Routes>
     <Route path = '/' element={<Inventory/>} />
-    <Route path = '/AddQuantity' element={<AddQuantity/>}/>
+    {/* <Route path = '/AddQuantity' element={<AddQuantity/>}/> */}
     <Route path = '/dashboard' element={<Dashboard/>} />
     <Route path = '/dashboard/request' element={<OrderRequest/>}/>
 
