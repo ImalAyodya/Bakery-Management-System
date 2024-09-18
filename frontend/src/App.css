@@ -4,12 +4,12 @@
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
-
+/* 
 body {
   display: flex;
   height: 100vh;
   background-color: #f8f8f8;
-}
+} */
 
 .container {
   display: flex;
@@ -307,10 +307,10 @@ textarea {
   background-color: #f0f0f0;
 }
 
-/* In styles.css */
+
 .no-underline {
   text-decoration: none;
-  color: inherit; /* This ensures the link color matches the surrounding text */
+  color: inherit; 
 }
 
 .ingredient-request-container {
@@ -589,4 +589,85 @@ h2 {
       padding: 8px;
       font-size: 12px;
   }
+}
+
+/*admin dashboard*/
+.admin-dashboard-page {
+  text-align: center;
+  background-color: #ffde75; 
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: 'Roboto', sans-serif; 
+}
+
+.admin-dashboard-page-header {
+  background-color: #fdb815; 
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 40px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.admin-dashboard-page-header h1 {
+  font-size: 2rem;
+  letter-spacing: 1.2px;
+}
+
+.admin-dashboard-page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.admin-dashboard-page-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.admin-dashboard-page-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2); 
+}
+
+.admin-dashboard-page-card-content h2 {
+  font-size: 1.6rem;
+  color: #fdb815; 
+  margin-bottom: 15px;
+}
+
+.admin-dashboard-page-card-content p {
+  font-size: 1rem;
+  color: #4a4a4a; 
+}
+
+.admin-dashboard-page-card:hover h2 {
+  color: #007bff; 
+}
+
+.admin-dashboard-page-footer {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #9c0264; 
+  color: white;
+  border-radius: 10px;
+}
+
+.admin-dashboard-page-footer p {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.admin-dashboard-page-footer p::after {
+  content: " ❤️ by Bakery Team";
 }
