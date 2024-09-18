@@ -67,9 +67,15 @@ import RequestStaff from './pages/RequestStaff';
 import ProductionForm from './components/ProductionForm';
 import IngredientRequest from './pages/IngredientRequest';
 import UpdateProduct from './pages/updateProduct';
+<<<<<<< Updated upstream
 import Inventory from './Inventory';
 import OrderRequest from './OrderRequest';
 import Dashboard from './Dashboard';
+=======
+import InventoryDashboard from './Dashboard';
+import Inventory from './Inventory';
+import OrderRequest from './OrderRequest';
+>>>>>>> Stashed changes
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 
@@ -84,8 +90,12 @@ function App() {
                 <Route path='/daily-production' element={<ProductionForm />} />
                 <Route path='/updateProduct/:id' element={<UpdateProduct />} />
                 <Route path = '/' element={<Inventory/>} />
+<<<<<<< Updated upstream
                 <Route path = '/AddQuantity' element={<AddQuantity/>}/> 
                 <Route path = '/dashboard' element={<Dashboard/>} />
+=======
+                <Route path = '/dashboard' element={<InventoryDashboard/>} />
+>>>>>>> Stashed changes
                 <Route path = '/dashboard/request' element={<OrderRequest/>}/>
             </Routes>
         </BrowserRouter>
