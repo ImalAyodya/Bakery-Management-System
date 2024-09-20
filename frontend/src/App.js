@@ -1,11 +1,3 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ProductManagement from './pages/ProductManagement';
-import ProductWastageManagement from './pages/ProductWastageManagement';
-import RequestStaff from './pages/RequestStaff';
-import ProductionForm from './components/ProductionForm';
-import IngredientRequest from './pages/IngredientRequest';
-import UpdateProduct from './pages/updateProduct';
 import CommercialOrder from './CommercialOrder';
 import Onlineorder from './OnlineOrder';
 import Checkout from './Checkout';
@@ -20,12 +12,6 @@ function App() {
 
     <BrowserRouter>
       <Routes>
-        <Route index element={<ProductWastageManagement />} />
-        <Route path="/product-management" element={<ProductManagement />} />
-        <Route path="/request-staff" element={<RequestStaff />} />
-        <Route path='/request-ingredient' element={<IngredientRequest />} />
-        <Route path='/daily-production' element={<ProductionForm />} />
-        <Route path='/updateProduct/:id' element={<UpdateProduct />} />
         <Route path= "/" element={<CommercialOrder/>}/>
         <Route path="/Online" element={<Onlineorder/>}/>
         <Route path="/CheckoutOrder" element={<Checkout/>}/>
