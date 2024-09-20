@@ -1,0 +1,136 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 90%;
+    overflow: hidden;
+    margin: 30px auto;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background-image: url(C:\Users\kshma\Desktop\Project_2.0\new-react\src\Images\angelo.jpg);
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+
+.container h2{
+   text-align: center; 
+    color: #fff;
+}
+
+form {
+    background: #ae781c;
+    background: rgba(174, 123, 28, 0.8);
+    width: 40%;
+    padding: 10px;
+    margin-left: 350px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px #aaa;
+    padding: 50px 50px;
+    border-radius: 10px;
+}
+
+form p {
+    margin: 5px 0;
+    color: #fff;
+}
+
+form .input_box {
+    margin-bottom: 10px;
+}
+
+form input[type="text"], 
+form input[type="email"], 
+form textarea {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.order_type {
+    border: none;
+    width: 99%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    box-sizing: border-box;
+}
+
+/* form .sup_input_box{
+    margin-bottom: 10px;
+    width: 99%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    box-sizing: border-box;
+}
+
+form .sup_input_box select{
+    border: none;
+    width: 99%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    box-sizing: border-box;
+} */
+
+/* select[name="suppliertype"] {
+    width: 99%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    box-sizing: border-box;
+}
+
+select[name="suppliertype"] option {
+    color: #000000; 
+} */
+
+.input_box input[type="date"] {
+    width: 95%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+  
+.input_box input[type="date"]:focus {
+    outline: none;
+}
+
+form button[type="submit"] {
+    background-color: #e66525;
+    color: #fff;
+    width: 550px;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 10px;
+}
+
+form button[type="submit"]:hover {
+    background-color: #db9d46;
+}
+
+
