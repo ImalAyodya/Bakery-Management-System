@@ -32,5 +32,5 @@ const SupplierSchema = new mongoose.Schema({
     }
 });
 
-const Supplier = mongoose.model('posts', SupplierSchema);
+const Supplier = mongoose.model('SupplierTable', SupplierSchema);
 module.exports = Supplier;

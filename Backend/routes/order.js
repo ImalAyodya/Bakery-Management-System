@@ -6,7 +6,7 @@ const Cors = require('cors');
 
 app.use(Cors());
 
-router.post('/order/save', async (req, res) =>{
+router.post('/Supplierorder/save', async (req, res) =>{
     try{
         const {orderTable} = req.body;
         const newPost = new Order({
@@ -27,7 +27,7 @@ router.post('/order/save', async (req, res) =>{
 
 // read data
 
-router.get("/posts/order",async(req, res)=>{
+router.get("/Supplierorder/read",async(req, res)=>{
     try{
         const posts=await Order.find().exec();
         return res.status(200).json({
