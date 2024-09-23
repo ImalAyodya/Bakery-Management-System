@@ -1,0 +1,111 @@
+/* Main container styling */
+.das-delivery-management-page {
+    display: flex;
+    flex-wrap: wrap; /* Ensures layout adapts to smaller screens */
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: white; /* Soft background color */
+  }
+  
+ /* Left side image container */
+.das-left-side {
+    flex: 1.5; /* Increase the flex value to take more space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .das-delivery-image {
+    max-width: 100%; /* Make the image take up full width of its container */
+    width: 80%; /* Set width relative to container, adjusts with screen size */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  
+  /* Right side content container */
+  .das-right-side {
+    flex: 1;
+    max-width: 600px;
+    padding: 20px;
+    background-color: lightyellow;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(0, 0, 0);
+    border-color: brown;
+    border-width: 50px;
+  }
+  
+  .das-right-side h1 {
+    font-size: 2em;
+    color: black;
+    margin-bottom: 15px;
+    text-align:center;
+  }
+  
+  .das-right-side p {
+    font-size: 1.2em;
+    color: black;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: justify;
+  }
+  
+  /* Button container styling */
+  .das-button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  /* Button styling */
+  .das-nav-button {
+    background-color: #f4c542;
+    color: white;
+    font-size: 1.1em;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 80%;
+    max-width: 300px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .das-nav-button:hover {
+    background-color: #ffec8b;
+  }
+  
+  /* Responsive design adjustments */
+  @media (max-width: 768px) {
+    .das-right-side, .das-left-side {
+      flex: 100%; /* Stacks elements vertically on smaller screens */
+      padding: 10px;
+    }
+  
+    .das-nav-button {
+      width: 90%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .das-right-side h1 {
+      font-size: 1.6em;
+    }
+  
+    .das-right-side p {
+      font-size: 1em;
+    }
+  
+    .das-nav-button {
+      font-size: 1em;
+    }
+  }
+  .das-topic{
+    margin-left: 30%;
+  }
+  

@@ -1,0 +1,358 @@
+/* Container for the table and form */
+.orders-container2 {
+    margin: 20px auto; /* Center the container with automatic margins */
+    max-width: 90%; /* Limit the width of the container */
+}
+
+/* Table styling */
+.orders-table2 {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 20px; /* Add margin below the table */
+    border: 2px solid #d4a373; /* Updated bright yellow border */
+    background-color: rgba(255, 255, 224, 0.9); /* Light yellow background */
+    transition: background-color 0.3s ease; /* Transition effect for background color */
+}
+
+.orders-table2 th,
+.orders-table2 td {
+    border: 1px solid #f4c542; /* Updated bright yellow border for cells */
+    padding: 8px;
+    text-align: left;
+    background-color: #fffacd; /* Light yellow background for cells */
+    color: #333; /* Dark gray text for cells */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transition effect for cells */
+}
+
+.orders-table2 th {
+    background-color: #d4a373; /* Updated bright yellow for header */
+    color: white;
+}
+
+.orders-table2 tbody tr:hover {
+    background-color: #ffec8b; /* Light yellow on row hover */
+    cursor: pointer;
+}
+
+/* New Order button styling with plus icon */
+.new-order-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #f4c542; /* Updated bright yellow button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.new-order-button .plus-icon {
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 20px; /* Adjusted size for the plus symbol */
+}
+
+.new-order-button:hover {
+    background-color: #ffec8b; /* Lighter yellow on hover */
+    transform: scale(1.05);
+}
+
+/* Form styling */
+.form-popup2 {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fffacd; /* Light yellow background for the form */
+    border: 2px solid #f4c542; /* Updated bright yellow border */
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* Limit form width */
+    margin-left: auto;
+    margin-right: auto; /* Center the form */
+    opacity: 0; /* Start with hidden form */
+    transform: translateY(20px); /* Start with slightly moved form */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Transition for appearance */
+}
+
+.form-popup2.show {
+    opacity: 1; /* Fully visible form */
+    transform: translateY(0); /* Move to its original position */
+}
+
+/* Form styling */
+.form2 h1 {
+    margin-bottom: 20px;
+    color: #333; /* Dark gray for form heading */
+    text-align: center; /* Center the heading */
+    font-size: 20px; /* Smaller size for the form title */
+    border: none; /* Removed border */
+}
+
+.form-group2 {
+    margin-bottom: 15px;
+    color: black; /* Black lines for form fields */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the form elements */
+}
+
+.form-group2 label {
+    color: #333; /* Dark gray for labels */
+}
+
+.form-group2 input,
+.form-group2 select {
+    width: 80%; /* Reduce the width of input fields */
+    padding: 10px;
+    margin-top: 5px;
+    border: 2px solid black; /* Black border for form fields */
+    border-radius: 10px;
+    background-color: #fffaf0; /* Light cream background */
+    color: #333; /* Dark gray text */
+    transition: border-color 0.3s ease; /* Transition for border color */
+}
+
+.form-group2 input:focus,
+.form-group2 select:focus {
+    border-color: #f4c542; /* Change border color on focus */
+}
+
+/* Submit button styling */
+.btn {
+    background-color: #f4c542; /* Updated bright yellow for the submit button */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    display: block;
+    margin: 20px auto 0 auto; /* Center the submit button */
+}
+
+.btn:hover {
+    background-color: #ffec8b; /* Lighter yellow on hover */
+    transform: scale(1.05);
+}
+/* Add this CSS to OrderDelivery.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .summary-button {
+    background-color: #f4c542;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  .summary-button:hover {
+    background-color: #ffec8b;
+  }
+  /* Parent container to center the search input */
+  .search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Full width of the container */
+    margin-bottom: 20px; /* Adjust spacing as needed */
+    
+  }
+  
+  /* Style for search input */
+  .search-input {
+    width: 100%;
+    max-width: 300px; /* Control the width of the search input */
+    padding: 10px;
+    padding-left: 35px; /* Add padding to the left to make space for the icon */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  /* Style for search icon */
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 16px;
+    pointer-events: none; /* Prevent the icon from being clickable */
+  }
+  .date-picker-container {
+    margin: 20px 0;
+  }
+  
+  .chart-container {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  /* Styles for the pie chart container */
+.pie-chart-container {
+    width: 400px;  /* Set a maximum width for the pie chart */
+    height: 400px; /* Set a maximum height */
+    margin: 0 auto;  /* Center the pie chart within its container */
+  }
+  
+  .order-summary-content {
+    max-width: 800px; /* Control the modal width */
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styles for modal */
+  .order-summary-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Submit button styling */
+  .submit-button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .submit-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* View Summary Button Styling */
+  .view-summary-button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .view-summary-button:hover {
+    background-color: #1E88E5;
+  }
+  .delete-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 20%;
+  }
+  .update-button {
+    background-color: rgb(0, 181, 0);
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 20%;
+  }
+  .das-submit-button
+  {background-color: #ce9e37; /* Yellow */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    margin-left: 40%;
+
+  }
+  .das-bt-con
+  {
+  display: flex; /* Ensures the buttons are aligned in a row */
+  gap: 100px; 
+  
+  }
+  /* Close button style */
+  .close-summary-button {
+    margin-top: 50px;
+    padding: 10px;
+    background-color: #ff5c5c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+  }
+  
+  .close-summary-button:hover {
+    background-color: #e04a4a;
+  }
+  
+  .generate-report-button
+  {
+    margin-top: 50px;
+    padding: 10px;
+    background-color: #ff5c5c;
+    color: white;
+    border: none;
+    
+    border-radius: 5px;
+    cursor: pointer;
+    
+    
+   
+  }
+  
