@@ -9,7 +9,7 @@ function OrdersView(){
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-      axios.get('http://localhost:8000/posts/order') 
+      axios.get('http://localhost:8000/Supplierorder/read') 
           .then(response => {
               if (response.data.success) {
                   setItems(response.data.order);
@@ -29,7 +29,7 @@ function OrdersView(){
 
       <div className="container1">
         <h3>Orders Details</h3>
-        <button className='add' onClick={() => navigate('/OrderForm')}>Place Orders</button>
+        <button className='addbtn' onClick={() => navigate('/OrderForm')}>Place Orders</button>
         <table border="1" cellPadding="10" cellSpacing="0">
           <thead>
             <tr>

@@ -1,104 +1,90 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './View.css';
+import './SupplierForm.css';
 
-function View(){
-  
-    const navigate = useNavigate();
+function View() {
+  const navigate = useNavigate();
+  const [items, setItems] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [display, setDisplay] = useState(false);
+  const [itemId, setItemId] = useState('');
+  const [Email, setemail] = useState('');
+  const [MobileNumber, setmobileNumber] = useState('');
 
-    const [items, setItems] = useState([]);
+  // Read
+  useEffect(() => {
+    axios.get('http://localhost:8000/SupplierTable/read')
+      .then(response => {
+        if (response.data.success) {
+          setItems(response.data.supplier);
+        } else {
+          alert('Failed to fetch posts');
+        }
+      })
+      .catch(error => {
+        alert('There was an error fetching the posts!', error);
+      });
+  }, []);
 
-    // const [display, setDisplay] = useState(false);
-    // const [itemId, setItemId] = useState('');
-    // const [companyName, setcompanyName] = useState('');
-    // const [companyAddress, setcompanyAddress] = useState('');
-    // const [email, setemail] = useState('');
-    // const [mobileNumber, setmobileNumber] = useState('');
-    // const [businessRegistrationNumber, setbusinessRegistrationNumber] = useState('');
-    // const [supplierType, setsupplierType] = useState('');
-    // const [productCategories, setproductCategories] = useState('');
+  // Update
+  const handleUpdate = (itemId) => {
+    axios.put(`http://localhost:8000/SupplierTable/update/${itemId}`, {
+        email: Email,
+        mobileNumber: MobileNumber
+    })
+    .then(response => {
+        if (response.data.success) {
+            alert("Data updated successfully");
+            setDisplay(false); // Close the modal after updating
+        } else {
+            alert('Data not updated.');
+        }
+    })
+    .catch(error => {
+        alert('Error updating data.');
+    });
+  };
 
-    useEffect(() => {
-      axios.get('http://localhost:8000/posts') 
-          .then(response => {
-              if (response.data.success) {
-                  setItems(response.data.supplier);
-              } else {
-                  alert('Failed to fetch posts');
-              }
-          })
-          .catch(error => {
-              alert('There was an error fetching the posts!', error);
-          });
+  // Delete
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:8000/SupplierTable/delete/${id}`)
+      .then(response => {
+        if (response.data.success) {
+          setItems(items.filter(item => item._id !== id));
+          alert('Data deleted successfully.');
+        } else {
+          alert('Failed to delete data.');
+        }
+      })
+      .catch(error => {
+        alert('Error deleting item.');
+      });
+  };
+
+  // Filter items based on search term
+  const filteredItems = items.filter(item => {
+    const companyName = item.supplierTable?.companyName?.toLowerCase() || '';
+    const supplierType = item.supplierTable?.supplierType?.toLowerCase() || '';
+    const searchTermLower = searchTerm.toLowerCase();
+    return companyName.includes(searchTermLower) || supplierType.includes(searchTermLower);
   });
 
-  //delete
-  const handleDelete = (id) => {
-    axios.delete(`http://localhost:8000/posts/delete/${id}`)
-    .then(response => {
-        if(response.data.success){
-            setItems(items.filter(items => items._id ===  id));
-            alert('Data deleted Successfully..');
-        }
-        else{
-            alert('Failed to delete data..');
-        }
-    })
-
-    .catch(error =>{
-        console.error('There was an error deleting the item:', error);
-        alert('There was an error in deleting items')
-    })
-  }
-
-  //update
-//   const handleUpdate = (itemId) => {
-//     axios.put(`http://localhost:8000/posts/update/${itemId}`, {
-//       companyName: companyname,
-//       companyAddress: companyaddress,
-//       email: Email,
-//       mobileNumber: mobilenumber,
-//       businessRegistrationNumber: businessregistrationnumber,
-//       supplierType: suppliertype,
-//       productCategories: productcategories
-//     })
-//     .then(response => {
-//         if (response.data.success){
-//             setItems(items.map(item =>
-//                 item._id === itemId ? {...item, customer: {...item.customer, companyName: companyname, companyAddress: companyaddress, email: Email, mobileNumber: mobilenumber, businessRegistrationNumber: businessregistrationnumber, supplierType: suppliertype, productCategories: productcategories } } : item
-//             ));
-//             alert('Data updated successfully...');
-//             setDisplay(false);
-//         }
-//     });
-// };
-  // const handleUpdate = (itemId) => {
-  //   axios.put(`http://localhost:8000/posts/update${itemId}, { diliverystatus: addStatus }`) 
-  //     .then(response => {
-  //       if (response.data.success) {
-  //         setODelivery(oDelivery.map(ex =>
-  //           ex._id === itemId ? { ...ex, OrderDelivery: { ...ex.OrderDelivery, diliverystatus: addStatus } } : ex
-  //         ));
-  //         alert('Data updated successfully');
-  //       } else {
-  //         alert('Data not updated');
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.error('There was an error', error);
-  //       alert('Error occurred');
-  //     });
-  // };
-
-    return(
+  return (
     <>
-    <header>
-    </header>
+      <header></header>
 
       <div className="container1">
         <h3>Existing Suppliers</h3>
-        <button className='add' onClick={() => navigate('/SupplierForm')}>Add New suppliers</button>
+        <button className='addbtn' onClick={() => navigate('/SupplierForm')}>Add New suppliers</button>
+        <input
+          type="text"
+          className="search-bar"
+          placeholder="Search by company name or supplier type"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)} // Update search term on input change
+        />
         <table border="1" cellPadding="10" cellSpacing="0">
           <thead>
             <tr>
@@ -113,26 +99,80 @@ function View(){
             </tr>
           </thead>
           <tbody>
-          {items.map((item)=> (
-              <tr key={item._id}>
-                <td>{item.supplierTable?.companyName}</td>
-                <td>{item.supplierTable?.companyAddress}</td>
-                <td>{item.supplierTable?.email}</td>
-                <td>{item.supplierTable?.mobileNumber}</td>
-                <td>{item.supplierTable?.businessRegistrationNumber}</td>
-                <td>{item.supplierTable?.supplierType}</td>
-                <td>{item.supplierTable?.productCategories}</td>
-                <td>
-                  <button className='edit' onClick={() => navigate('/SupplierForm')}>Edit</button><br></br><br></br>
-                  <button className='delete' onClick={() => handleDelete(item._id)}>Delete</button>
-                </td>
+            {items.length > 0 ? (
+              items.map((item) => (
+                <tr key={item._id}>
+                  <td>{item.supplierTable?.companyName}</td>
+                  <td>{item.supplierTable?.companyAddress}</td>
+                  <td>{item.supplierTable?.email}</td>
+                  <td>{item.supplierTable?.mobileNumber}</td>
+                  <td>{item.supplierTable?.businessRegistrationNumber}</td>
+                  <td>{item.supplierTable?.supplierType}</td>
+                  <td>{item.supplierTable?.productCategories}</td>
+                  <td>
+                    <button
+                      className='edit'
+                      onClick={() => {
+                        setDisplay(true);
+                        setItemId(item._id);
+                        setemail(item.supplierTable.email); // Populate email state
+                        setmobileNumber(item.supplierTable.mobileNumber); // Populate mobile number state
+                      }}
+                    >
+                      Edit
+                    </button><br></br><br></br>
+
+                    <button className='delete' onClick={() => handleDelete(item._id)}>Delete</button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="8">No suppliers found</td>
               </tr>
-            ))}  
+            )}
           </tbody>
         </table>
       </div>
+
+      {display && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={() => setDisplay(false)}>&times;</span>
+            <form onSubmit={(e) => { e.preventDefault(); handleUpdate(itemId); }}>
+              <p>{itemId}</p>
+              <p>Email :</p>
+              <div className="input_box">
+                <input
+                  type="email"
+                  placeholder="Enter your Email"
+                  name="email"
+                  className="name"
+                  value={Email}
+                  onChange={(e) => setemail(e.target.value)}
+                />
+              </div>
+              <br />
+              <p>Mobile Number :</p>
+              <div className="input_box">
+                <input
+                  type="text"
+                  placeholder="Enter your Mobile Number"
+                  name="mobileNumber"
+                  className="name"
+                  value={MobileNumber}
+                  onChange={(e) => setmobileNumber(e.target.value)}
+                />
+              </div>
+              <br />
+                <button className='update' type="submit">Update</button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 }
 
 export default View;
+

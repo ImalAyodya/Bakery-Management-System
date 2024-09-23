@@ -48,7 +48,7 @@ function App() {
     e.preventDefault();
     if (validate()) {
       axios
-        .post('http://localhost:8000/posts/save', { supplierTable: newItem })
+        .post('http://localhost:8000/SupplierTable/save', { supplierTable: newItem })
         .then((response) => {
           if (response.data.success) {
             setItems([...items, response.data.supplierTable]);
@@ -70,60 +70,6 @@ function App() {
         });
     }
   };
-
-
-
-
-
-
-  
-  // const [item, setItem] = useState([]);
-  // const [newItem, SetnewItem] = useState({
-  //   companyName: '',
-  //   companyAddress: '',
-  //   email: '',
-  //   mobileNumber: '',
-  //   businessRegistrationNumber: '',
-  //   supplierType: '',
-  //   productCategories: ''
-  // });
-
-  // const handleInputChange = (e)=> {
-  //   const { name, value } = e.target;
-  //   SetnewItem({ ...newItem, [name]: value });
-  // }
-
-  // const handleForSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   axios.post('http://localhost:8000/posts/save', { supplierTable: newItem })
-  //   .then(response => {
-  //       if(response.data.success){
-  //           setItem([...item, response.data.supplierTable]);
-  //           SetnewItem({
-  //           companyName: '',
-  //           companyAddress: '',
-  //           email: '',
-  //           mobileNumber: '',
-  //           businessRegistrationNumber: '',
-  //           supplierType: '',
-  //           productCategories: ''
-  //           });
-
-  //           console.log(newItem);
-  //       } else {
-  //           alert('Failed to add new Item');
-  //       }
-  //   })
-  //   .catch(error => {
-  //       console.log('There was an error adding new items', error);
-  //   });
-  // };
-
-
-
-
-
 
   return (
     <div>
@@ -238,7 +184,7 @@ function App() {
 
           <div className="input_group">
             <div className="input_box">
-              <button type="submit">Send</button>
+              <button className='add' type="submit">Send</button>
             </div>
           </div>
         </form>

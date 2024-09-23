@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './SupplierForm.css';
 
@@ -12,10 +12,34 @@ function OrderForm() {
 
   const [items, setItems] = useState([]);
   const [errors, setErrors] = useState({});
+  const [quantityPlaceholder, setQuantityPlaceholder] = useState('Enter Quantity');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
     setNewItem({ ...newItem, [name]: value });
+
+    if (name === 'productCategories') {
+      switch (value) {
+        case 'flour':
+          setQuantityPlaceholder('Enter quantity in kg');
+          break;
+        case 'sugar':
+          setQuantityPlaceholder('Enter quantity in kg');
+          break;
+        case 'butter':
+          setQuantityPlaceholder('Enter quantity in packets');
+          break;
+        case 'egg':
+          setQuantityPlaceholder('Enter quantity in dozens');
+          break;
+        case 'yeast':
+          setQuantityPlaceholder('Enter quantity in grams');
+          break;
+        default:
+          setQuantityPlaceholder('Enter Quantity');
+      }
+    }
   };
 
   const validate = () => {
@@ -39,7 +63,7 @@ function OrderForm() {
 
     if (validate()) {
       axios
-        .post('http://localhost:8000/order/save', { orderTable: newItem })
+        .post('http://localhost:8000/Supplierorder/save', { orderTable: newItem })
         .then((response) => {
           if (response.data.success) {
             setItems([...items, response.data.orderTable]);
@@ -60,18 +84,18 @@ function OrderForm() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8000/posts') 
-        .then(response => {
-            if (response.data.success) {
-                setItems(response.data.supplier);
-            } else {
-                alert('Failed to fetch posts');
-            }
-        })
-        .catch(error => {
-            alert('There was an error fetching the posts!', error);
-        });
-});
+    axios.get('http://localhost:8000/SupplierTable/read')
+      .then((response) => {
+        if (response.data.success) {
+          setItems(response.data.supplier);
+        } else {
+          alert('Failed to fetch posts');
+        }
+      })
+      .catch((error) => {
+        alert('There was an error fetching the posts!', error);
+      });
+  }, []);
 
   return (
     <div>
@@ -80,9 +104,9 @@ function OrderForm() {
         <h2>Order Placements</h2>
         <form onSubmit={handleFormSubmit}>
 
-        <p>Company Name:</p>
+          <p>Company Name:</p>
           <div className="input_box">
-            <select
+          <select
               className="order_type"
               name="companyName"
               value={newItem.companyName}
@@ -135,7 +159,7 @@ function OrderForm() {
           <div className="input_box">
             <input
               type="text"
-              placeholder="Enter Quantity"
+              placeholder={quantityPlaceholder}
               name="quantity"
               className="name"
               value={newItem.quantity}
@@ -147,7 +171,7 @@ function OrderForm() {
 
           <div className="input_group">
             <div className="input_box">
-              <button type="submit">Send</button>
+              <button className='add' type="submit">Send</button>
             </div>
           </div>
         </form>

@@ -66,7 +66,7 @@ th {
     background-color: #db9d46;
 }
 
-.add {
+.addbtn {
     font-size: 14px;
     background-color: #ae781c;
     color: #fff;
@@ -79,7 +79,30 @@ th {
 }
 
 
-.add:hover {
+.addbtn:hover {
     background-color: #ded13e;
 }
+
+.search-bar {
+    width: 25%;            
+    padding: 10px;
+    font-size: 16px;       
+    border: 1px solid #ccc; 
+    border-color: #f5e210;    
+    border-radius: 20px;         
+    outline: none;  
+    margin-left: 100px;           
+    margin-bottom: 20px;        
+    transition: border-color 0.3s ease;  
+  }
+  
+  .search-bar:focus {
+    border-color: #007bff;     
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); 
+  }
+  
+  .table-wrapper {
+    margin-top: 20px;
+  }
+  
 
