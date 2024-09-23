@@ -2,13 +2,15 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const mongoose = require('mongoose');
-const Post = require('../models/posts');
+const Post = require('../models/inventory');
+const sendStock = require('../models/SendStock');
+const Order = require('../models/OrderRequest');
 const cors = require('cors');
 
 app.use(cors());
 
 //create data
-router.post('/posts/save', async (req, res) => {
+router.post('/inventory/save', async (req, res) => {
     try {
 
         const{inventory} = req.body;
@@ -31,7 +33,7 @@ router.post('/posts/save', async (req, res) => {
 
 //Read Data
 
-router.get('/posts', async (req, res) => {
+router.get('/inventory', async (req, res) => {
     try {
         const posts = await Post.find().exec();
         return res.status(200).json({
@@ -46,57 +48,7 @@ router.get('/posts', async (req, res) => {
 });
 
 
-
-
-//Update data
-/*router.put("/posts/update/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { action, addQuantity } = req.body;
-        const { reOrder } = req.body;
-
-        // Convert id to ObjectId
-        const objectId = new mongoose.Types.ObjectId(id);
-
-        // Find and update the post
-        const updatedPost = await Post.findOneAndUpdate(
-            { _id: objectId },
-            { 'inventory.addQuantity': addQuantity, 'inventory.reOrder': reOrder },
-            { new: true } // Return the updated document
-        );
-
-        if (!updatedPost) {
-            return res.status(404).json({ error: "Post not found" });
-        }
-
-        let currentQuantity = parseInt(updatedPost.inventory.addQuantity, 10);
-        const newQuantity = parseInt(addQuantity, 10);
-
-        if (action === 'add') {
-            currentQuantity += newQuantity;
-        } else if (action === 'remove') {
-            currentQuantity -= newQuantity;
-        }
-
-        updatedPost.inventory.addQuantity = currentQuantity;
-        updatedPost.inventory.reOrder = reOrder;
-
-        // Save the updated post
-        await updatedPost.save();
-
-        // Return the updated post in the response
-        return res.status(200).json({
-            success: true,
-            updatedPost: updatedPost // Send the updated post data
-        });
-
-    } catch (err) {
-        return res.status(400).json({
-            error: err.message
-        });
-    }
-});*/
-router.put("/posts/update/:id", async (req, res) => {
+router.put("/inventory/update/:id", async (req, res) => {
     const { id } = req.params;
     const { addQuantity } = req.body;
 
@@ -137,7 +89,7 @@ router.put("/posts/update/:id", async (req, res) => {
 
 
 //delete data
-router.delete("/posts/delete/:id", async (req, res) => {
+router.delete("/inventory/delete/:id", async (req, res) => {
     console.log("Delete request received for ID:", req.params.id);
         try {
         const deletedPost = await Post.findByIdAndDelete(req.params.id).exec();
@@ -163,30 +115,80 @@ router.delete("/posts/delete/:id", async (req, res) => {
 
 
 
+/*--------------Send Stock Create and Read Section-------------------*/
+
+router.post('/sendstock/save', async (req, res) => {
+    try {
+
+        const{stock} = req.body;
+        const newPost = new sendStock({
+            stock
+        })
+        await newPost.save();
+        return res.status(200).json({
+            success: "Data saved successfully",
+            stock: newPost
+        });
+    } catch (err) {
+        return res.status(400).json({
+            error: err.message
+        });
+    }
+});
+
+
+router.get('/sendstock', async (req, res) => {
+    try {
+        const posts = await sendStock.find().exec();
+        return res.status(200).json({
+            success: true,/*success message ekk thbbee klin*/
+            existingPosts: posts
+        });
+    } catch (err) {
+        return res.status(400).json({
+            error: err.message
+        });
+    }
+});
+
+
+/*---------------Order Request Create and Read Section-------------------*/
+
+router.post('/supplierrequest/save', async (req, res) => {
+    try {
+
+        const{order} = req.body;
+        const newPost = new Order({
+            order
+        })
+        await newPost.save();
+        return res.status(200).json({
+            success: "Data saved successfully",
+            order: newPost
+        });
+    } catch (err) {
+        return res.status(400).json({
+            error: err.message
+        });
+    }
+});
+
+
+router.get('/supplierrequest', async (req, res) => {
+    try {
+        const posts = await Order.find().exec();
+        return res.status(200).json({
+            success: true,/*success message ekk thbbee klin*/
+            existingPosts: posts
+        });
+    } catch (err) {
+        return res.status(400).json({
+            error: err.message
+        });
+    }
+});
 
 
 module.exports = router;
 
-
-// const express = require('express');
-// const router = express.Router();
-// const Post = require('../models/posts');
-
-// http://localhost:8001/posts/save
-
-// router.post('/save', async (req, res) => {
-//     const post = new Post({
-//         title: req.body.title,
-//         description: req.body.description
-//     });
-
-//     try {
-//         const savedPost = await post.save();
-//         res.json(savedPost);
-//     } catch (err) {
-//         res.json({ message: err });
-//     }
-// });
-
-// module.exports = router;
 
