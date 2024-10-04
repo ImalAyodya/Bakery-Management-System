@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Order = require('../Models/postmethod');
+const Order = require('../models/postmethod');
 const { default: mongoose } = require('mongoose');
 
 
@@ -10,7 +10,7 @@ const { default: mongoose } = require('mongoose');
 
 //create data
 
-router.post('/order/create',async(req, res)=>{  //request and response 
+router.post('/wholesaleOrder/create',async(req, res)=>{  //request and response 
     try{
         const{WholesaleOrder} = req.body; //body ekn reques kergnnva data.
         const newPost = new Order( 
@@ -55,7 +55,7 @@ router.post('/order/create', async (req, res) => {
 
 
 //read data      route kiyene function eke thiye....get kiyene http request method eke.
-router.get("/order", async(req, res)=>{
+router.get("/wholesaleOrder", async(req, res)=>{
     try{
         const posts = await Order.find().exec();       //udeme declare kerpu Order name ekefetch all documents from the post collection in the MongoDB database.
         return res.status(200).json({            
@@ -75,7 +75,7 @@ router.get("/order", async(req, res)=>{
 
 
 //update data
-router.put("/order/update/:id",async(req, res)=>{
+router.put("/wholesaleOrder/update/:id",async(req, res)=>{
     try{
         const{ id } = req.params;
         const{ status } = req.body;
@@ -105,7 +105,7 @@ router.put("/order/update/:id",async(req, res)=>{
 });
 
 //delete
-router.delete("/order/delete/:id",async(req, res)=>{
+router.delete("/wholesaleOrder/delete/:id",async(req, res)=>{
     try{
         
         //const deleteOrder =await Order.deleteMany({ "WholesaleOrder.status": "Cancelled" });

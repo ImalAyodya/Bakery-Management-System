@@ -6,7 +6,7 @@ const OrderSchema  = new schema({
         customerID: { type: String, required: true },
         customerName: { type: String, required: true },
         
-        products: [{ 
+        products: [{                                                                                                                                                                                                                                                                                                                                                                                                                                              
           product: { type: String, required: true }, //backend ekete denne kalin require eke dnmame check kernva name kiyene property ekete value ek thiyede kiela
           quantity: { type: Number, required: true }, 
           uom: { type: String, required: true }, // Unit of Measure 
@@ -23,7 +23,7 @@ const OrderSchema  = new schema({
    
 }, { timestamps: true });  //useful for keeping track of when records were created use degault date
  
-const Order = mongoose.model('order',OrderSchema)
+const Order = mongoose.model('wholesaleOrder',OrderSchema)
 module.exports=Order;  //meke mongo db ekete giame api capital dila thibboth okkoma simple venva thv s ekk add venva
 
 

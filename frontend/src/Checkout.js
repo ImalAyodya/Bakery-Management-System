@@ -15,6 +15,17 @@ function Checkout(){
   const location = useLocation();
   const cartItems = location.state?.cartItems || [];
   const navigate = useNavigate();
+  const validateName = (name) => {
+    // Remove any digits from the name
+    const sanitizedValue = name.replace(/\d/g, '');
+  
+    if (sanitizedValue !== name) {
+      alert('Name should not contain numbers');
+    }
+  
+    return sanitizedValue;
+  };
+
 
   const getTotalQuantity = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -33,6 +44,7 @@ function Checkout(){
   
   //const [onlineOrder, setOnlineOrder] = useState([]);
   const [newOnlineOrder, setNewOnlineOrder] = useState({
+    orderId: '',
     customerName : '',
     phoneNumber: '',
     address: '',
@@ -56,14 +68,57 @@ function Checkout(){
     }));
   }, [items,totalQuantity, totalPrice]); //change--------------------------
 
+
+  //------------------------------------------------
+
+   // Fetch order notifications from the server
+   /*const fetchOrderNotifications = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/notifications'); // Replace with your actual notifications endpoint
+      if (response.data) {
+        // Process the notifications data if necessary
+        console.log('Fetched notifications:', response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+    }
+  };
+   // Fetch notifications on component mount
+   useEffect(() => {
+    fetchOrderNotifications();
+  }, []);*/
+
  const handleInputChange = (e) => {
 
       const {name,value} = e.target;
-      setNewOnlineOrder(prevOrder => ({
-        ...prevOrder,
-        [name]: value
-      }));
+      if (name === 'customerName') {
+        const sanitizedValue = validateName(value);
+        setNewOnlineOrder((prevOrder) => ({
+          ...prevOrder,
+          customerName: sanitizedValue
+        }));
+      } else{
+        setNewOnlineOrder(prevOrder => ({
+          ...prevOrder,
+          [name]: value
+        }));
+      }
+    
+      
   };
+
+  const generateOrderId = () => {
+    const timestamp = Date.now(); // Current timestamp
+    const randomNum = Math.floor(Math.random() * 1000); // Random number between 0 and 999
+    return `ORD-${timestamp}-${randomNum}`;
+  };
+  
+  const formatDateTime = () => {
+    const currentDate = new Date();
+    const padZero = (num) => (num < 10 ? '0' + num : num);
+    return `${currentDate.getFullYear()}-${padZero(currentDate.getMonth() + 1)}-${padZero(currentDate.getDate())} ${padZero(currentDate.getHours())}:${padZero(currentDate.getMinutes())}:${padZero(currentDate.getSeconds())}`;
+  };
+
   const handleCartItemChange = (index, field, value) => {
     const newItems = [...items];
     newItems[index] = { ...newItems[index], [field]: value };
@@ -74,25 +129,23 @@ function Checkout(){
     setNewOnlineOrder(prevOrder => ({
       ...prevOrder,
       cartItems: newItems,
+    
     }));
   };
 
-   {/*const handleCartItemChange = (index, field, value) => {
-    const newItems = [...items];
-    newItems[index] = { ...newItems[index], [field]: value };
-    setItems(newItems);
-    setTotalQuantity(getTotalQuantity());
-    setTotalPrice(getTotalPrice());
-};*/}
-{/*const handleInputChange = (e) => {
-  const {name,value} = e.target;
-  setNewOnlineOrder({...newOnlineOrder,[name]:value});
-}
-*/}
+
+  
+  
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
+     // Generate a new orderId
+    const generatedOrderId = generateOrderId();
+    //const currentDate = new Date().toISOString();
+    const currentDate = formatDateTime();
     const orderData = {
+      orderId: generatedOrderId,
       customerName: newOnlineOrder.customerName,
       phoneNumber: newOnlineOrder.phoneNumber,
       address: newOnlineOrder.address,
@@ -100,18 +153,30 @@ function Checkout(){
       cartItems: items, // using updated cart items
         totQuantity: getTotalQuantity(),
         totPrice: getTotalPrice(),
-      createdAt: new Date().toISOString(),
+      createdAt:currentDate,
       status: newOnlineOrder.status,
     };
     console.log('Order Data to be sent:', orderData);
     axios.post('http://localhost:8000/onlineorder/create', { OnlineOrder: orderData }) // Use 'WholesaleOrder' here
       .then(response => {
         if (response.data.success) {
+
+        //   const notificationData = {
+        //     message: `Order ${generatedOrderId} has been successfully placed!`,
+        //     time: new Date().toISOString(),
+        // };
+
+        //await axios.post('http://localhost:8000/notifications', notificationData); 
           // Update the state with the newly added order
           //setOnlineOrder([...onlineOrder, response.data.Onlineorderdetails]);
-          setItems([]);
+          setItems([]); // Clear the cart
+         
+        setTotalQuantity(0); // Reset total quantity
+        setTotalPrice(0); 
+        //getTotalPrice(0);
           // Reset the form fields
           setNewOnlineOrder({
+            orderId: '',
             customerName: '',
             phoneNumber: '',
             address: '',
@@ -124,6 +189,21 @@ function Checkout(){
           });
   
           alert('Data added successfully');
+          navigate('/Online', { state: { cartItems: [] } }); // Cart items passed as empty array
+          //const notificationMessage = `Order ${generatedOrderId} has been successfully placed! Created at: ${currentDate}`;
+          const orderPlacedMessage = `Order ${generatedOrderId} has been successfully placed! at: ${currentDate}`;
+          //const orderCreatedMessage = `Created at: ${currentDate}`;
+          
+          const notifications = JSON.parse(sessionStorage.getItem('notifications')) || [];
+          //notifications.push(notificationMessage);
+
+          notifications.push(orderPlacedMessage); // Push order placed message
+          //notifications.push(orderCreatedMessage);
+          sessionStorage.setItem('notifications', JSON.stringify(notifications)); 
+            
+          sessionStorage.setItem('recentOrderId', generatedOrderId); // Store recent order ID in session storage 
+
+                
         } else {
           alert('Failed to add order');
         }
@@ -155,14 +235,14 @@ function Checkout(){
                                             <li key={index}>
                                                     <div className='item-info'>
                                                     <div className="item-info-name"> {item.productName}   </div>   
-                                                    <div className="item-info-price">${item.unitPrice}</div>
+                                                    <div className="item-info-price">Rs.{item.unitPrice}</div>
                                                     <div className="item-info-qty">{item.quantity}</div>
                                                     </div>
                                                
                                             </li>
                                             ))}
                                         </ul>
-                                        <h3>Total Price: ${getTotalPrice()}</h3>
+                                        <h3>Total Price: Rs.{getTotalPrice()}</h3>
                             </div>
                         </div>
                     </div>
@@ -176,12 +256,16 @@ function Checkout(){
                     <div className="form">
                         <div className="group">
                             <label for="name"> Name</label>
-                            <input type="text" name="customerName" id="customerName" value={newOnlineOrder.customerName} onChange={handleInputChange}/>
+                            <input type="text" name="customerName" id="customerName"  pattern="[A-Za-z\s]+" value={newOnlineOrder.customerName} onChange={handleInputChange}  
+        title="Name should only contain letters and spaces."/>
                         </div>
 
                         <div className="group">
                             <label for="phone">Phone Number</label>
-                            <input type="phone" name="phoneNumber" id="phoneNumber" value={newOnlineOrder.phoneNumber} onChange={handleInputChange}/>
+                            <input type="phone" name="phoneNumber" id="phoneNumber" value={newOnlineOrder.phoneNumber} onChange={handleInputChange} 
+        title="Phone number should be exactly 10 digits." 
+        pattern="0[0-9]{9}"  
+                  maxlength="10"/>
                         </div>
 
                         <div className="group">
@@ -192,6 +276,7 @@ function Checkout(){
                         <div className="group">
                             <label for="payment">Payment Method</label>
                             <select name="paymentMethod" id="paymentMethod" value={newOnlineOrder.paymentMethod} onChange={handleInputChange} >
+                                <option value="option">Select Payment Method</option>
                                 <option value="cod">Cash On Delivery</option>
                                 <option value="visaMaster">Pay with VISA/MASTER Card On Delivery</option>
                                 <option value="Amex">Pay with AMEX Card On Delivery</option>
@@ -217,9 +302,9 @@ function Checkout(){
                                                             <div className="item-info-name"> {item.name}   </div>   
                                                             <div className="item-info-price">${item.price}</div>
                                                             <div className="item-info-qty">{item.quantity}</div>*/}
-                                                            <input type="text" name="name" value={item.productName} onChange={(e) => handleCartItemChange(index, 'name', e.target.value)}  /> {/*onChange={(e) => handleCartItemChange(index, 'name', e.target.value)} */}
-                                                            <input type="number" name="price" value={item.unitPrice} onChange={(e) => handleCartItemChange(index, 'price', e.target.value)}  /> {/*onChange={(e) => handleCartItemChange(index, 'price', e.target.value)}  */}
-                                                            <input type="number" name="quantity"value={item.quantity} onChange={(e) => handleCartItemChange(index, 'quantity', e.target.value)}/>  {/* onChange={(e) => handleCartItemChange(index, 'quantity', e.target.value)}*/}
+                                                            <input type="text" className='autofill' name="name" value={item.productName} onChange={(e) => handleCartItemChange(index, 'name', e.target.value)} readOnly /> {/*onChange={(e) => handleCartItemChange(index, 'name', e.target.value)} */}
+                                                            <div>Rs.</div> <input type="text" className='autofill' name="price" value={item.unitPrice} onChange={(e) => handleCartItemChange(index, 'price', e.target.value)} readOnly  /> {/*onChange={(e) => handleCartItemChange(index, 'price', e.target.value)}  */}
+                                                            <input type="text" className='autofill' name="quantity"value={item.quantity} onChange={(e) => handleCartItemChange(index, 'quantity', e.target.value)} readOnly/>  {/* onChange={(e) => handleCartItemChange(index, 'quantity', e.target.value)}*/}
                                                             </div>
                                                     
                                                     </li>
@@ -231,13 +316,13 @@ function Checkout(){
 
                             <div className="row">
                                 <div>Total Quantity</div>
-                                <input type="number"  name="totalQuantity" value={totalQuantity} onChange={handleInputChange} readOnly />
+                                <input type="number"   className='autofill' name="totalQuantity" value={totalQuantity} onChange={handleInputChange} readOnly />
                                 {/*<div className="totalQuantity" >{getTotalQuantity()}</div> */}  {/*value={newOnlineOrder.totQuantity} onChange={handleInputChange}*/}
                             </div>
 
                             <div className="row">
                                 <div className='pricelabel' ><h3>Total Price</h3></div>
-                                <input type="number" value={totalPrice} onChange={handleInputChange} readOnly />
+                                <div>Rs.</div><input type="number" className='autofill' value={totalPrice} onChange={handleInputChange} readOnly />
                                 {/*<div className="totalPrice" >${getTotalPrice()}</div>*/} {/*value={newOnlineOrder.totPrice} onChange={handleInputChange}*/}
                             </div>
                     </div>
