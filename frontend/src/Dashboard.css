@@ -1,5 +1,6 @@
 .background{
   background-color: #fdfaf4;
+  margin-top: -26px;
 }
 
 .body{
@@ -17,6 +18,7 @@
 }
 
 .dashboardtopic{
+  margin-left: 430px;
   color: #533b00;
   font-size: 40px;
 }
@@ -178,18 +180,18 @@ tr:hover{
 
   .bottom-btn{
     width: 200px;
-    height: 300px;
+    height: 550px;
     background-color: #fac031;
     border-radius: 4px;
     margin-left: 10px;
-    margin-top: 100px;
+    margin-top: -80px;
     border: 3px solid #3226058d;
 
   }
 
 
 
-  .bottom-btn button{
+  .bottom-btn .new-ingre{
     background-color: #e2ac17;
     border: 3px solid #5b45098d;
     color:rgb(5, 5, 5);
@@ -201,12 +203,38 @@ tr:hover{
 
   }
 
-  .bottom-btn button:hover{
+  .bottom-btn .new-ingre:hover{
     background-color: #5b45098d;
     transition: 0.2s;
     border: 3px solid #c9b16d;
     color: azure;
   }
+
+
+  .bottom-btn .productSentBtn{
+    background-color: #e2ac17;
+    border: 3px solid #5b45098d;
+    color:rgb(5, 5, 5);
+    font-size: 20px;
+    width: 410px;
+    margin-left: 7px;
+    margin-top: 30px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 7px;
+
+  }
+
+  .bottom-btn .productSentBtn:hover{
+    background-color: #5b45098d;
+    transition: 0.2s;
+    border: 3px solid #c9b16d;
+    color: azure;
+  }
+
+
+
+
 
   .bottom-btn .del-ingre{
     margin-left: 10px;
@@ -217,36 +245,124 @@ tr:hover{
 
   .bottom-btn .new-ingre{
     margin-left: 7px;
-    margin-top: 60px;
+    margin-top: 20px;
     width: 410px;
     height: 50px;
   }
 
   .bottom-btn .report{
-    margin-left: 7px;
-    margin-top: 10px;
+    background-color: #e2ac17;
+    border: 3px solid #5b45098d;
+    color:rgb(5, 5, 5);
+    font-size: 20px;
     width: 410px;
+    margin-left: 7px;
+    margin-top: 30px;
     height: 50px;
+    cursor: pointer;
+    border-radius: 7px;
   }
+
+  .bottom-btn .report:hover{
+    background-color: #5b45098d;
+    transition: 0.2s;
+    border: 3px solid #c9b16d;
+    color: azure;
+  }
+
 
   .bottom-btn .order{
-    margin-left: 7px;
-    margin-top: 10px;
+    background-color: #e2ac17;
+    border: 3px solid #5b45098d;
+    color:rgb(5, 5, 5);
+    font-size: 20px;
     width: 410px;
+    margin-left: 7px;
+    margin-top: 30px;
     height: 50px;
+    cursor: pointer;
+    border-radius: 7px;
+  }
+
+  .bottom-btn .order:hover{
+    background-color: #5b45098d;
+    transition: 0.2s;
+    border: 3px solid #c9b16d;
+    color: azure;
+  }
+
+
+  .bottom-btn .productSentBtn{
+    background-color: #e2ac17;
+    border: 3px solid #5b45098d;
+    color:rgb(5, 5, 5);
+    font-size: 20px;
+    width: 410px;
+    margin-left: 7px;
+    margin-top: 30px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 7px;
+  }
+
+  .bottom-btn .productSentBtn:hover{
+    background-color: #5b45098d;
+    transition: 0.2s;
+    border: 3px solid #c9b16d;
+    color: azure;
   }
 
 
 
-  /* ---------------------------------------------------------*/
+  .bottom-btn .sup_report{
+    background-color: #e2ac17;
+    border: 3px solid #5b45098d;
+    color:rgb(5, 5, 5);
+    font-size: 20px;
+    width: 410px;
+    margin-left: 7px;
+    margin-top: 30px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 7px;
+  }
+
+  .bottom-btn .sup_report:hover{
+    background-color: #5b45098d;
+    transition: 0.2s;
+    border: 3px solid #c9b16d;
+    color: azure;
+  }
+
+  .bottom-btn .product_report{
+    background-color: #e2ac17;
+    border: 3px solid #5b45098d;
+    color:rgb(5, 5, 5);
+    font-size: 20px;
+    width: 410px;
+    margin-left: 7px;
+    margin-top: 30px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 7px;
+  }
+
+  .bottom-btn .product_report:hover{
+    background-color: #5b45098d;
+    transition: 0.2s;
+    border: 3px solid #c9b16d;
+    color: azure;
+  }
+
+
+
+  /* ------------------------Add New Ingredient section---------------------------------*/
   .add-main{
     width:1519px;
-    height: 680px;
     backdrop-filter: 20px;
-    margin-top: 0px;
     left: 0;
     right: 0;
-    top: 140px;
+    top: 0px;
     backdrop-filter: 80px;
     position: absolute;
   
@@ -272,13 +388,12 @@ tr:hover{
 
 .next-body{
   width:1530px;
-  height: 1200px;
   background-color: rgba(0, 0, 0, 0.70);
   transition:all 0.5s;
   margin-top: -87px;
 }
 
-.add-quantity p{
+.add-quantity .ad{
     margin-left: 10px;
 }
 
@@ -293,7 +408,7 @@ tr:hover{
     border: 1px solid rgb(57, 55, 89);
 }
 
-.add-topic p{
+.add-topic .ad{
     margin-left: 0px;
     margin-top: 100px;
     color:rgb(184, 184, 229)
@@ -305,11 +420,25 @@ tr:hover{
     height: 25px;
 }
 
-.submit{
-    width: 250px;
-    height: 35px;
-    margin-left: 60px;
+.addSize{
+  font-size: 20px;
+  margin-left: 10px;
+  margin-top: 130px;
+  color:rgb(255, 255, 255)
+}
 
+.addSubmit{
+  cursor: pointer;
+  color: white;
+  width: 250px;
+  height: 35px;
+  background-color: rgb(37, 56, 94);
+  font-size: 20px;
+  margin-left: 60px;
+}
+
+.addSubmit:hover{
+  background-color: rgb(22, 33, 56);
 }
 
 .back-btn{
@@ -318,9 +447,22 @@ tr:hover{
     margin-left: 85px;
 }
 
+.add-itemId{
+  display: none;
+}
 
 
 /*--------------------------remove quantity btn-----------------------------------*/
+
+.rem-itemId{
+  display: none;
+}
+
+.itemName{
+  font-size: 24px;
+  
+
+}
 
 .remove-main{
   width:1473px;
@@ -329,7 +471,7 @@ tr:hover{
   margin-top: 0px;
   left: 0;
   right: 0;
-  top: 140px;
+  top: 0px;
   backdrop-filter: 80px;
   position: absolute;
 
@@ -339,7 +481,7 @@ tr:hover{
 .remove-body{
   display: flex;
   position: absolute;
-  margin-left: 325px;
+  margin-left: 350px;
   margin-top: -600px;
   text-align: left;
   width: 800px;
@@ -355,7 +497,7 @@ tr:hover{
 
 .next-body{
 width:1519px;
-height: 900px;
+height: 770px;
 background-color: rgba(0, 0, 0, 0.90);
 transition:all 0.5s;
 margin-top: -87px;
@@ -376,10 +518,17 @@ margin-top: -87px;
   border: 1px solid rgb(89, 55, 55);
 }
 
-.remove-topic p{
-  margin-left: 0px;
+.remove-topic .rm{
+  margin-left: 10px;
   margin-top: 100px;
   color:rgb(229, 184, 184)
+}
+
+.remove-size{
+  font-size: 20px;
+  margin-left: 10px;
+  margin-top: 130px;
+  color:rgb(255, 255, 255)
 }
 
 .input{
@@ -388,17 +537,31 @@ margin-top: -87px;
   height: 25px;
 }
 
-.submit{
+.removeSubmit{
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+  background-color: #67312b;
   width: 250px;
   height: 35px;
   margin-left: 60px;
+}
 
+.removeSubmit:hover{
+  background-color: #512c28;
 }
 
 .back-btn{
   width: 200px;
   height: 35px;
   margin-left: 85px;
+  font-size: 17px;
+  background-color: #e2c374;
+  cursor: pointer;
+}
+
+.back-btn:hover{
+  background-color: #c6aa63;
 }
 
 
@@ -412,7 +575,7 @@ margin-top: -87px;
   backdrop-filter: 20px;
   left: 0;
   right: 0;
-  top: 140px;
+  top: 91px;
   backdrop-filter: 80px;
   position: absolute;
   background-color: rgba(208, 201, 201, 0.95);
@@ -511,4 +674,83 @@ border-radius: 7px;
 
 
 
-/*-------------------------Order Request-----------------------------*/
+/*-------------------------Production section-----------------------------*/
+.productAdd-main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.99); /* Dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure popup is above other content */
+}
+
+.product-body {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Adds shadow for depth */
+  width: 400px;
+  max-width: 100%; /* Ensures it doesn't exceed the screen width */
+  text-align: center;
+}
+
+.product-topic {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.product-form p {
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #333;
+  text-align: left;
+}
+
+.product-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+.product-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.product-btn:hover {
+  background-color: #2980b9;
+}
+
+.productCancelBtn {
+  width: 100%;
+  padding: 10px;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.productCancelBtn:hover {
+  background-color: #c0392b;
+}
