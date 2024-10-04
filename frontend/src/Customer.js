@@ -9,7 +9,7 @@ function Customer() {
         Phone_number: '',
         Email: '',
         user_name: '',
-        password: '',
+    
     });
 
     const [errors, setErrors] = useState({});
@@ -72,7 +72,7 @@ function Customer() {
 
         // Validate the form before submission
         if (validate()) {
-            axios.post('http://localhost:8000/customer/save', { customer: newItem })
+            axios.post('http://localhost:8001/customer/save', { customer: newItem })
                 .then(response => {
                     if (response.data.success) {
                         setItems([...items, response.data.customer]);

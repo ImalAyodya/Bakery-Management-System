@@ -54,7 +54,7 @@ body {
     padding: 20px;
     margin: 50px;
     margin-top: 100px;
-    margin-left: 300px;
+    margin-left: 200px;
     box-shadow: 0 0 10px #aaa;
     border-radius: 10px;
     width: 200px;
@@ -78,5 +78,37 @@ body {
 }
 
 .customer button[type="submit"]:hover {
+    background-color: #db9d46;
+}
+
+.inquiry {
+    background: #fff;
+    padding: 20px;
+    margin: 50px;
+    margin-top: 100px;
+    margin-left: 600px;
+    box-shadow: 0 0 10px #aaa;
+    border-radius: 10px;
+    width: 200px;
+    
+}
+
+.inquiry h3 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.inquiry button[type="submit"] {
+    background-color: #4c5420;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-left: 55px;
+    border-radius: 10px;
+}
+
+.inquiry button[type="submit"]:hover {
     background-color: #db9d46;
 }

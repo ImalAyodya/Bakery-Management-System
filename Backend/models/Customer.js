@@ -24,7 +24,8 @@ const  postschema= new mongoose.Schema({
         },
         password:{
             type: String,
-            required: true
+            unique:true
+                                                                                                                                                                                 
         }
     }
 });

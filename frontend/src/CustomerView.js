@@ -19,7 +19,7 @@ function View(){
 
     useEffect(() => {
       // Fetch posts from the backend
-      axios.get('http://localhost:8000/posts')
+      axios.get('http://localhost:8001/posts')
           .then(response => {
               if (response.data.success) {
                   setItems(response.data.data);
@@ -33,7 +33,7 @@ function View(){
     }, []);
 
     const handleUpdate = (itemId) => {
-        axios.put(`http://localhost:8000/posts/update/${itemId}`, {
+        axios.put(`http://localhost:8001/posts/update/${itemId}`, {
             name: name,
             Address: address,
             Phone_number: phoneNumber,
@@ -53,7 +53,7 @@ function View(){
     };
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:8000/posts/delete/${id}`)
+        axios.delete(`http://localhost:8001/posts/delete/${id}`)
         .then(response => {
             if(response.data.success){
                 setItems(items.filter(item => item._id !== id));
@@ -93,7 +93,7 @@ function View(){
                             <td>{item.customer.Phone_number}</td>
                             <td>{item.customer.Email}</td>
                             <td>{item.customer.user_name}</td>
-                            <td>{item.customer.password}</td>
+                            <td>{'*'.repeat(item.customer.password.length)}</td>
                             <td>
                                 <button className="edit" onClick={() => {
                                     setItemId(item._id);
@@ -121,7 +121,7 @@ function View(){
                         <input type="text" id="userName" value={item.userName} onChange={(e) => setUserName(e.target.value)} />
                         <br/>
                         <label htmlFor="password">Password</label>
-                        <input type="text" id="password" value={item.password} onChange={(e) => setPassword(e.target.value)} />
+                        <input type="password" id="password" value={item.password} onChange={(e) => setPassword(e.target.value)} />
                         <br/>
                         <button type="submit" className="submit-button">Submit</button>
                         <button type="button" onClick={() => setDisplay(false)}>Close</button>

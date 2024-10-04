@@ -22,6 +22,10 @@ function View(){
                 <h3>Customer Details</h3><br></br>
                 <button type="submit" onClick={() => navigate('/CustomerView')}>Click here</button>
             </div>
+            <div class="inquiry">
+                <h3>Customer Inquiry</h3><br></br>
+                <button type="submit" onClick={() => navigate('/AdminInquiryView')}>Click here</button>
+            </div>
         </div>
     </div>
 
