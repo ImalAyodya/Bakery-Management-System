@@ -15,7 +15,7 @@ const UpdateProduct = () => {
   });
 
   useEffect(() => {
-    axios.get(`http://localhost:5080/products/${id}`)
+    axios.get(`http://localhost:8000/products/${id}`)
         .then((response) => {
             const fetchedProduct = response.data;
             setProduct({
@@ -41,7 +41,7 @@ const UpdateProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:5080/products/update/${id}`, product).then(() => {
+    axios.put(`http://localhost:8000/products/update/${id}`, product).then(() => {
       alert("Product Updated Successfully");
       navigate('/');
     }).catch(err => {
