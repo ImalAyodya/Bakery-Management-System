@@ -1,4 +1,3 @@
-import React from 'react';
 import ProductManagement from './pages/ProductManagement';
 import ProductWastageManagement from './pages/ProductWastageManagement';
 import RequestStaff from './pages/RequestStaff';
@@ -37,6 +36,11 @@ import Dfirst from './Dfirst';
 import ViewDailySales from './ViewDailySales'
 import AdminDashboard from './AdminDashboard'
 import HeaderAdmin from './HeaderAdmin'
+import Supplier from './Supplier';
+import SupplierForm from './SupplierForm';
+import View from './View';
+import OrderView from './OrderView';
+import OrderForm from './OrderForm';
 
 
 
@@ -50,13 +54,11 @@ function App() {
 
                 <Route index element={<AdminDashboard />} />
                 <Route path="/products" element={<ProductWastageManagement />} />
-
                 <Route path="/product-management" element={<ProductManagement />} />
                 <Route path="/request-staff" element={<RequestStaff />} />
                 <Route path='/request-ingredient' element={<IngredientRequest />} />
                 <Route path='/daily-production' element={<ProductionForm />} />
-                <Route path='/updateProduct/:id' element={<UpdateProduct />} />
-               
+                <Route path='/updateProduct/:id' element={<UpdateProduct />} />               
                 <Route path = '/inventory' element={<Inventory/>} />
                 <Route path = '/AddQuantity' element={<AddQuantity/>}/>
                 <Route path = '/dashboard' element={<Dashboard/>} />
@@ -64,7 +66,6 @@ function App() {
                 <Route path = '/dashboard/productreport' element={<Product_Report/>}/>
                 <Route path = '/dashboard/orderreport' element={<Order_Report/>}/>
                 <Route path = '/dashboard/generatereport' element={<Stock_Report/>}/>
-
                 <Route path="/" element={<Home/>}/>
                 <Route path= "/commercial" element={<CommercialOrder/>}/>
                 <Route path="/Online" element={<Onlineorder/>}/>
@@ -74,28 +75,23 @@ function App() {
                 <Route path="/AdminDashbrd" element={<AdminDashboard/>}/>
                 <Route path="/orderDBUI" element={<OrderDBUI/>}/>
                 <Route path="/notification" element={<NotificationDashboard/>}/>
-
-
-
-                
-
-
                 <Route path='/sales' element={<Salesm/>}/>
                 <Route path='/Prform' element={<Prform/>}/>
-                
                 <Route path='/plan' element={<Nwplan/>}/>
                 <Route path='/Salesdash' element={<Salesdash/>}/>
-                
                 <Route path='/Stables' element={<Stables/>}/>
                 <Route path='/Nwplan' element={<Nwplan/>}/>
-
-
-
                 <Route path = '/Form' element={<Form/>}/>
                 <Route path = '/orderdelivery'element={<OrderDelivery/>}/>
                 <Route path = '/dailyroute'element={<DailyRoutes/>}/>
                 <Route path = '/delivery'element={<Dfirst/>}/>
                 <Route path = '/ViewDailySales'element={<ViewDailySales/>}/> 
+                <Route path="/Supplier" element={<Supplier/>} />
+                <Route path="/SupplierForm" element={<SupplierForm />} />
+                <Route path="/View" element={<View />} />
+                <Route path='/OrderView' element={<OrderView />} />
+                <Route path="/OrderForm" element={<OrderForm />} />
+      </Routes>
 
             </Routes>
         </BrowserRouter>
