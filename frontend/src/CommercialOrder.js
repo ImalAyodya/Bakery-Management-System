@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { UilFacebookF, UilInstagram, UilTwitter } from '@iconscout/react-unicons';
 import './CommercialOrder.css';
 import React, { useState } from 'react';
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import  Header from './Header';
 import axios from 'axios';
 
