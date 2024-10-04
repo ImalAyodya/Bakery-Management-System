@@ -8,7 +8,7 @@ const ProductionTable = ({ productions }) => {
 
     const fetchProductions = async () => {
         try {
-            const response = await axios.get('http://localhost:5080/production');
+            const response = await axios.get('http://localhost:8000/production');
             setProductions(response.data);
         } catch (error) {
             console.error('Error fetching production data', error);

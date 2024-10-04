@@ -1,18 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const route = require('./routes/saleroute'); // Ensure this is the correct path for your routes
+const DailyDelivery = require('./models/salesdeliveryorders'); // Update the path as needed
+app.use(route); // Use your custom routes
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotebv = require('dotenv');
 require('dotenv').config();
-
 const app = express();
-
-const port = 5080;
-
+const port = 8000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// const URL = "mongodb+srv://Ayodya:Ayodya@cluster0.csn4fag.mongodb.net/ProductDB?retryWrites=true&w=majority&appName=Cluster0";
 const URL = "mongodb+srv://malmi:malmi123@cluster0.3dgof.mongodb.net/ProductDB?retryWrites=true&w=majority&appName=Cluster03';";
 
 mongoose.connect(URL, {}).then(() => {
@@ -21,14 +20,37 @@ mongoose.connect(URL, {}).then(() => {
     console.log(err);
 })
 
+// Route to add a daily delivery record
+app.post('/api/dailydelivery', async (req, res) => {
+  try {
+    const dailyDelivery = new DailyDelivery(req.body);
+    await dailyDelivery.save();
+    res.status(201).json({
+      success: true,
+      message: 'Daily delivery record added successfully',
+      data: dailyDelivery
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to add daily delivery record',
+      error: error.message
+    });
+  }
+});
+
 const productRoutes = require('./routes/products.js');
 
-http://localhost:5080/products.
+http://localhost:8000/products.
 
 app.use('/products', productRoutes);
 
 const productionRoutes = require('./routes/production.js');
 app.use('/production', productionRoutes);
+
+const postRoute = require('./route/deliveryroutes');
+app.use(cors());
 
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`);

@@ -1,0 +1,136 @@
+body{
+    background-color:#fffcfc;
+    
+}
+table {
+    width: 70%;
+    border-collapse:inherit;
+    border-radius: 3px;
+    
+}
+
+th {
+    background-color:rgb(233, 167, 86); 
+    color: rgb(0, 0, 0);             
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #040404;
+}
+.tableheading{
+    color:#855e0b;
+    font-size: 20px;
+}
+tbody tr {
+    height: 50px; 
+    border-bottom: 1px solid #040404;
+  }
+hr{
+    border: 2px;             
+    height: 10px;            
+    background-color:#b59206; 
+    
+}
+.search {
+    width: 300px; 
+    padding: 10px 15px; 
+    border-radius: 25px; 
+    border: 1px solid #010101; /* Border color */
+    background-color: #fff; /* White background */
+    font-size: 16px; /* Font size for the input text */
+    background-image: url('https://img.icons8.com/ios-glyphs/30/search--v1.png'); /* Search icon URL */
+    background-position: 10px center; /* Positioning the icon inside the input */
+    background-repeat: no-repeat; /* Prevent the icon from repeating */
+    padding-left: 40px; /* Adjust padding to make room for the icon */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+    margin-bottom: 50px;
+  }
+  .search:focus {
+    outline: none; /* Remove the default outline */
+    border-color: #000000; /* Change border color when focused */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a glow effect when focused */
+  }
+.tablebutton{
+    background-color: #f70606; 
+    color: white;              
+    border:solid;              /* Remove default border */
+    border-radius: 50px;        /* Rounded corners */
+    padding: 10px 20px;        /* Vertical and horizontal padding */
+    font-size: 20px;           /* Font size */
+    cursor: pointer;           /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease;
+    width:200px;
+    float:right;
+    border-color: #f70606;
+}
+.tablebutton:hover {
+    background-color: #d00505; /* Darker shade on hover */
+    transform: scale(1.05);    /* Slightly enlarges the button */
+}
+
+
+.table1 {
+    width: 100%; /* Ensure the container takes full width */
+    text-align: center; /* Center the content inside the container */
+}
+
+.table1 table {
+    margin: 0 auto; /* Center the table horizontally */
+    text-align: left; /* Keep table content left-aligned (optional) */
+}
+
+.table1 table th {
+    text-align: center; /* Center the table heading text */
+}
+.table2 {
+    width: 100%; /* Ensure the container takes full width */
+    text-align: center; /* Center the content inside the container */
+}
+
+.table2 table {
+    margin: 0 auto; /* Center the table horizontally */
+    text-align: left; /* Keep table content left-aligned (optional) */
+}
+
+.table2 table th {
+    text-align: center; /* Center the table heading text */
+}
+.table3 {
+    width: 100%; /* Ensure the container takes full width */
+    text-align: center; /* Center the content inside the container */
+}
+
+.table3 table {
+    margin: 0 auto; /* Center the table horizontally */
+    text-align: left; /* Keep table content left-aligned (optional) */
+}
+
+.table3 table th {
+    text-align: center; /* Center the table heading text */
+}
+
+.table4 {
+    width: 100%; /* Ensure the container takes full width */
+    text-align: center; /* Center the content inside the container */
+}
+
+.table4 table {
+    margin: 0 auto; /* Center the table horizontally */
+    text-align: left; /* Keep table content left-aligned (optional) */
+}
+
+.table4 table th {
+    text-align: center; /* Center the table heading text */
+}
+.table5 {
+    width: 100%; /* Ensure the container takes full width */
+    text-align: center; /* Center the content inside the container */
+}
+
+.table5 table {
+    margin: 0 auto; /* Center the table horizontally */
+    text-align: left; /* Keep table content left-aligned (optional) */
+}
+
+.table5 table th {
+    text-align: center; /* Center the table heading text */
+}

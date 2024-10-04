@@ -1,7 +1,7 @@
 const router = require('express').Router();
 let Product = require("../models/Product.js");
 
-http://localhost:5080/products/insert
+http://localhost:8000/products/insert
 
 router.route('/insert').post((req, res) => {
     const productCode = req.body.productCode;
@@ -25,7 +25,7 @@ router.route('/insert').post((req, res) => {
     })
 })
 
-http://localhost:5080/products/
+http://localhost:8000/products/
 
 router.route('/').get((req, res) =>{
     Product.find().then((products) => {
@@ -35,7 +35,7 @@ router.route('/').get((req, res) =>{
     })
 })
 
-http://localhost:5080/products/update/8jhedvcjhewchvdchj
+http://localhost:8000/products/update/8jhedvcjhewchvdchj
 
 router.route('/update/:id').put(async(req, res) =>{
     let productId = req.params.id;
@@ -58,7 +58,7 @@ router.route('/update/:id').put(async(req, res) =>{
     })
 })
 
-http://localhost:5080/products/delete/655dhchjdcjhdbkcbd
+http://localhost:8000/products/delete/655dhchjdcjhdbkcbd
 
 router.route('/delete/:id').delete(async(req, res) =>{
     let productId = req.params.id;
@@ -72,7 +72,7 @@ router.route('/delete/:id').delete(async(req, res) =>{
     })
 })  
 
-http://localhost:5080/655dhchjdcjhdbkcbd
+http://localhost:8000/655dhchjdcjhdbkcbd
 
 router.route('/:id').get(async (req, res) => {
     let productId = req.params.id;

@@ -2,6 +2,8 @@ import React,{useState} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import '../App.css';
+import '../ProductBackground.css'
+
 
 
 
@@ -26,7 +28,7 @@ const ProductManagement = () => {
       category
       }
 
-    axios.post("http://localhost:5080/products/insert", newProduct).then(() => {
+    axios.post("http://localhost:8000/products/insert", newProduct).then(() => {
       alert('Product Added')
       setproductCode("");
       setproductName("");
