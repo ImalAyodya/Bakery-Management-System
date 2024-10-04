@@ -42,7 +42,7 @@ function InventoryUI(){
       <div className = 'reports-btn'>
         <img className='report-img' src = {Reports} alt=""/>
         <h2 align='center'>Check previous reports</h2>
-        <button className='report-btn'>Click here</button>
+        <button className='report-btn'onClick={() => Navigate('/dashboard/generatereport')}>Click here</button>
       </div>
 
       <div className = 'dashboard-btn'>
