@@ -7,24 +7,16 @@ import ProductionForm from './components/ProductionForm';
 import IngredientRequest from './pages/IngredientRequest';
 import UpdateProduct from './pages/updateProduct';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import CommercialOrder from './CommercialOrder';
 import Onlineorder from './OnlineOrder';
 import Checkout from './Checkout';
 import Home from './Home';
 import OrderDashboard from './OrderDashboard';
 import OnlineOrderDB from './OnlineOrderDB';
-
 import './index.css';
 import Salesm from './Salesm';
-
 import Nwplan from './Nwplan';
-import Appheader from './components/Appheader';
-import Content from './components/Content';
-import Appfooter from './components/Appfooter';
 import Salesdash from './Salesdash';
-
-import Heading from './components/Heading';
 import Prform from './Prform';
 import Stables from './Stables';
 
