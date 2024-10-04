@@ -1,11 +1,11 @@
 //create data
 const express = require('express');
 const route = express.Router();
-const Post = require('../models/posts');
+const Post = require('../models/targetplan');
 const mongoose = require('mongoose');
 //const wholesaleorders = require('../models/');
-const wholesaleorders = require('../models/Wholesaleorder');
-const deliveryorders = require('../models/deliveryorders');
+const wholesaleorders = require('../models/salesWholesaleorder');
+const deliveryorders = require('../models/salesdeliveryorders');
 const Production = require('../models/productiondetails'); // Update the path to your model file
 const OnlineOrder = require('../models/onlineSales');
 
