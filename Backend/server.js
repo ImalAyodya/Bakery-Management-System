@@ -29,6 +29,9 @@ app.use('/products', productRoutes);
 const productionRoutes = require('./routes/production.js');
 app.use('/production', productionRoutes);
 
+const postRoute = require('./route/deliveryroutes');
+app.use(cors());
+
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`);
 })
