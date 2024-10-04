@@ -4,12 +4,7 @@
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
-/* 
-body {
-  display: flex;
-  height: 100vh;
-  background-color: #f8f8f8;
-} */
+
 
 .container {
   display: flex;

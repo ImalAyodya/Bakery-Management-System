@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../App.css';
+import '../ProductBackground.css'
+
 
 const ProductWastageManagement = () => {
   const [products, setProducts] = useState([]);
