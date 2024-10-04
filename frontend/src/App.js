@@ -43,12 +43,7 @@ function App() {
 
 
 
-                <Route path="/" element={<CommercialOrder />} />
-                <Route path="/Online" element={<Onlineorder />} />
-                <Route path="/CheckoutOrder" element={<Checkout />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/orderDashbrd" element={<OrderDashboard />} />
-                <Route path="/onlineOrderDashbrd" element={<OnlineOrderDB />} />
+                
 
             </Routes>
         </BrowserRouter>
