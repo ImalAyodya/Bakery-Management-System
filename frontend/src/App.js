@@ -6,6 +6,7 @@ import ProductionForm from './components/ProductionForm';
 import IngredientRequest from './pages/IngredientRequest';
 import UpdateProduct from './pages/updateProduct';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import CommercialOrder from './CommercialOrder';
 import Onlineorder from './OnlineOrder';
 import Checkout from './Checkout';
@@ -15,6 +16,7 @@ import OnlineOrderDB from './OnlineOrderDB';
 import AdminDashboard from './AdminDashboard';
 import OrderDBUI from './OrderDBUI';
 import NotificationDashboard from './NotificationDashboard';
+
 
 
 
@@ -41,12 +43,18 @@ function App() {
 
 
 
+                <Route path="/" element={<CommercialOrder />} />
+                <Route path="/Online" element={<Onlineorder />} />
+                <Route path="/CheckoutOrder" element={<Checkout />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/orderDashbrd" element={<OrderDashboard />} />
+                <Route path="/onlineOrderDashbrd" element={<OnlineOrderDB />} />
+
             </Routes>
         </BrowserRouter>
     );
 }
 
+
 export default App;
-
-
 
