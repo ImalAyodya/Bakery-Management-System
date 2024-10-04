@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../App.css';
+import '../ProductBackground.css'
+
 
 const ProductWastageManagement = () => {
   const [products, setProducts] = useState([]);
@@ -9,7 +11,7 @@ const ProductWastageManagement = () => {
 
   useEffect(() => {
     function getProducts() {
-      axios.get("http://localhost:5080/products").then((response) => {
+      axios.get("http://localhost:8000/products").then((response) => {
         setProducts(response.data);
       });
     }
@@ -19,7 +21,7 @@ const ProductWastageManagement = () => {
   const deleteProduct = (id) => {
     const confirm = window.confirm("Do you want to Delete?");
     if (confirm) {
-      axios.delete(`http://localhost:5080/products/delete/${id}`).then(res => {
+      axios.delete(`http://localhost:8000/products/delete/${id}`).then(res => {
         alert("Product Deleted");
         window.location.reload();
       }).catch(err => {

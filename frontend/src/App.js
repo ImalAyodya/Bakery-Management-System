@@ -5,6 +5,7 @@ import RequestStaff from './pages/RequestStaff';
 import ProductionForm from './components/ProductionForm';
 import IngredientRequest from './pages/IngredientRequest';
 import UpdateProduct from './pages/updateProduct';
+import AdminDashboard from './components/AdminDashboard';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import CommercialOrder from './CommercialOrder';
@@ -20,7 +21,8 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route index element={<ProductWastageManagement />} />
+                <Route index element={<AdminDashboard />} />
+                <Route path="/products" element={<ProductWastageManagement />} />
                 <Route path="/product-management" element={<ProductManagement />} />
                 <Route path="/request-staff" element={<RequestStaff />} />
                 <Route path='/request-ingredient' element={<IngredientRequest />} />
@@ -41,4 +43,5 @@ function App() {
 
 
 export default App;
+
 
