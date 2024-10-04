@@ -2,7 +2,7 @@
 import  "./Onlineorder.css";
 import { Navigate, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import { useCart } from './CartContext';
+// import { useCart } from './CartContext';
 import  Header from './Header';
 import icon from './images/icon.png';
 import bun1 from './images/sausagesbun.jpg';

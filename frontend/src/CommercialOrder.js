@@ -2,7 +2,7 @@ import orderimg from './images/orderimg.png';
 import { Navigate, useNavigate } from 'react-router-dom';
 import './CommercialOrder.css';
 import React, { useState } from 'react';
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import  Header from './Header';
 import axios from 'axios';
 
