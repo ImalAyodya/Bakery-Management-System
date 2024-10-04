@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import './Inventory.css'
-import Reports from './Images/reports.jpg';
-import Inventory from './Images/inventory.jpg';
-import MainImg from './Images/top-image.jpg';
-import Header from './Header.js';
+import Reports from './images/reports.jpg';
+import Inventory from './images/inventory.jpg';
+import MainImg from './images/top-image.jpg';
+import Header from './components/Header.js';
 
 
 function InventoryUI(){
@@ -41,8 +41,8 @@ function InventoryUI(){
 
       <div className = 'reports-btn'>
         <img className='report-img' src = {Reports} alt=""/>
-        <h2 align='center'>Check Stock reports</h2>
-        <button className='report-btn' onClick={() => Navigate('/dashboard/generatereport')}>Click here</button>
+        <h2 align='center'>Check previous reports</h2>
+        <button className='report-btn'onClick={() => Navigate('/dashboard/generatereport')}>Click here</button>
       </div>
 
       <div className = 'dashboard-btn'>
