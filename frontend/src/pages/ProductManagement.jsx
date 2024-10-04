@@ -26,7 +26,7 @@ const ProductManagement = () => {
       category
       }
 
-    axios.post("http://localhost:5080/products/insert", newProduct).then(() => {
+    axios.post("http://localhost:8000/products/insert", newProduct).then(() => {
       alert('Product Added')
       setproductCode("");
       setproductName("");
