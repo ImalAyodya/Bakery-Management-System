@@ -37,6 +37,7 @@ function OrdersView(){
               <th>Order Date</th>
               <th>Product Categories</th>
               <th>Quantity</th>
+              <th>Price</th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +47,8 @@ function OrdersView(){
                 <td>{item.orderTable?.date}</td>
                 <td>{item.orderTable?.productCategories}</td>
                 <td>{item.orderTable?.quantity}</td>
+                <td>{item.orderTable?.price}</td>
+
               </tr>
             ))}
           </tbody>

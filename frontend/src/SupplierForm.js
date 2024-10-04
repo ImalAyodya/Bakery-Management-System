@@ -10,7 +10,8 @@ function App() {
     mobileNumber: '',
     businessRegistrationNumber: '',
     supplierType: '',
-    productCategories: ''
+    productCategories: '',
+    price: ''
   });
 
   const [items, setItems] = useState([]);
@@ -59,7 +60,8 @@ function App() {
               mobileNumber: '',
               businessRegistrationNumber: '',
               supplierType: '',
-              productCategories: ''
+              productCategories: '',
+              price: ''
             });
           } else {
             alert('Failed to add new item');
@@ -179,6 +181,18 @@ function App() {
               <option value="yeast">Yeast</option>
             </select>
             {errors.productCategories && <p className="error">{errors.productCategories}</p>}
+          </div>
+          <br />
+          <p>Price :</p>
+          <div className="input_box">
+            <input
+              type="text"
+              placeholder="Enter Price"
+              name="Price"
+              className="name"
+              value={newItem.price}
+              onChange={handleInputChange}
+            />
           </div>
           <br />
 

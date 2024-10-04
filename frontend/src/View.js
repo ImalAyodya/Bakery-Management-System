@@ -12,6 +12,7 @@ function View() {
   const [itemId, setItemId] = useState('');
   const [Email, setemail] = useState('');
   const [MobileNumber, setmobileNumber] = useState('');
+  const [Price, setprice] = useState('');
 
   // Read
   useEffect(() => {
@@ -32,7 +33,8 @@ function View() {
   const handleUpdate = (itemId) => {
     axios.put(`http://localhost:8000/SupplierTable/update/${itemId}`, {
         email: Email,
-        mobileNumber: MobileNumber
+        mobileNumber: MobileNumber,
+        price: Price
     })
     .then(response => {
         if (response.data.success) {
@@ -95,12 +97,13 @@ function View() {
               <th>Business Registration Number</th>
               <th>Supplier Type</th>
               <th>Product Categories</th>
+              <th>Price</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {items.length > 0 ? (
-              items.map((item) => (
+            {filteredItems.length > 0 ? (
+              filteredItems.map((item) => (
                 <tr key={item._id}>
                   <td>{item.supplierTable?.companyName}</td>
                   <td>{item.supplierTable?.companyAddress}</td>
@@ -109,6 +112,7 @@ function View() {
                   <td>{item.supplierTable?.businessRegistrationNumber}</td>
                   <td>{item.supplierTable?.supplierType}</td>
                   <td>{item.supplierTable?.productCategories}</td>
+                  <td>{item.supplierTable?.price}</td>
                   <td>
                     <button
                       className='edit'
@@ -140,7 +144,7 @@ function View() {
           <div className="modal-content">
             <span className="close" onClick={() => setDisplay(false)}>&times;</span>
             <form onSubmit={(e) => { e.preventDefault(); handleUpdate(itemId); }}>
-              <p>{itemId}</p>
+              <p className='id'>{itemId}</p>
               <p>Email :</p>
               <div className="input_box">
                 <input
@@ -162,6 +166,18 @@ function View() {
                   className="name"
                   value={MobileNumber}
                   onChange={(e) => setmobileNumber(e.target.value)}
+                />
+              </div>
+              <br />
+              <p>Price :</p>
+              <div className="input_box">
+                <input
+                  type="text"
+                  placeholder="Enter Price"
+                  name="price"
+                  className="name"
+                  value={Price}
+                  onChange={(e) => setprice(e.target.value)}
                 />
               </div>
               <br />

@@ -8,16 +8,26 @@ function OrderForm() {
     date: '',
     productCategories: '',
     quantity: '',
+    price: ''
   });
 
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState([]); // List of suppliers
   const [errors, setErrors] = useState({});
   const [quantityPlaceholder, setQuantityPlaceholder] = useState('Enter Quantity');
 
+  // Fetch supplier price based on selected company
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     setNewItem({ ...newItem, [name]: value });
+
+    if (name === 'companyName') {
+      // Find the selected supplier
+      const selectedSupplier = items.find(item => item.supplierTable?.companyName === value);
+      if (selectedSupplier) {
+        // Update the price based on the selected supplier
+        setNewItem(prevState => ({ ...prevState, price: selectedSupplier.supplierTable?.price || '' }));
+      }
+    }
 
     if (name === 'productCategories') {
       switch (value) {
@@ -72,6 +82,7 @@ function OrderForm() {
               date: '',
               productCategories: '',
               quantity: '',
+              price: ''
             });
           } else {
             alert('Failed to add new item');
@@ -87,13 +98,13 @@ function OrderForm() {
     axios.get('http://localhost:8000/SupplierTable/read')
       .then((response) => {
         if (response.data.success) {
-          setItems(response.data.supplier);
+          setItems(response.data.supplier); // Load supplier data
         } else {
-          alert('Failed to fetch posts');
+          alert('Failed to fetch suppliers');
         }
       })
       .catch((error) => {
-        alert('There was an error fetching the posts!', error);
+        alert('There was an error fetching the suppliers!', error);
       });
   }, []);
 
@@ -106,7 +117,7 @@ function OrderForm() {
 
           <p>Company Name:</p>
           <div className="input_box">
-          <select
+            <select
               className="order_type"
               name="companyName"
               value={newItem.companyName}
@@ -114,10 +125,10 @@ function OrderForm() {
             >
               <option value="">Select Company Name</option>
               {items.map((item) => (
-               <option key={item._id}>
-                {item.supplierTable?.companyName}
-               </option>
-               ))}
+                <option key={item._id} value={item.supplierTable?.companyName}>
+                  {item.supplierTable?.companyName}
+                </option>
+              ))}
             </select>
             {errors.companyName && <p className="error">{errors.companyName}</p>}
           </div>
@@ -166,6 +177,19 @@ function OrderForm() {
               onChange={handleInputChange}
             />
             {errors.quantity && <p className="error">{errors.quantity}</p>}
+          </div>
+          <br />
+
+          <p>Price:</p>
+          <div className="input_box">
+            <input
+              type="text"
+              name="price"
+              className="name"
+              value={newItem.price}
+              readOnly
+              onChange={handleInputChange}
+            />
           </div>
           <br />
 
