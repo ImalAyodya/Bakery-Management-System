@@ -152,6 +152,30 @@ router.get('/sendstock', async (req, res) => {
 });
 
 
+router.delete("/sendstock/delete/:id", async (req, res) => {
+    console.log("Delete request received for ID:", req.params.id);
+        try {
+        const deletedPost = await sendStock.findByIdAndDelete(req.params.id).exec();
+
+        if (!deletedPost) {
+            return res.status(404).json({
+                error: "Post not found"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Data deleted successfully",
+            data: deletedPost
+        });
+    } catch (err) {
+        return res.status(400).json({
+            error: err.message
+        });
+    }
+});
+
+
 /*---------------Order Request Create and Read Section-------------------*/
 
 router.post('/supplierrequest/save', async (req, res) => {
@@ -187,6 +211,31 @@ router.get('/supplierrequest', async (req, res) => {
         });
     }
 });
+
+
+router.delete("/supplierrequest/delete/:id", async (req, res) => {
+    console.log("Delete request received for ID:", req.params.id);
+        try {
+        const deletedPost = await Order.findByIdAndDelete(req.params.id).exec();
+
+        if (!deletedPost) {
+            return res.status(404).json({
+                error: "Post not found"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Data deleted successfully",
+            data: deletedPost
+        });
+    } catch (err) {
+        return res.status(400).json({
+            error: err.message
+        });
+    }
+});
+
 
 
 module.exports = router;
