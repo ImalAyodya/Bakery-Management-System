@@ -12,7 +12,7 @@ app.use(cors());
 
 app.use(postRoutes);
 
-const PORT = 8001;
+const PORT = 8000;
 const DB_URL = 'mongodb+srv://pasan:pasan2003@inventory.03olvri.mongodb.net/?retryWrites=true&w=majority&appName=Inventory';
 
 mongoose.connect(DB_URL)
