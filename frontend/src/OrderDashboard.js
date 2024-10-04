@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios'; //frontend connect
 import  "./OrderDashboard.css";
-
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 function OrderDashboard() {
   
@@ -15,7 +16,7 @@ function OrderDashboard() {
  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() =>{
-      axios.get('http://localhost:8000/order')
+      axios.get('http://localhost:8000/wholesaleOrder')
       .then(response =>{
         if(response.data.success){
           setOrders(response.data.ReadData);
@@ -28,11 +29,11 @@ function OrderDashboard() {
       .catch(error =>{
         alert('There is a error feching data', error);
       });
-  });
+  }, []);
 
 
   const updateOrderStatus = (orderId, newStatus) => {
-    axios.put(`http://localhost:8000/order/update/${orderId}`, { status: newStatus })
+    axios.put(`http://localhost:8000/wholesaleOrder/update/${orderId}`, { status: newStatus })
       .then(response => {
         if (response.data.success) {
           // Update the local state with the new data
@@ -59,37 +60,167 @@ function OrderDashboard() {
   const handleStatusChange = (e) => {
     setTemporaryStatus(e.target.value);
   };
-  const handleDelete = (id)=>{
-     axios.delete(`http://localhost:8000/order/delete/${id}`)
-     .then(response => {
-      if (response.data.success) {
-        // Update the local state with the new data
-        setOrders(orders.filter(order => order._id === id));
-        alert("Data deleted successfully");
-      } else {
-        alert("Failed to Delete status");
-      }
-    })
-    .catch(error => {
-      console.error('There was an error deleting the item', error)
-      alert('There was an error deleting the order');
-    });
-
+  const handleDelete = (id) => {
+    // Show confirmation dialog
+    const confirmDelete = window.confirm("Are you sure you want to delete this order?");
+    if (confirmDelete) {
+      axios.delete(`http://localhost:8000/wholesaleOrder/delete/${id}`)
+        .then(response => {
+          if (response.data.success) {
+            // Corrected the filter condition to exclude the deleted order
+            setOrders(orders.filter(order => order._id !== id));
+            alert("Data deleted successfully");
+          } else {
+            alert("Failed to delete the order");
+          }
+        })
+        .catch(error => {
+          console.error('There was an error deleting the item', error);
+          alert('There was an error deleting the order');
+        });
+    }
+    // If the user clicked Cancel, do nothing
   }
-
+  
+  const formatDate = (dateString) => {
+    if (!dateString) return ''; // Handle undefined or null dates
+    const date = new Date(dateString);
+    
+    // Check for invalid dates
+    if (isNaN(date.getTime())) {
+      return dateString; // Return the original string if invalid
+    }
+    
+    const year = date.getFullYear();
+    const month = (`0${date.getMonth() + 1}`).slice(-2); // Months are 0-indexed
+    const day = (`0${date.getDate()}`).slice(-2);
+    return `${year}.${month}.${day}`;
+  };
+  
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
   const filteredOrders = orders.filter(order => 
     order.WholesaleOrder.customerID.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    order.WholesaleOrder.status.toLowerCase().includes(searchQuery.toLowerCase())
+    order.WholesaleOrder.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    formatDate(order.WholesaleOrder.createdAt).includes(searchQuery)
   );
 
+
+
+  
+  // Inside your OrderDashboard component
+  const generateReport = () => {
+
+    const ordersToReport = filteredOrders.length > 0 ? filteredOrders : orders; // Use filteredOrders if available
+
+    if (ordersToReport.length === 0) {
+      alert('No orders available to generate a report.');
+      return;
+    }
+  
+    const doc = new jsPDF();
+    const currentDate = new Date().toLocaleDateString(); // e.g., 09/23/2024
+  
+    // Add the bakery name and current date
+    doc.setFontSize(16);
+    doc.text('Miyurasa Bakers', 14, 20);
+    doc.setFontSize(12);
+    doc.text(`Date: ${currentDate}`, 14, 30);
+    doc.text('Wholesale Orders Report', 14, 40);
+  
+    // Define multi-level table headers
+    const headers = [
+      [
+        { content: 'Customer ID', rowSpan: 2 },
+        { content: 'Customer Name', rowSpan: 2 },
+        { content: 'Products', colSpan: 5 },
+        { content: 'Total Amount', rowSpan: 2 },
+        { content: 'Order Schedule', rowSpan: 2 },
+        { content: 'Delivery Date', rowSpan: 2 },
+        { content: 'Order Date', rowSpan: 2 },
+        { content: 'Status', rowSpan: 2 },
+        { content: 'Action', rowSpan: 2 } // Optional: Omit or replace in PDF
+      ],
+      ['Product', 'Quantity', 'UOM', 'Unit Price', 'Amount']
+    ];
+  
+    // Flatten the orders data
+    const rows = [];
+    ordersToReport.forEach(order => {
+      const { customerID, customerName, totalAmount, orderSchedule, deliveryDate, createdAt, status } = order.WholesaleOrder;
+      order.WholesaleOrder.products.forEach((product, index) => {
+        rows.push({
+          customerID: index === 0 ? customerID : '',
+          customerName: index === 0 ? customerName : '',
+          product: product.product,
+          quantity: product.quantity,
+          uom: product.uom,
+          unitPrice: product.unitPrice,
+          amount: product.amount,
+          totalAmount: index === 0 ? totalAmount : '',
+          orderSchedule: index === 0 ? orderSchedule : '',
+          deliveryDate: index === 0 ? formatDate(deliveryDate) : '',
+          createdAt: index === 0 ? formatDate(createdAt) : '',
+          status: index === 0 ? status : '',
+          action: '' // Optional: Omit or replace
+        });
+      });
+    });
+  
+    // Add the table to the PDF
+    doc.autoTable({
+      head: headers,
+      body: rows.map(row => [
+        row.customerID,
+        row.customerName,
+        row.product,
+        row.quantity,
+        row.uom,
+        row.unitPrice,
+        row.amount,
+        row.totalAmount,
+        row.orderSchedule,
+        row.deliveryDate,
+        row.createdAt,
+        row.status,
+        row.action
+      ]),
+      startY: 50,
+      styles: { fontSize: 8, cellPadding: 2 },
+      headStyles: { fillColor: [22, 160, 133], textColor: [255, 255, 255] },
+      alternateRowStyles: { fillColor: [240, 240, 240] },
+      margin: { horizontal: 14 },
+      theme: 'striped',
+      columnStyles: {
+        0: { cellWidth: 'auto' }, // Customer ID
+        1: { cellWidth: 'auto' }, // Customer Name
+        2: { cellWidth: 'auto' }, // Product
+        3: { cellWidth: 'auto' }, // Quantity
+        4: { cellWidth: 'auto' }, // UOM
+        5: { cellWidth: 'auto' }, // Unit Price
+        6: { cellWidth: 'auto' }, // Amount
+        7: { cellWidth: 'auto' }, // Total Amount
+        8: { cellWidth: 'auto' }, // Order Schedule
+        9: { cellWidth: 'auto' }, // Delivery Date
+        10: { cellWidth: 'auto' }, // Order Date
+        11: { cellWidth: 'auto' }, // Status
+        12: { cellWidth: 'auto' }, // Action
+      },
+      // Optional: Adjust table width or handle page breaks
+    });
+  
+    // Save the PDF
+    doc.save('wholesale-orders-report.pdf');
+  };
+  
+  
+  
     return(
         <>
         <h1>Wholesale Order Dashboard</h1>
-
+        <button className="generate-report-button" onClick={generateReport}  type="button" >Generate Report</button>
         <div className="search-container">
                 <input
                     type="text"
@@ -165,11 +296,11 @@ function OrderDashboard() {
                     {order.WholesaleOrder.orderSchedule}
                   </td>
                   <td rowSpan={order.WholesaleOrder.products.length}>
-                    {order.WholesaleOrder.deliveryDate}
+                    {formatDate(order.WholesaleOrder.deliveryDate)}
                   </td>
                   <td rowSpan={order.WholesaleOrder.products.length}>
-                    {order.WholesaleOrder.createdAt}
-                  </td>
+              {formatDate(order.WholesaleOrder.createdAt)} 
+               </td>
                   <td>
                   {editingOrderId === order._id ? (
                   <select

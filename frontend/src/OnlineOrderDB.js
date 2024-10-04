@@ -57,75 +57,154 @@ function OnlineOrderDB(){
     const handleStatusChange = (e) => {
       setTemporaryStatus(e.target.value);
     };
-    const handleDelete = (id)=>{
-       axios.delete(`http://localhost:8000/onlineorder/delete/${id}`)
-       .then(response => {
-        if (response.data.success) {
-          // Update the local state with the new data
-          setOrders(orders.filter(order => order._id === id));
-          alert("Data deleted successfully");
-        } else {
-          alert("Failed to Delete status");
-        }
-      })
-      .catch(error => {
-        console.error('There was an error deleting the item', error)
-        alert('There was an error deleting the order');
-      });
-  
-    }
+    const handleDelete = (id) => {
+      // Show confirmation dialog
+      const confirmDelete = window.confirm("Are you sure you want to delete this order?");
+      if (confirmDelete) {
+          axios.delete(`http://localhost:8000/onlineorder/delete/${id}`)
+              .then(response => {
+                  if (response.data.success) {
+                      // Update the local state by removing the deleted order
+                      setOrders(orders.filter(order => order._id !== id));
+                      alert("Data deleted successfully");
+                  } else {
+                      alert("Failed to delete the order");
+                  }
+              })
+              .catch(error => {
+                  console.error('There was an error deleting the item', error);
+                  alert('There was an error deleting the order');
+              });
+      }
+      // If the user clicked Cancel, do nothing
+  }
+
   //for search option
     const handleSearchChange = (e) => {
       setSearchQuery(e.target.value);
     };
-  
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = (`0${date.getMonth() + 1}`).slice(-2); // Months are 0-indexed
+      const day = (`0${date.getDate()}`).slice(-2);
+      return `${year}.${month}.${day}`;
+    };
+    
     const filteredOrders = orders.filter(order => 
       order.OnlineOrder.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.OnlineOrder.status.toLowerCase().includes(searchQuery.toLowerCase())
+      order.OnlineOrder.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      formatDate(order.OnlineOrder.createdAt).includes(searchQuery)
     );
 
+// Inside OnlineOrderDB component
 
 
+const generateReport = () => {
+  if (orders.length === 0) {
+      alert('No orders available to generate a report.');
+      return;
+  }
 
-    const generateReport = () => {
-      const doc = new jsPDF();
-      doc.text('Online Orders Report', 14, 16);
-  
-      // Define table columns and rows
-      const columns = [
-          { title: 'Customer Name', dataKey: 'customerName' },
-          { title: 'Phone Number', dataKey: 'phoneNumber' },
-          { title: 'Address', dataKey: 'address' },
-          { title: 'Payment Method', dataKey: 'paymentMethod' },
-          { title: 'Product', dataKey: 'productName' },
-          { title: 'Unit Price', dataKey: 'unitPrice' },
-          { title: 'Quantity', dataKey: 'quantity' },
-          { title: 'Total Quantity', dataKey: 'totQuantity' },
-          { title: 'Total Amount', dataKey: 'totPrice' },
-          { title: 'Order Date', dataKey: 'createdAt' },
-          { title: 'Status', dataKey: 'status' },
-      ];
-  
-      const rows = filteredOrders.flatMap(order =>
-          order.OnlineOrder.cartItems.map(product => ({
-              customerName: order.OnlineOrder.customerName,
-              phoneNumber: order.OnlineOrder.phoneNumber,
-              address: order.OnlineOrder.address,
-              paymentMethod: order.OnlineOrder.paymentMethod,
+  const doc = new jsPDF();
+  const currentDate = new Date().toLocaleDateString(); // Format the date as needed
+
+  // Add the bakery name and date
+  doc.setFontSize(16);
+  doc.text('Miyurasa Bakers', 14, 26);
+  doc.setFontSize(12);
+  doc.text(`Date: ${currentDate}`, 14, 37);
+  doc.text('Online Orders Report', 14, 32);
+
+  // Define multi-level table headers
+  const headers = [
+      [
+          { content: 'Customer Name', rowSpan: 2 },
+          { content: 'Phone Number', rowSpan: 2 },
+          { content: 'Address', rowSpan: 2 },
+          { content: 'Payment Method', rowSpan: 2 },
+          { content: 'Cart Items', colSpan: 3 },
+          { content: 'Total Product Qty', rowSpan: 2 },
+          { content: 'Total Amount', rowSpan: 2 },
+          { content: 'Order Date', rowSpan: 2 },
+          { content: 'Order Status', rowSpan: 2 }
+          // Optional: Can be left blank or omitted
+      ],
+      [
+          'Product',
+          'Unit Price',
+          'Quantity'
+      ]
+  ];
+
+  // Flatten the orders data
+  const rows = [];
+  orders.forEach(order => {
+      const { customerName, phoneNumber, address, paymentMethod, totQuantity, totPrice, createdAt, status } = order.OnlineOrder;
+      order.OnlineOrder.cartItems.forEach((product, index) => {
+          rows.push({
+              customerName: index === 0 ? customerName : '',
+              phoneNumber: index === 0 ? phoneNumber : '',
+              address: index === 0 ? address : '',
+              paymentMethod: index === 0 ? paymentMethod : '',
               productName: product.productName,
               unitPrice: product.unitPrice,
               quantity: product.quantity,
-              totQuantity: order.OnlineOrder.totQuantity,
-              totPrice: order.OnlineOrder.totPrice,
-              createdAt: new Date(order.OnlineOrder.createdAt).toLocaleDateString(),
-              status: order.OnlineOrder.status
-          }))
-      );
-  
-      doc.autoTable(columns, rows, { startY: 30 });
-      doc.save('online-orders-report.pdf');
-  };
+              totQuantity: index === 0 ? totQuantity : '',
+              totPrice: index === 0 ? totPrice : '',
+              createdAt: index === 0 ? formatDate(createdAt) : '',
+              status: index === 0 ? status : '',
+             
+          });
+      });
+  });
 
+  // Define table body with repeated customer details
+  const tableBody = rows.map(row => [
+      row.customerName,
+      row.phoneNumber,
+      row.address,
+      row.paymentMethod,
+      row.productName,
+      row.unitPrice,
+      row.quantity,
+      row.totQuantity,
+      row.totPrice,
+      row.createdAt,
+      row.status,
+      
+  ]);
+
+  // Add the table to the PDF
+  doc.autoTable({
+      head: headers,
+      body: tableBody,
+      startY: 50,
+      styles: { fontSize: 8, cellPadding: 1},
+      headStyles: { fillColor: [22, 160, 133], textColor: [255, 255, 255] },
+      alternateRowStyles: { fillColor: [240, 240, 240] },
+      margin: { horizontal: 12 },
+      theme: 'striped',
+      columnStyles: {
+          0: { cellWidth: 'auto' }, // Customer Name
+          1: { cellWidth: 'auto' }, // Phone Number
+          2: { cellWidth: 'auto' }, // Address
+          3: { cellWidth: 'auto' }, // Payment Method
+          4: { cellWidth: 'auto' }, // Product
+          5: { cellWidth: 'auto' }, // Unit Price
+          6: { cellWidth: 'auto' }, // Quantity
+          7: { cellWidth: 'auto' }, // Total Product Qty
+          8: { cellWidth: 'auto' }, // Total Amount
+          9: { cellWidth: 'auto' }, // Order Date
+          10: { cellWidth: 'auto' }, // Order Status
+         
+      },
+      // Optional: Adjust table width or handle page breaks
+  });
+
+  // Save the PDF
+  doc.save('online-orders-report.pdf');
+};
 
   
 
@@ -151,6 +230,7 @@ function OnlineOrderDB(){
 <table className='ordertable'>
 <thead className='ordertbheading'>
   <tr className='ordertbtr'>
+    <th className='orderth'>Order ID</th> {/* Add this line */}
     <th className='orderth'>Customer Name</th>
     <th className='orderth'>Customer PhoneNumber</th>
     <th className='orderth'>Customer Address</th>
@@ -165,6 +245,7 @@ function OnlineOrderDB(){
 
  
   <tr className='ordertbtr'>
+    <th className='orderth'></th>
     <th className='orderth'></th> 
     <th className='orderth'></th> 
     <th className='orderth'></th> 
@@ -182,10 +263,12 @@ function OnlineOrderDB(){
 
 <tbody className='orderbdy'>
 {filteredOrders.map((order) =>(
+  
   order.OnlineOrder.cartItems.map((product, index) => (    //product--> pahala array eke dane name eke
     <tr className='ordertrbdy' key={`${order._id}-${index}`}>
       {index === 0 && (
         <>
+          <td rowSpan={order.OnlineOrder.cartItems.length}>{order.OnlineOrder.orderId}</td> {/* Display Order ID */}
           <td rowSpan={order.OnlineOrder.cartItems.length}>{order.OnlineOrder.customerName}</td>
           <td rowSpan={order.OnlineOrder.cartItems.length}>{order.OnlineOrder.phoneNumber}</td>
           <td rowSpan={order.OnlineOrder.cartItems.length}>{order.OnlineOrder.address}</td>
@@ -200,7 +283,8 @@ function OnlineOrderDB(){
         <>
           <td rowSpan={order.OnlineOrder.cartItems.length}> {order.OnlineOrder.totQuantity }</td>
           <td rowSpan={order.OnlineOrder.cartItems.length}> {order.OnlineOrder.totPrice}</td>
-          <td rowSpan={order.OnlineOrder.cartItems.length}> {order.OnlineOrder.createdAt}</td>
+          <td rowSpan={order.OnlineOrder.cartItems.length}> {formatDate(order.OnlineOrder.createdAt)}</td>
+
           <td>
                 {editingOrderId === order._id ? (
                 <select
@@ -208,6 +292,7 @@ function OnlineOrderDB(){
                     onChange={(e) => updateOrderStatus(order._id, e.target.value)}
                 >
                     <option value="Pending">Pending</option>
+                    <option value="Busy">Busy</option>
                     <option value="Confirmed">Confirmed</option>
                     <option value="Prepared">Prepared</option>
                     <option value="Delivered">Delivered</option>

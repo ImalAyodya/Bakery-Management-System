@@ -12,6 +12,11 @@ import Checkout from './Checkout';
 import Home from './Home';
 import OrderDashboard from './OrderDashboard';
 import OnlineOrderDB from './OnlineOrderDB';
+import AdminDashboard from './AdminDashboard';
+import OrderDBUI from './OrderDBUI';
+import NotificationDashboard from './NotificationDashboard';
+
+
 
 
 function App() {
@@ -24,12 +29,18 @@ function App() {
                 <Route path='/request-ingredient' element={<IngredientRequest />} />
                 <Route path='/daily-production' element={<ProductionForm />} />
                 <Route path='/updateProduct/:id' element={<UpdateProduct />} />
-                <Route path="/" element={<CommercialOrder />} />
-                <Route path="/Online" element={<Onlineorder />} />
-                <Route path="/CheckoutOrder" element={<Checkout />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/orderDashbrd" element={<OrderDashboard />} />
-                <Route path="/onlineOrderDashbrd" element={<OnlineOrderDB />} />
+                <Route path="/" element={<Home/>}/>
+                <Route path= "/commercial" element={<CommercialOrder/>}/>
+                <Route path="/Online" element={<Onlineorder/>}/>
+                <Route path="/CheckoutOrder" element={<Checkout/>}/>
+                <Route path="/orderDashbrd" element={<OrderDashboard/>}/>
+                <Route path="/onlineOrderDashbrd" element={<OnlineOrderDB/>}/>
+                <Route path="/AdminDashbrd" element={<AdminDashboard/>}/>
+                <Route path="/orderDBUI" element={<OrderDBUI/>}/>
+                <Route path="/notification" element={<NotificationDashboard/>}/>
+
+
+
             </Routes>
         </BrowserRouter>
     );

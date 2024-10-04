@@ -1,10 +1,12 @@
 import orderimg from './images/orderimg.png';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { UilFacebookF, UilInstagram, UilTwitter } from '@iconscout/react-unicons';
 import './CommercialOrder.css';
 import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
 import  Header from './Header';
 import axios from 'axios';
+
 
 
 
@@ -31,10 +33,13 @@ function CommercialOrder() {
   const [totalAmount, setTotalAmount] = useState(0);
 
   const productData = {
-    Bread: { uom: 'Loaf', unitPrice: 2.5 },
-    Bun: { uom: 'Piece', unitPrice: 1.0 },
-    Donuts: { uom: 'Piece', unitPrice: 1.5 },
-    FishBun: { uom: 'Piece', unitPrice: 2.0 },
+    "Sausage Bun": {uom: 'Piece', unitPrice: 80},
+    "Egg Bun": {uom: 'Piece', unitPrice: 80},
+    "Fish Bun": {uom: 'Piece', unitPrice: 60},
+    "Chicken Bun": {uom: 'Piece', unitPrice: 100},
+    "Cheese Bun": {uom: 'Piece', unitPrice: 150},
+   
+    
   };
   const addProduct = () => {
     setProducts([...products, { id: products.length + 1, product: '', quantity: '', uom: '', unitPrice: '', amount: '' }]);
@@ -52,16 +57,49 @@ function CommercialOrder() {
       // Call handleInputChange for wholesale order changes
       handleInputChange(e);
     }
-  };*/}
+  };*/}const validateName = (name) => {
+  // Regular expression to allow only letters and spaces
+  const namePattern = /^[A-Za-z\s]+$/;
+
+  if (!namePattern.test(name)) {
+    alert('Name should only contain letters and spaces.');
+    return false; // Invalid name
+  }
+  return true; // Valid name
+};
+
   const handleCombinedChange = (index, event) => {
     handleProductChange(index, event);  // Call the product change handler
     handleInputChange(event);  // Call the input change handler
   };
 
   const handleInputChange = (e) => {
-      const {name,value} = e.target;
-      setNewWholesaleOrder({...newWholesaleOrder,[name]:value});
-  }
+    const { name, value } = e.target;
+  
+    // Check if the field being changed is the customer name
+    if (name === 'customerName') {
+      // Validate the name
+      if (validateName(value)) {
+        // Only update the state if the name is valid
+        setNewWholesaleOrder((prevOrder) => ({
+          ...prevOrder,
+          [name]: value
+        }));
+      } else {
+        // Clear the input if validation fails
+        setNewWholesaleOrder((prevOrder) => ({
+          ...prevOrder,
+          customerName: ''
+        }));
+      }
+    } else {
+      // Update other fields normally
+      setNewWholesaleOrder((prevOrder) => ({
+        ...prevOrder,
+        [name]: value
+      }));
+    }
+  };
 const handleProductChange = (index, event) => {
       const newProducts = [...products];
       //newProducts[index][event.target.name] = event.target.value;
@@ -145,7 +183,7 @@ const handleSubmit = (e) => {
     status: newWholesaleOrder.status,
   };
 
-  axios.post('http://localhost:8000/order/create', { WholesaleOrder: orderData }) // Use 'WholesaleOrder' here
+  axios.post('http://localhost:8000/wholesaleOrder/create', { WholesaleOrder: orderData }) // Use 'WholesaleOrder' here
     .then(response => {
       if (response.data.success) {
         // Update the state with the newly added order
@@ -162,8 +200,15 @@ const handleSubmit = (e) => {
           createdAt: '',  // Reset createdAt to empty or set to a new Date() if needed
           status: 'Pending'
         });
+       
 
         alert('Data added successfully');
+        setProducts([
+          { id: 1, product: '', quantity: '', uom: '', unitPrice: '', amount: '' }
+        ]);
+
+        // Reset the total amount to zero
+        setTotalAmount(0);
       } else {
         alert('Failed to add order');
       }
@@ -260,7 +305,7 @@ const handleSubmit = (e) => {
             <input type="text" id="CustomerID" name="customerID" required placeholder="Customer ID" value={newWholesaleOrder.customerID}  onChange={handleInputChange}/> {/*value={newWholesaleOrder.customerName}  onChange={(e) => handleChange(e)}*/}
 
             <label htmlFor="CustomerName">Customer Name</label>
-            <input type="text" id="CustomerName" name="customerName" required placeholder="Customer Name" value={newWholesaleOrder.customerName}  onChange={handleInputChange}/> {/*value={newWholesaleOrder.customerName}   onChange={(e) => handleChange(e)}*/}
+            <input type="text" id="CustomerName" name="customerName" required placeholder="Customer Name" value={newWholesaleOrder.customerName} pattern="[A-Za-z\s]+"  onChange={handleInputChange}/> {/*value={newWholesaleOrder.customerName}   onChange={(e) => handleChange(e)}*/}
             <br/>
             <div className="product-row">
               <label>Select the Product</label>
@@ -275,17 +320,26 @@ const handleSubmit = (e) => {
                 <div className="select-bar2">
                   <select className="select-bar"name="product" value={product.product} onChange={(e) => handleCombinedChange(index, e)}  >  {/*onChange={(e) => handleProductChange(index, e)}*/}
                     <option value="" disabled>Select the product</option>
-                    <option value="Bread">Bread</option>
-                    <option value="Bun">Bun</option>
-                    <option value="Donuts">Donuts</option>
-                    <option value="FishBun">Fish Bun</option>
+                    <option value="Sausage Bun">Sausage Bun</option>
+                    <option value="Egg Bun">Egg Bun</option>
+                    <option value="Fish Bun">Fish Bun</option>
+                    <option value="Chicken Bun">Chicken Bun</option>
+                    <option value="Cheese Bun">Cheese Bun</option>
+                    
                 
                   </select>
+
+
+
+
+
+
+
                 </div>
-                <input type="number" name="quantity" value={product.quantity} onChange={(e) => handleCombinedChange(index, e)} placeholder="Quantity" />
-                <input type="text" name="uom" value={product.uom} onChange={(e) => handleCombinedChange(index, e)} placeholder="UOM" readOnly />
-                <input type="text" name="unitPrice"value={product.unitPrice} onChange={(e) => handleCombinedChange(index, e)} placeholder="Unit price" readOnly/>
-                <input type="text" name="amount" value={product.amount} onChange={(e) => handleCombinedChange(index, e)} placeholder="Amount" readOnly/>
+                <input type="number" name="quantity" value={product.quantity} onChange={(e) => handleCombinedChange(index, e)} placeholder="Quantity"  min="0"/>
+                <input type="text" className="autofillC" name="uom" value={product.uom} onChange={(e) => handleCombinedChange(index, e)} placeholder="UOM" readOnly />
+                <input type="text" className="autofillC" name="unitPrice"value={product.unitPrice} onChange={(e) => handleCombinedChange(index, e)} placeholder="Unit price" readOnly/>
+                <input type="text" className="autofillC" name="amount" value={product.amount} onChange={(e) => handleCombinedChange(index, e)} placeholder="Amount" readOnly/>
                 <button type="button" className="addbtn" onClick={addProduct}>+</button>
                 <button type="button" className="removebtn" onClick={() => removeProduct(index)}>-</button>
               </div>
@@ -293,13 +347,13 @@ const handleSubmit = (e) => {
             
   <br></br>
             <label>Total Amount</label>
-            <input type="text"  placeholder="Total Amount" value={totalAmount.toFixed(2)} onChange={handleInputChange} readOnly />   {/*value={totalAmount.toFixed(2)}*/}
+            <input type="text"   className="autofillC" placeholder="Total Amount" value={totalAmount.toFixed(2)} onChange={handleInputChange} readOnly />   {/*value={totalAmount.toFixed(2)}*/}
 
             <label>Order Schedule</label>
             <input type="text" placeholder="Daily" name="orderSchedule" value={newWholesaleOrder.orderSchedule} onChange={handleInputChange} />
             
             <label htmlFor="delivery-date" >Select Delivery Date: </label>
-            <input type="date" id="date" name="deliveryDate" required placeholder="date" value={newWholesaleOrder.deliveryDate} onChange={handleInputChange} />
+            <input type="date" id="date" name="deliveryDate" required placeholder="date" value={newWholesaleOrder.deliveryDate} onChange={handleInputChange}  min={new Date().toISOString().split("T")[0]} />
                 {/*<DatePicker
                     id="delivery-date"
                     selected={selectedDate}
@@ -309,7 +363,7 @@ const handleSubmit = (e) => {
                 />*/}
 
             
-            <button type="submit" className="orderbtn" >Place Order</button> {/*onClick={ () => Navigate('/main')}*/}
+            <button type="submit" className="Comorderbtn" >Place Order</button> {/*onClick={ () => Navigate('/main')}*/}
          
         </form>
       </div>

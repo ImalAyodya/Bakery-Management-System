@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const onlineOrder = require('../Models/postmethodOnline');
+const onlineOrder = require('../models/postmethodOnline');
 const { default: mongoose } = require('mongoose');
 
 router.post('/onlineorder/create',async(req, res)=>{  //request and response 
