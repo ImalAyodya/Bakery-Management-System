@@ -9,6 +9,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .product-main h1{
+    margin-top: 80px;
     color: black;
 }
 
@@ -27,7 +28,7 @@
     padding-left: 10px;
     border-bottom: 1px solid #ddd;
     width: 50%;
-    text-align: right;
+    text-align: center;
 }
 
 .dateLabel{
@@ -43,10 +44,10 @@
 .dateLabel label{
     font-weight: bold;
     color: #555;
-    margin-right: 400px;
+    margin-right: 620px;
     border-bottom: 1px solid #ddd;
-    width: 50%;
-    text-align: right;
+    width: 15%;
+    text-align: left;
 }
 
 
@@ -86,4 +87,37 @@
 input[type="checkbox"] {
     transform: scale(1.2); /* Adjust the size of the checkbox */
     margin-left: 20px;
+}
+
+
+.searchProduct{
+    width:400px;
+    height:30px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-left: 565px;
+    border: 2px solid #1f1701;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .stockDeleteBtn {
+    background-color: #f44336; 
+    color: white;              
+    border: none;              
+    padding: 10px 20px;        
+    text-align: center;     
+    text-decoration: none;    
+    display: inline-block;   
+    font-size: 16px;          
+    margin: 4px 2px;         
+    cursor: pointer;         
+    border-radius: 5px;      
+    transition-duration: 0.3s;
+    margin-left: 790px;
+}
+
+.stockDeleteBtn:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+    color: white;              /* Keep white text */
 }
