@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import Buttonrow from "./components/Buttonrow";
 import './tables.css';
-import { parse, format } from 'date-fns'; // Import date parsing functions
+import { parse, format } from 'date-fns';
 
 function Stables() {
     const [onlineSales, setOnlineSales] = useState([]);
-    const [wholesaleSales, setWholesaleSales] = useState([]);
+    const [wholesaleSales, setWholesaleSales] = useState([]);                                                                                        
     const [deliverySales, setDeliverySales] = useState([]);
+
+    const [onlineSearchDate, setOnlineSearchDate] = useState('');
+    const [wholesaleSearchDate, setWholesaleSearchDate] = useState('');
+    const [deliverySearchDate, setDeliverySearchDate] = useState('');
 
     const fetchOnlineSales = async () => {
         try {
-            const response = await fetch('http://localhost:8001/onlineorder');
+            const response = await fetch('http://localhost:8000/onlineorder');
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
             setOnlineSales(data.data || []);
@@ -21,7 +25,7 @@ function Stables() {
 
     const fetchWholesaleSales = async () => {
         try {
-            const response = await fetch('http://localhost:8001/order');
+            const response = await fetch('http://localhost:8000/order');
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
             setWholesaleSales(data.ReadData || []);
@@ -32,10 +36,9 @@ function Stables() {
 
     const fetchDeliverySales = async () => {
         try {
-            const response = await fetch('http://localhost:8001/post2');
+            const response = await fetch('http://localhost:8000/post2');
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
-            console.log('Fetched data:', data); // Log the data for debugging
             setDeliverySales(data.data || []);
         } catch (error) {
             console.error('Error fetching delivery sales:', error);
@@ -46,24 +49,18 @@ function Stables() {
         fetchOnlineSales();
         fetchWholesaleSales();
         fetchDeliverySales();
-    }, []);
+    }, []);//automatically runs the three functions
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const date = event.target.date.value;
-        const productId = event.target.productid.value;
-        console.log('Date:', date);
-        console.log('Product ID:', productId);
-    };
+    // Helper function to filter sales by date
 
-    const formatDateString = (dateString) => {
-        try {
-            const parsedDate = parse(dateString, 'dd/MM/yyyy', new Date());
-            return format(parsedDate, 'MM/dd/yyyy'); // Format date for display
-        } catch (error) {
-            console.error('Error parsing date:', error);
-            return dateString; // Return the original string if parsing fails
-        }
+
+    const filterSalesByDate = (sales, searchDate, dateKey) => {
+        if (!searchDate) return sales;//all data       date the user is searching     This is the key in the sales object that holds the sale's date (for example, 'createdAt' for online sales or 'deliveryDate' for wholesale sales).
+
+        return sales.filter((sale) => {
+            const saleDate = new Date(sale[dateKey]).toLocaleDateString();
+            return saleDate === new Date(searchDate).toLocaleDateString();
+        });
     };
 
     return (
@@ -72,8 +69,21 @@ function Stables() {
             <Buttonrow />
             <hr />
 
+            {/* Online Sales Table */}
             <div className="table1">
                 <h6 className="tableheading">Online Sales</h6>
+
+                <div className="search-container">
+                    <input
+                        type="date"
+                        value={onlineSearchDate}
+                        onChange={(e) => setOnlineSearchDate(e.target.value)}
+                        className="search-input"
+                        placeholder="Search by Date"
+                    />
+                    <i className="fas fa-search search-icon"></i>
+                </div>
+
                 <table>
                     <thead>
                         <tr>
@@ -84,28 +94,44 @@ function Stables() {
                         </tr>
                     </thead>
                     <tbody>
-                        {onlineSales.length > 0 ? (
-                            onlineSales.flatMap((order) =>
+                        {filterSalesByDate(onlineSales, onlineSearchDate, 'createdAt').length > 0 ? (
+                            filterSalesByDate(onlineSales, onlineSearchDate, 'createdAt').flatMap((order) =>
                                 order.OnlineOrder.cartItems.map((item, index) => (
                                     <tr key={`${order._id}-${index}`}>
-                                    <td>{item.productName}</td>
-                                    <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                                    <td>{item.unitPrice}</td>
-                                    <td>{item.quantity}</td>
-                                  </tr>
+                                        <td>{item.productName}</td>
+                                        <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                                        <td>{item.unitPrice}</td>
+                                        <td>{item.quantity}</td>
+                                    </tr>
                                 ))
                             )
                         ) : (
                             <tr>
-                                <td colSpan="4">No online sales data available</td>
+                                <td colSpan="4">No online sales data available for the selected date</td>
                             </tr>
                         )}
                     </tbody>
                 </table>
             </div>
 
+            {/* Wholesale Sales Table */}
             <div className="table2">
                 <h6 className="tableheading">Wholesale Sales</h6>
+
+
+                <div className="search-container">
+                    <input 
+                        type="date"
+                        value={wholesaleSearchDate}
+                        onChange={(e) => setWholesaleSearchDate(e.target.value)}
+                        className="search-input"
+                        placeholder="Search by Date"
+                    />
+                    <i className="fas fa-search search-icon"></i>
+                </div>
+                
+
+                
                 <table>
                     <thead>
                         <tr>
@@ -116,29 +142,41 @@ function Stables() {
                         </tr>
                     </thead>
                     <tbody>
-                        {wholesaleSales.length > 0 ? (
-                            wholesaleSales.flatMap((sale) => {
+                        {filterSalesByDate(wholesaleSales, wholesaleSearchDate, 'WholesaleOrder.deliveryDate').length > 0 ? (
+                            filterSalesByDate(wholesaleSales, wholesaleSearchDate, 'WholesaleOrder.deliveryDate').flatMap((sale) => {
                                 const order = sale.WholesaleOrder;
                                 return order.products.map((product, index) => (
                                     <tr key={`${sale._id}-${index}`}>
-  <td>{product.product}</td>
-  <td>{new Date(order.deliveryDate).toLocaleDateString()}</td>
-  <td>{product.unitPrice}</td>
-  <td>{product.quantity}</td>
-</tr>
+                                        <td>{product.product}</td>
+                                        <td>{new Date(order.deliveryDate).toLocaleDateString()}</td>
+                                        <td>{product.unitPrice}</td>
+                                        <td>{product.quantity}</td>
+                                    </tr>
                                 ));
                             })
                         ) : (
                             <tr>
-                                <td colSpan="4">No wholesale sales data available</td>
+                                <td colSpan="4">No wholesale sales data available for the selected date</td>
                             </tr>
                         )}
                     </tbody>
                 </table>
             </div>
 
+            {/* Delivery Sales Table */}
             <div className="table3">
                 <h6 className="tableheading">Delivery Sales</h6>
+                <div className="search-container">
+                    <input
+                        type="date"
+                        value={deliverySearchDate}
+                        onChange={(e) => setDeliverySearchDate(e.target.value)}
+                        className="search-input"
+                        placeholder="Search by Date"
+                    />
+                    <i className="fas fa-search search-icon"></i>
+                </div>
+                
                 <table>
                     <thead>
                         <tr>
@@ -149,41 +187,29 @@ function Stables() {
                         </tr>
                     </thead>
                     <tbody>
-                        {deliverySales.length > 0 ? (
-                            deliverySales.flatMap((sale) => {
+                        {filterSalesByDate(deliverySales, deliverySearchDate, 'dailydelivery.date').length > 0 ? (
+                            filterSalesByDate(deliverySales, deliverySearchDate, 'dailydelivery.date').flatMap((sale) => {
                                 const order = sale.dailydelivery;
                                 return order.products.map((product, index) => (
                                     <tr key={`${sale._id}-${index}`}>
-  <td>{product.product}</td>
-  <td>{formatDateString(order.date)}</td> {/* Use the custom date formatter */}
-  <td>{product.unitprice}</td>
-  <td>{product.quantity}</td>
-</tr>
+                                        <td>{product.product}</td>
+                                        <td>{new Date(order.date).toLocaleDateString()}</td>
+                                        <td>{product.unitprice}</td>
+                                        <td>{product.quantity}</td>
+                                    </tr>
                                 ));
                             })
                         ) : (
                             <tr>
-                                <td colSpan="4">No delivery sales data available</td>
+                                <td colSpan="4">No delivery sales data available for the selected date</td>
                             </tr>
                         )}
                     </tbody>
                 </table>
             </div>
-
-            {/* <form onSubmit={handleSubmit}>
-                <div>
-                    <h1 className="getdet">Calculate And Proceed</h1>
-                </div>
-
-                <label htmlFor="date">Date :</label>
-                <input type="date" id="date" name="date" /><br />
-                <label htmlFor="productid">Product ID :</label>
-                <input type="text" id="productid" name="productid" /><br />
-
-                <button type="submit" id="calcbuttonn">Calculate</button>
-            </form> */}
         </>
     );
 }
 
 export default Stables;
+

@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import Buttonrow from "./components/Buttonrow";
 import './tables.css';
+import jsPDF from 'jspdf';//generate PDF files directly in the browser
+import html2canvas from 'html2canvas';//HTML elements into canvas images.
 
-const API_URL_PRODUCTIONS = 'http://localhost:8001/productions';
-const API_URL_ONLINE_SALES = 'http://localhost:8001/onlineorder';
-const API_URL_WHOLESALE_SALES = 'http://localhost:8001/order';
-const API_URL_DELIVERY_SALES = 'http://localhost:8001/post2';
+const API_URL_PRODUCTIONS = 'http://localhost:8000/productions';//This URL is used to fetch or send data related to production
+const API_URL_ONLINE_SALES = 'http://localhost:8000/onlineorder';
+const API_URL_WHOLESALE_SALES = 'http://localhost:8000/order';
+const API_URL_DELIVERY_SALES = 'http://localhost:8000/post2';
 
 function SalesSummaryTable() {
-  const [summary, setSummary] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [onlineSales, setOnlineSales] = useState([]);
+  const [summary, setSummary] = useState([]);// Holds the final sales summary data.
+  const [loading, setLoading] = useState(true);//Tracks if the data is being loaded.
+  const [error, setError] = useState(null);//Tracks if there’s an error while fetching the data.
+  const [onlineSales, setOnlineSales] = useState([]);//Store the fetched sales and production data.
   const [wholesaleSales, setWholesaleSales] = useState([]);
   const [deliverySales, setDeliverySales] = useState([]);
   const [productions, setProductions] = useState([]);
+
+  // Date range for filtering
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
 
   // Fetch production details
   const fetchProductions = async () => {
@@ -28,6 +34,33 @@ function SalesSummaryTable() {
       setError('Error fetching productions');
     }
   };
+
+ 
+
+// Function to generate PDF
+const generatePDF = () => {
+  const input = document.getElementById('sales-summary-table');
+  if (!input) {
+    console.error('Sales summary table not found');
+    return; // Prevent further execution if the element doesn't exist
+  }
+
+  html2canvas(input, { scale: 2 }).then((canvas) => {
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF();
+    const imgWidth = 190; // Adjust width to fit PDF page
+    const pageHeight = pdf.internal.pageSize.height;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const heightLeft = imgHeight;
+
+    let position = 0;
+
+    pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+    pdf.save('sales-summary.pdf'); // Save the PDF
+  }).catch(error => {
+    console.error('Error generating PDF:', error);
+  });
+};
 
   // Fetch online orders
   const fetchOnlineSales = async () => {
@@ -77,20 +110,12 @@ function SalesSummaryTable() {
 
   const calculateSalesSummary = () => {
     return productions.flatMap((production) => {
-      // Iterate over each product in the products array
       return production.products.map((product) => {
         const { productName, quantity: productQuantity, unitPrice: unitCost } = product;
-
-        // Initialize quantities and earnings
+  
         let soldQuantity = 0;
         let totalEarnings = 0;
-
-        // Initialize logs for sold quantities
-        const onlineSoldQuantities = [];
-        const wholesaleSoldQuantities = [];
-        const deliverySoldQuantities = [];
-
-        // Accumulate quantities and earnings from online sales
+  
         onlineSales.forEach(sale => {
           const cartItems = sale.OnlineOrder?.cartItems || [];
           cartItems.forEach(item => {
@@ -99,12 +124,10 @@ function SalesSummaryTable() {
               const earnings = (item.unitPrice || 0) * quantity;
               soldQuantity += quantity;
               totalEarnings += earnings;
-              onlineSoldQuantities.push(quantity);
             }
           });
         });
-
-        // Accumulate quantities and earnings from wholesale sales
+  
         wholesaleSales.forEach(sale => {
           const products = sale.WholesaleOrder?.products || [];
           products.forEach(item => {
@@ -113,41 +136,35 @@ function SalesSummaryTable() {
               const earnings = (item.unitPrice || 0) * quantity;
               soldQuantity += quantity;
               totalEarnings += earnings;
-              wholesaleSoldQuantities.push(quantity);
             }
           });
         });
-
-        // Accumulate quantities and earnings from delivery sales
+  
         deliverySales.forEach(delivery => {
           const products = delivery.dailydelivery?.products || [];
           products.forEach(item => {
             if (String(item.product) === String(productName)) {
-              const quantity = parseInt(item.quantity, 10) || 0; // Convert string to integer
-              const earnings = parseFloat(item.totalprice) || 0; // Use totalprice directly
+              const quantity = parseInt(item.quantity, 10) || 0;
+              const earnings = parseFloat(item.totalprice) || 0;
               soldQuantity += quantity;
               totalEarnings += earnings;
-              deliverySoldQuantities.push(quantity);
             }
           });
         });
-
-        // Calculate remaining unsold quantity
+  
         const notSoldQuantity = productQuantity - soldQuantity;
-
-        // Calculate total production cost and net earnings
+        const totalQuantity = productQuantity; 
         const productionCost = productQuantity * unitCost;
         const netEarnings = totalEarnings;
-
-        // Calculate profit
         const profit = totalEarnings - (soldQuantity * unitCost);
-
+  
         return {
-          productID: productName, // Change to productName since that's what your data has
-          date: production.date,  // Use the date from production level
+          productID: productName,
+          date: production.date,
           productionCost,
           soldQuantity,
           notSoldQuantity,
+          totalQuantity, 
           totalEarnings: netEarnings,
           profit
         };
@@ -163,16 +180,46 @@ function SalesSummaryTable() {
     }
   }, [productions, onlineSales, wholesaleSales, deliverySales]);
 
-  // Function to format currency values for display
+  // Function to filter sales by date range
+  const filterSalesByDate = (salesData) => {
+    if (!fromDate || !toDate) return salesData;
+
+    const from = new Date(fromDate);
+    const to = new Date(toDate);
+
+    return salesData.filter(item => {
+      const itemDate = new Date(item.date);
+      return itemDate >= from && itemDate <= to;
+    });
+  };
+
+  // Calculate totals for styled cards
+  const calculateTotals = () => {
+    const filteredSummary = filterSalesByDate(summary);
+    return filteredSummary.reduce(
+      (totals, item) => {
+        totals.totalEarnings += item.totalEarnings;
+        totals.totalProfit += item.profit;
+        totals.totalSold += item.soldQuantity;
+        totals.totalNotSold += item.notSoldQuantity;
+        return totals;
+      },
+      { totalEarnings: 0, totalProfit: 0, totalSold: 0, totalNotSold: 0 }
+    );
+  };
+
+  const totals = calculateTotals();
+
+  // Format currency values
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'LKR', // Change to LKR for Sri Lankan Rupees
-      minimumFractionDigits: 2, // Ensures that the format includes two decimal places
+      currency: 'LKR',
+      minimumFractionDigits: 2,
     }).format(value);
   };
 
-  // Function to format the date
+  // Format date values
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString();
   };
@@ -183,51 +230,90 @@ function SalesSummaryTable() {
       <Buttonrow />
       <hr />
 
-      <div className="table4">
-        <h6 className="tableheading">Sales Summary Table</h6>
-
-        {/* Display loading state */}
-        {loading && <p>Loading data...</p>}
-
-        {/* Display error message if any */}
-        {error && <p className="error-message">{error}</p>}
-
-        {/* Display table if data is available */}
-        {!loading && !error && (
-          <table>
-            <thead>
-              <tr>
-                <th>Product ID</th>
-                <th>Date</th>
-                <th>Cost for Production</th>
-                <th>Sold Quantity</th>
-                <th>Not Sold Quantity</th>
-                <th>Total Earnings</th>
-                <th>Profit</th> {/* New column header */}
-              </tr>
-            </thead>
-            <tbody>
-              {summary.length > 0 ? (
-                summary.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.productID}</td>
-                    <td>{formatDate(item.date)}</td>
-                    <td>{formatCurrency(item.productionCost)}</td>
-                    <td>{item.soldQuantity}</td>
-                    <td>{item.notSoldQuantity}</td>
-                    <td>{formatCurrency(item.totalEarnings)}</td>
-                    <td>{formatCurrency(item.profit)}</td> {/* New column data */}
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="7">No sales summary data available</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        )}
+      {/* Date Range Filter */}
+      <div className='search-container'>
+        <div className="date-filter">
+          <label>From: </label>
+          <input
+            type="date"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+            className="search-input"
+          />
+          <label>To: </label>
+          <input
+            type="date"
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
+            className="search-input"
+          />
+          <i className="fas fa-search search-icon"></i>
+        </div>
       </div>
+
+      {/* Total Summary Cards */}
+      <div className="summary-cards">
+        <div className="card">
+          <h3>Total Earnings</h3>
+          <p>{formatCurrency(totals.totalEarnings)}</p>
+        </div>
+        <div className="card">
+          <h3>Total Profit</h3>
+          <p>{formatCurrency(totals.totalProfit)}</p>
+        </div>
+        <div className="card">
+          <h3>Total Sold Quantity</h3>
+          <p>{totals.totalSold}</p>
+        </div>
+        <div className="card">
+          <h3>Total Not Sold Quantity</h3>
+          <p>{totals.totalNotSold}</p>
+        </div>
+      </div>
+
+      <div className="table4" id="sales-summary-table">
+  <h6 className="tableheading">Sales Summary Table</h6>
+  {loading && <p>Loading data...</p>}
+  {error && <p className="error-message">{error}</p>}
+  {!loading && !error && (
+    <table>
+      <thead>
+  <tr>
+    <th>Product ID</th>
+    <th>Date</th>
+    <th>Cost for Production</th>
+    <th>Total Quantity</th> 
+    <th>Sold Quantity</th>
+    <th>Not Sold Quantity</th>
+    <th>Total Earnings</th>
+    <th>Profit</th>
+  </tr>
+</thead>
+<tbody>
+  {filterSalesByDate(summary).length > 0 ? (
+    filterSalesByDate(summary).map((item, index) => (
+      <tr key={index}>
+        <td>{item.productID}</td>
+        <td>{formatDate(item.date)}</td>
+        <td>{formatCurrency(item.productionCost)}</td>
+        <td>{item.totalQuantity}</td> 
+        <td>{item.soldQuantity}</td>
+        <td>{item.notSoldQuantity}</td>
+        <td>{formatCurrency(item.totalEarnings)}</td>
+        <td>{formatCurrency(item.profit)}</td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="8">No sales summary data available</td>
+    </tr>
+  )}
+</tbody>
+    </table>
+  )}
+</div>
+
+      <button onClick={generatePDF} className="download-btn">Download PDF</button>
     </>
   );
 }

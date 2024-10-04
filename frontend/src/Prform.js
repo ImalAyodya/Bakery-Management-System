@@ -3,7 +3,7 @@ import Buttonrow from "./components/Buttonrow";
 import './tables.css';
 
 // Define the backend API endpoint
-const API_URL = 'http://localhost:8001/productions';  // Update the URL if needed
+const API_URL = 'http://localhost:8000/productions';  // Update the URL if needed
 
 function Prform() {
     const [productions, setProductions] = useState([]);
@@ -11,6 +11,7 @@ function Prform() {
     const [date, setDate] = useState('');
     const [unitCost, setUnitCost] = useState('');
     const [productQuantity, setProductQuantity] = useState('');
+    const [searchDate, setSearchDate] = useState(''); // Add searchDate state
 
     // Fetch production details from the backend
     const fetchProductions = async () => {
@@ -27,6 +28,14 @@ function Prform() {
     useEffect(() => {
         fetchProductions();
     }, []);
+
+    // Filter productions by the search date
+    const filteredProductions = productions.filter(production => {
+        if (!searchDate) return true; // Return all if no search input
+        const productionDate = new Date(production.date).toLocaleDateString();
+        const searchDateFormatted = new Date(searchDate).toLocaleDateString();
+        return productionDate === searchDateFormatted;
+    });
 
     // Handle form submission
     const handleSubmit = async (event) => {
@@ -66,25 +75,30 @@ function Prform() {
 
             <div className="table4">
                 <h6 className="tableheading">Production Details</h6>
+                <div className="search-container">
                 <input 
-                    type="search" 
+                    type="date" 
                     className="search" 
                     id="search" 
                     name="search" 
-                    placeholder='Search' 
+                    placeholder='Search by Date' 
+                    value={searchDate} 
+                    onChange={(e) => setSearchDate(e.target.value)} 
+                    
                 />
+                </div>
                 <table>
                     <thead>
                         <tr>
                             <th>Date</th>
                             <th>Product Name</th>
                             <th>Quantity</th>
-                            <th>Unit Price</th>
+                            <th>Unit cost</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {productions.length > 0 ? (
-                            productions.map((production, index) => (
+                        {filteredProductions.length > 0 ? (
+                            filteredProductions.map((production, index) => (
                                 <tr key={index}>
                                     <td>{new Date(production.date).toLocaleDateString()}</td>
                                     <td colSpan={3}>
@@ -92,7 +106,7 @@ function Prform() {
                                             <div key={productIndex}>
                                                 <strong>{product.productName}</strong> <br />
                                                 Quantity: {product.quantity} <br />
-                                                Unit Price: Rs. {product.unitPrice}
+                                                Unit cost: Rs. {product.unitPrice}
                                                 <hr />
                                             </div>
                                         ))}
@@ -149,3 +163,4 @@ function Prform() {
 }
 
 export default Prform;
+

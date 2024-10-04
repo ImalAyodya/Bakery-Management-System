@@ -14,7 +14,7 @@ function Nwplan() {
   const [targetplan, setTargetplan] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8001/saleplan')
+    axios.get('http://localhost:8000/saleplan')
       .then(response => {
         if (response.data.success) {
           setTargetplan(response.data.mypost);
@@ -28,7 +28,7 @@ function Nwplan() {
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8001/saleplan/delete/${id}`)
+    axios.delete(`http://localhost:8000/saleplan/delete/${id}`)
       .then(response => {
         if (response.data.success) {
           setTargetplan(targetplan.filter(plan => plan._id !== id));
@@ -43,7 +43,7 @@ function Nwplan() {
   };
 
   const handleUpdates = (itemid) => {
-    axios.put(`http://localhost:8001/saleplan/update/${itemid}`, {
+    axios.put(`http://localhost:8000/saleplan/update/${itemid}`, {
       date: edate,
       predictedQuantity: eqnty
     })
@@ -77,7 +77,7 @@ function Nwplan() {
           <thead>
             <tr>
               <th>Date</th>
-              <th>Product ID</th>
+              <th>Product Name</th>
               <th>Predicted Quantity</th>
               <th>Actions</th>
             </tr>
