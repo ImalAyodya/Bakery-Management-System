@@ -20,7 +20,7 @@ const ProductionForm = ({ fetchProductions }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.post('http://localhost:5080/production/', { date, products });
+            await axios.post('http://localhost:8000/production/', { date, products });
             setDate('');
             setProducts([{ productName: '', quantity: '', unitPrice: '' }]);
         } catch (err) {
