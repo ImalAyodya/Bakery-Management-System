@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ProductManagement from './pages/ProductManagement';
 import ProductWastageManagement from './pages/ProductWastageManagement';
@@ -6,6 +5,7 @@ import RequestStaff from './pages/RequestStaff';
 import ProductionForm from './components/ProductionForm';
 import IngredientRequest from './pages/IngredientRequest';
 import UpdateProduct from './pages/updateProduct';
+import AdminDashboard from './components/AdminDashboard';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CommercialOrder from './CommercialOrder';
 import Onlineorder from './OnlineOrder';
@@ -19,6 +19,14 @@ import Nwplan from './Nwplan';
 import Salesdash from './Salesdash';
 import Prform from './Prform';
 import Stables from './Stables';
+import OrderDelivery from './OrderDelivery';
+import Form from './Form';
+import DailyRoutes from './DailyRoutes';
+import Dfirst from './Dfirst';
+import ViewDailySales from './ViewDailySales'
+import AdminDashboard from './AdminDashboard'
+import HeaderAdmin from './HeaderAdmin'
+
 
 
 
@@ -27,6 +35,11 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route index element={<ProductWastageManagement />} />
+
+
+                <Route index element={<AdminDashboard />} />
+                <Route path="/products" element={<ProductWastageManagement />} />
+
                 <Route path="/product-management" element={<ProductManagement />} />
                 <Route path="/request-staff" element={<RequestStaff />} />
                 <Route path='/request-ingredient' element={<IngredientRequest />} />
@@ -51,11 +64,19 @@ function App() {
                 <Route path='/Nwplan' element={<Nwplan/>}/>
 
 
-          
+
+                <Route path = '/Form' element={<Form/>}/>
+                <Route path = '/orderdelivery'element={<OrderDelivery/>}/>
+                <Route path = '/dailyroute'element={<DailyRoutes/>}/>
+                <Route path = '/delivery'element={<Dfirst/>}/>
+                <Route path = '/ViewDailySales'element={<ViewDailySales/>}/> 
+
             </Routes>
         </BrowserRouter>
     );
-
 }
 
+
 export default App;
+
+

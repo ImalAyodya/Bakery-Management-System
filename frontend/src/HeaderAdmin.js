@@ -5,6 +5,8 @@ import './Header.css';
 function HeaderAdmin(){
     const navigate = useNavigate ();
 
+    const Homepage = useNavigate ();
+
     const AdminDashbrd= useNavigate();
     
       return(
@@ -17,10 +19,13 @@ function HeaderAdmin(){
                 <div className="nav-item">
                     <div className="nav-items">
                        <ul>
-                        <li ><a href= "#home">Home</a></li>
+
+                        <li onClick={ ()=> Homepage ('/delivery')}><a href= "#home">Home</a></li>
+                        <li onClick={ ()=> AdminDashbrd('/')}><a href="#home">Admin</a></li>
+                        <li onClick={ ()=> Homepage ('/home')}><a href= "#home">Home</a></li>
                         <li><a href="#home">Sign Up</a></li>
                         <li><a href="#home">Login</a></li>
-                        <li onClick={ ()=> AdminDashbrd('/')}><a href="#home">Admin</a></li>
+                        <li onClick={ ()=> AdminDashbrd('/AdminDashbrd')}><a href="#home">Admin</a></li>
                      
                        </ul> 
                         

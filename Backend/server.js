@@ -1,17 +1,24 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
-const bodyParser = require('body-parser');
 const route = require('./routes/saleroute'); // Ensure this is the correct path for your routes
 const DailyDelivery = require('./models/salesdeliveryorders'); // Update the path as needed
-
-
+app.use(route); // Use your custom routes
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const dotebv = require('dotenv');
+require('dotenv').config();
 const app = express();
-
-// Middleware setup
+const port = 8000;
 app.use(cors());
 app.use(bodyParser.json());
-app.use(route); // Use your custom routes
+
+const URL = "mongodb+srv://malmi:malmi123@cluster0.3dgof.mongodb.net/ProductDB?retryWrites=true&w=majority&appName=Cluster03';";
+
+mongoose.connect(URL, {}).then(() => {
+    console.log("MongoDB connected");
+}).catch((err) => {
+    console.log(err);
+})
 
 // Route to add a daily delivery record
 app.post('/api/dailydelivery', async (req, res) => {
@@ -33,19 +40,18 @@ app.post('/api/dailydelivery', async (req, res) => {
   }
 });
 
-// MongoDB connection
-const PORT = 8001;
-const DB_URL = 'mongodb+srv://malmi:malmi123@cluster0.3dgof.mongodb.net/OrderDB?retryWrites=true&w=majority&appName=Cluster0';
+const productRoutes = require('./routes/products.js');
 
-mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('Database connected successfully');
-  })
-  .catch((error) => {
-    console.error('Database connection failed:', error);
-  });
+http://localhost:8000/products.
 
-// Start server
-const server = app.listen(PORT, () => {
-  console.log(`Node server is listening on port ${PORT}`);
-});
+app.use('/products', productRoutes);
+
+const productionRoutes = require('./routes/production.js');
+app.use('/production', productionRoutes);
+
+const postRoute = require('./route/deliveryroutes');
+app.use(cors());
+
+app.listen(port, ()=>{
+    console.log(`Server is running on port ${port}`);
+})

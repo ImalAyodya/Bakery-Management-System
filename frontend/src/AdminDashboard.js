@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import './AdminDashboard.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import HeaderAdmin from './HeaderAdmin.js';
+import HeaderAdmin from './HeaderAdmin';
+
+
 
 const AdminDashboard = () => {
     return (
@@ -59,6 +61,7 @@ const AdminDashboard = () => {
           </Link>
   
           <Link to="/Salesm" className="admin-dashboard-page-card">
+
             <div className="admin-dashboard-page-card-content">
               <h2>Sales Reports</h2>
               <p>View and analyze sales data.</p>
@@ -120,6 +123,5 @@ const AdminDashboard = () => {
 
   
   export default AdminDashboard;
-  
-  
+
   
