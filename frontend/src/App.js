@@ -41,6 +41,14 @@ import SupplierForm from './SupplierForm';
 import View from './View';
 import OrderView from './OrderView';
 import OrderForm from './OrderForm';
+import CustomerUI from './CustomerUI';  
+import CustomerView from './CustomerView';
+import Customer from './Customer';
+import CustomerEditForm from './CustomerEditForm';
+import InquiryForm from './InquiryForm';
+import AdminDashboard from './AdminDashboard';
+import AdminInquiryView from './AdminInquiryView';
+import InquiryView from './InquiryView';
 
 
 
@@ -91,7 +99,14 @@ function App() {
                 <Route path="/View" element={<View />} />
                 <Route path='/OrderView' element={<OrderView />} />
                 <Route path="/OrderForm" element={<OrderForm />} />
-      </Routes>
+                <Route path="/CustomerDB" element={<CustomerUI/>} />
+                <Route path="/CustomerView" element={<CustomerView/>} />
+                <Route path='/Customer' element={<Customer/>} />
+                <Route path='/CustomerEditForm' element={<CustomerEditForm/>} />
+                <Route path="/InquiryForm" element={<InquiryForm/>} />
+                <Route path="/AdminInquiryView" element={<AdminInquiryView/>} />
+                <Route path="/InquiryView" element={<InquiryView/>} />
+                <Route path="/" element={<AdminDashboard/>} />
 
             </Routes>
         </BrowserRouter>

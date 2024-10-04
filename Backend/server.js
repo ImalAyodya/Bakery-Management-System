@@ -22,6 +22,7 @@ mongoose.connect(URL, {}).then(() => {
     console.log(err);
 })
 
+
 // Route to add a daily delivery record
 app.post('/api/dailydelivery', async (req, res) => {
   try {
@@ -41,6 +42,9 @@ app.post('/api/dailydelivery', async (req, res) => {
     });
   }
 });
+  
+const routepath = require('./routes/customer');
+app.use(routepath); 
 
 const productRoutes = require('./routes/products.js');
 
