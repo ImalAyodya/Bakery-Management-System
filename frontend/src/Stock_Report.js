@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './Stock_Report.css'; // Ensure your CSS file is properly imported
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Stock_Report() {
+
+  const Navigate = useNavigate();
+
+
   const [items, setItems] = useState([]);
   const [totalAvailableStocks, setTotalAvailableStocks] = useState(0);
   const [totalStockCost, setTotalStockCost] = useState(0);
@@ -53,7 +58,7 @@ function Stock_Report() {
 
   return (
     <div className="report-container">
-      <h1>Generate Report</h1>
+      <h1>Warehouse Ingredient Report</h1>
 
       <table className="report-table">
         <thead>
@@ -70,7 +75,7 @@ function Stock_Report() {
               <td>{item.inventory?.itemName}</td>
               <td>Rs. {item.inventory?.unitPrice}</td>
               <td>{item.inventory?.addQuantity}</td>
-              <td>Rs.{item.itemCost}</td>
+              <td><b>Rs.{item.itemCost}</b></td>
             </tr>
           ))}
         </tbody>
@@ -86,7 +91,7 @@ function Stock_Report() {
         </h3>
       </div>
 
-      <button className="generate-btn">Download Report</button>
+      <button className="generate-btn" onClick={() => Navigate('/dashboard')}>Back to Dashboard</button>
     </div>
   );
 }
