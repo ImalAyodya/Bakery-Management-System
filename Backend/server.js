@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const route = require('./routes/saleroute'); // Ensure this is the correct path for your routes
-const DailyDelivery = require('./models/deliveryorders'); // Update the path as needed
+const DailyDelivery = require('./models/salesdeliveryorders'); // Update the path as needed
 
 
 const app = express();
