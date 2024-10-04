@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import './AdminDashboard.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
@@ -12,6 +11,7 @@ const AdminDashboard = () => {
     return (
         
       <div className="admin-dashboard-page">
+
         <HeaderAdmin/>
         <header className="admin-dashboard-page-header">
           <h1>Bakery Management System - Admin Dashboard</h1>
@@ -60,7 +60,7 @@ const AdminDashboard = () => {
             </div>
           </Link>
   
-          <Link to="/Salesm" className="admin-dashboard-page-card">
+          <Link to="/sales" className="admin-dashboard-page-card">
 
             <div className="admin-dashboard-page-card-content">
               <h2>Sales Reports</h2>

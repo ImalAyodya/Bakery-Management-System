@@ -1,7 +1,9 @@
-const express = require('express');
+/*"npm i mongoose" ekaii ithuru tika okkma terminal eka through install krnwaa*/ 
+
 const mongoose = require('mongoose');
 const route = require('./routes/saleroute'); // Ensure this is the correct path for your routes
 const DailyDelivery = require('./models/salesdeliveryorders'); // Update the path as needed
+const postRoutes = require('./routes/routes');
 app.use(route); // Use your custom routes
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -12,7 +14,7 @@ const port = 8000;
 app.use(cors());
 app.use(bodyParser.json());
 
-const URL = "mongodb+srv://malmi:malmi123@cluster0.3dgof.mongodb.net/ProductDB?retryWrites=true&w=majority&appName=Cluster03';";
+const URL = "mongodb+srv://malmi:malmi123@cluster0.3dgof.mongodb.net/OrderDB?retryWrites=true&w=majority&appName=Cluster03';";
 
 mongoose.connect(URL, {}).then(() => {
     console.log("MongoDB connected");
@@ -41,6 +43,8 @@ app.post('/api/dailydelivery', async (req, res) => {
 });
 
 const productRoutes = require('./routes/products.js');
+
+app.use(postRoutes);
 
 http://localhost:8000/products.
 
