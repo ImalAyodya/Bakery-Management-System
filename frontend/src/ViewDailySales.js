@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import HeaderAdmin from './HeaderAdmin';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
- // You can style your table in this CSS file
+ 
 
 const ViewDailySales = () => {
   const [salesData, setSalesData] = useState([]);
   const [loading, setLoading] = useState(true);
-  // Initialize navigate function
+ 
   const navigate = useNavigate();
 
   // Fetch sales data from the backend
@@ -35,14 +38,16 @@ const ViewDailySales = () => {
   }
 
   return (
-    <div className="sales-container">
+    <div className="das-sales-container">
+      <HeaderAdmin/>
+      <br></br><br></br>
       <h1>Daily Delivery Sales</h1>
-      <div className="button-container1">
-        <button className="btn1" onClick={() => navigate('/Form')}>View Vehicles and Drivers</button><br />
-        <button className="btn1" onClick={() => navigate('/OrderDelivery')}>Order Delivery</button><br />
-        <button className="btn1" onClick={() => navigate('/dailyroute')}>Daily Delivery Stocks</button>
+      <div className="das-button-container1">
+        <button className="das-btn1" onClick={() => navigate('/Form')}>View Vehicles and Drivers</button><br />
+        <button className="das-btn1" onClick={() => navigate('/OrderDelivery')}>Order Delivery</button><br />
+        <button className="das-btn1" onClick={() => navigate('/dailyroute')}>Daily Delivery Stocks</button>
       </div>
-      <table className="sales-table">
+      <table className="das-sales-table">
         <thead>
           <tr>
             <th>Date</th>

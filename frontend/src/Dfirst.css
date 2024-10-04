@@ -1,111 +1,112 @@
-/* Main container styling */
+
 .das-delivery-management-page {
-    display: flex;
-    flex-wrap: wrap; /* Ensures layout adapts to smaller screens */
-    padding: 20px;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: white; /* Soft background color */
-  }
-  
- /* Left side image container */
-.das-left-side {
-    flex: 1.5; /* Increase the flex value to take more space */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  height: 100vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  border-radius: 20px;
+}
+
+
+.das-delivery-image {
+  width: 60%; 
+  height: auto; 
+  border-radius: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+
+.highlight {
+  justify-content: center;
+  font-size: 3em; 
+  font-weight: bold; 
+  color: #000000; 
+  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.3); 
+  background-color: blanchedalmond;;
+  padding: 20px; 
+  border-radius: 10px; 
+  text-align: center; 
+  margin: 10px 0 1px; 
+}
+
+
+.das-content-box {
+  background-color: lightyellow;
+  border-radius: 20px;
+  padding: 10px;
+  width: 90%; 
+  height: 100%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 0; 
+}
+
+
+
+
+.das-content-box h2 {
+  font-size: 2em;
+  color: black;
+  margin-bottom: 15px;
+}
+
+.das-content-box p {
+  font-size: 1.2em;
+  color: black;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+
+.das-button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+
+.das-nav-button {
+  background-color: #f4c542; 
+  color: white; 
+  font-size: 1.5em; 
+  padding: 15px 25px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer;
+  width: 1000px; 
+  max-width: 800px; 
+  height: 50px;
+  transition: background-color 0.3s ease; 
+}
+
+.das-nav-button:hover {
+  background-color: #ffec8b;
+}
+
+
+@media (max-width: 768px) {
   .das-delivery-image {
-    max-width: 100%; /* Make the image take up full width of its container */
-    width: 80%; /* Set width relative to container, adjusts with screen size */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  }
-  
-  
-  /* Right side content container */
-  .das-right-side {
-    flex: 1;
-    max-width: 600px;
-    padding: 20px;
-    background-color: lightyellow;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgb(0, 0, 0);
-    border-color: brown;
-    border-width: 50px;
-  }
-  
-  .das-right-side h1 {
-    font-size: 2em;
-    color: black;
-    margin-bottom: 15px;
-    text-align:center;
-  }
-  
-  .das-right-side p {
-    font-size: 1.2em;
-    color: black;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    text-align: justify;
-  }
-  
-  /* Button container styling */
-  .das-button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-  }
-  
-  /* Button styling */
-  .das-nav-button {
-    background-color: #f4c542;
-    color: white;
-    font-size: 1.1em;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
     width: 80%;
-    max-width: 300px;
-    transition: background-color 0.3s ease;
   }
-  
-  .das-nav-button:hover {
-    background-color: #ffec8b;
+
+  .das-content-box {
+    width: 90%; 
   }
-  
-  /* Responsive design adjustments */
-  @media (max-width: 768px) {
-    .das-right-side, .das-left-side {
-      flex: 100%; /* Stacks elements vertically on smaller screens */
-      padding: 10px;
-    }
-  
-    .das-nav-button {
-      width: 90%;
-    }
+
+  .das-nav-button {
+    width: 90%;
   }
+}
+
+
+.highlight:hover {
   
-  @media (max-width: 480px) {
-    .das-right-side h1 {
-      font-size: 1.6em;
-    }
-  
-    .das-right-side p {
-      font-size: 1em;
-    }
-  
-    .das-nav-button {
-      font-size: 1em;
-    }
-  }
-  .das-topic{
-    margin-left: 30%;
-  }
-  
+  background-color: burlywood; 
+  transition: all 0.3s ease-in-out; 
+}

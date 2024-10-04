@@ -1,8 +1,8 @@
 const express=require('express');//express dagtta
 const mongoose = require('mongoose');//mongose dagtta
 const router=express.Router();//path hadagnna express eke router kyna eka gtta
-const path = require('../models/post')//full post.js file eka varible ekata dagtta
-const path2 = require('../models/post2')//full post.js file eka varible ekata dagtta
+const path = require('../models/orderdelivery')//full post.js file eka varible ekata dagtta
+const path2 = require('../models/dailydelivery')//full post.js file eka varible ekata dagtta
 const Vehicle = require('../models/deliveryvehicle');
 //create data
 router.post('/deliveryorder/save', async(req,res)=>{

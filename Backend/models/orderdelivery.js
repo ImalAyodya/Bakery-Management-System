@@ -7,6 +7,10 @@ OrderDelivery:{//table eka
     orderlocation:{
         type:String
     },
+    ordertype:{
+        type:String
+    },
+
     assigneddriver:{
         type:String
     },

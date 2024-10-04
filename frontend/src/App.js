@@ -1,27 +1,3 @@
-<<<<<<< Updated upstream
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-=======
 import React from 'react';
 import ProductManagement from './pages/ProductManagement';
 import ProductWastageManagement from './pages/ProductWastageManagement';
@@ -43,7 +19,8 @@ import Form from './Form';
 import DailyRoutes from './DailyRoutes';
 import Dfirst from './Dfirst';
 import ViewDailySales from './ViewDailySales'
- 
+import AdminDashboard from './AdminDashboard'
+import HeaderAdmin from './HeaderAdmin'
 
 
 
@@ -71,11 +48,12 @@ function App() {
             
                 <Route path = '/delivery'element={<Dfirst/>}/>
                 <Route path = '/ViewDailySales'element={<ViewDailySales/>}/> 
+                <Route path = '/'element={<AdminDashboard/>}/>
+                <Route path = '/HeaderAdmin'element={<HeaderAdmin/>}/> 
                 
             </Routes>
         </BrowserRouter>
     );
->>>>>>> Stashed changes
 }
 
 export default App;

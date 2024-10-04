@@ -1,4 +1,4 @@
-.delivery-form-container {
+.das-delivery-form-container {
     font-family: Arial, sans-serif;
     padding: 20px;
     background-color: white;
@@ -38,7 +38,7 @@
     margin-left: 10px;
   }
   
-  .page-container1 {
+  .das-page-container1 {
     display: flex;
     justify-content: center;
   }
@@ -47,7 +47,7 @@
     border: none;
     border-top: 2px solid #ddd;
   }
-  .left-side1 {
+  .das-left-side1 {
     width: 100%;
     flex: 1;
     padding: 20px;
@@ -59,11 +59,11 @@
       max-width: 90%; /* Limit the width of the container */
   }
   
-  .left-side1:hover {
+  .das-left-side1:hover {
     box-shadow: 0 4px 10px rgba(255, 255, 0, 0.2); /* Yellow shadow */
   }
   
-  .right-side1 {
+  .das-right-side1 {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -71,11 +71,11 @@
     transition: transform 0.3s ease-in-out;
   }
   
-  .right-side1:hover {
+  .das-right-side1:hover {
     transform: scale(1.02);
   }
   
-  .container1 {
+  .das-container1 {
     background-color: lemonchiffon;
     max-width: 500px;
     width: 100%;
@@ -91,12 +91,12 @@
     transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
   
-  .container1:hover {
+  .das-container1:hover {
     box-shadow: 0 4px 10px rgba(255, 255, 0, 0.2); /* Yellow shadow */
     transform: scale(1.02);
   }
   
-  .form-group1 {
+  .das-form-group1 {
     margin-bottom: 15px;
     width: 100%;
   }
@@ -106,7 +106,7 @@
     margin-bottom: 5px;
   }
   
-  input, select, .button1 {
+  input, select, .das-button1 {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -122,7 +122,7 @@
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.5); /* Yellow */
   }
   
-  .button1 {
+  .das-button1 {
     background-color: #ce9e37; /* Yellow */
     color: #fff;
     border: none;
@@ -134,17 +134,17 @@
     border-radius: 5px;
   }
   
-  .button1:hover {
+  .das-button1:hover {
     background-color: #FFD700; /* Yellow */
     transform: scale(1.05);
   }
   
-  .button1:active {
+  .das-button1:active {
     background-color: #FFEC8B; /* Slightly darker yellow */
     transform: scale(1);
   }
   
-  .button-container1 {
+  .das-button-container1 {
     display: flex;
     justify-content: right;
     align-items: center;
@@ -158,11 +158,11 @@
     transition: box-shadow 0.3s ease-in-out;
   }
   
-  .button-container1:hover {
+  .das-button-container1:hover {
     box-shadow: whitesmoke; /* Yellow shadow */
   }
   
-  .btn1 {
+  .das-btn1 {
     background-color: #ce9e37; /* Yellow */
     color: white;
     border: none;
@@ -174,12 +174,12 @@
     transition: background-color 0.3s ease, transform 0.3s ease;
   }
   
-  .btn1:hover {
+  .das-btn1:hover {
     background-color: #FFD700; /* Yellow */
     transform: scale(1.05);
   }
   
-  .vehicle-tablee {
+  .das-vehicle-tablee {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
@@ -189,7 +189,7 @@
     transition: background-color 0.3s ease; /* Transition effect for background color */
     
   }
-  .vehicle-tablee th, .vehicle-tablee td {
+  .das-vehicle-tablee th, .das-vehicle-tablee td {
     border: 1px solid #f4c542; /* Updated bright yellow border for cells */
       padding: 8px;
       text-align: left;
@@ -198,21 +198,21 @@
       transition: background-color 0.3s ease, color 0.3s ease; /* Transition effect for cells */
   }
   
-  .vehicle-tablee th {
+  .das-vehicle-tablee th {
     background-color: #d4a373; /* Updated bright yellow for header */
       color: white;}
   
-  .vehicle-tablee tr:nth-child(even) {
+  .das-vehicle-tablee tr:nth-child(even) {
     background-color: #f9f9f9;
   }
   
-  .vehicle-tablee tr:hover {
+  .das-vehicle-tablee tr:hover {
     background-color: #f1f1f1;
   }
   
   
   
-  .delete-button {
+  .das-delete-button {
     background-color: #dc3545;
     color: white;
     padding: 8px 15px;
@@ -224,10 +224,10 @@
   
   
   
-  .vehicle-tablee th:hover {
+  .das-vehicle-tablee th:hover {
     background-color: #FFD700; /* Darker yellow */
   }
-  .newbutton
+  .das-newbutton
   {
     margin-top: 10px;
     padding: 10px 20px;
@@ -247,7 +247,7 @@
   
   /* DeliveryForm.css */
 
-.form-popup {
+.das-form-popup {
   background-color: rgba(255, 255, 255, 0.9);
   border: 1px solid #ddd;
   padding: 20px;
@@ -272,7 +272,7 @@
 }
 
 /* Adjust the add new button to be central */
-.newbutton {
+.das-newbutton {
   background-color: #f4c542; /* Yellow */
   border: none;
   padding: 10px 20px;
@@ -286,7 +286,7 @@
   margin-bottom: 8px;
 }
 
-.newbutton:hover {
+.das-newbutton:hover {
   background-color: #ffcc00; /* Gold */
   transform: scale(1.05);
 }

@@ -1,4 +1,4 @@
-.admin-form-container {
+.das-admin-form-container {
   font-family: Arial, sans-serif;
   padding: 20px;
   background-color: white;
@@ -16,20 +16,20 @@ h1 {
   margin-right: 60%;
 }
 
-.admin-page-container {
+.das-admin-page-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-.admin-right-side {
+.das-admin-right-side {
   flex: 1;
   display: flex;
   justify-content: center;
   margin-left: 20px;
 }
 
-.admin-container {
+.das-admin-container {
   max-width: 900px; /* Increased width for a larger container */
   width: 100%;
   padding: 20px;
@@ -43,7 +43,7 @@ h1 {
   align-items: center;
 }
 
-.admin-form-group {
+.das-admin-form-group {
   margin-bottom: 15px;
   width: 100%;
   display: flex;
@@ -51,13 +51,13 @@ h1 {
   align-items: center;
 }
 
-.admin-form-group label {
+.das-admin-form-group label {
   flex: 1;
   margin-right: 10px;
 }
 
-.admin-form-group input,
-.admin-form-group select {
+.das-admin-form-group input,
+.das-admin-form-group select {
   flex: 2;
   padding: 10px;
   border: 2px solid #5d3919;
@@ -67,26 +67,26 @@ h1 {
   width: 70%; /* Increased width for longer input boxes */
 }
 
-.admin-product-row {
+.das-admin-product-row {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
 }
 
-.admin-product-actions {
+.das-admin-product-actions {
   display: flex;
   flex-direction: column;
   margin-left: 10px;
 }
 
-.admin-product-actions-container {
+.das-admin-product-actions-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-left: 10px;
 }
 
-.admin-product-actions2 button {
+.das-admin-product-actions2 button {
   background-color: red;
   color: white;
   border: none;
@@ -96,7 +96,7 @@ h1 {
   cursor: pointer;
 }
 
-.admin-product-actions1 button {
+.das-admin-product-actions1 button {
   background-color: rgb(22, 202, 22);
   color: white;
   border: none;
@@ -106,11 +106,11 @@ h1 {
   cursor: pointer;
 }
 
-.admin-product-actions button:hover {
+.das-admin-product-actions button:hover {
   background-color: darkred;
 }
 
-.admin-button {
+.das-admin-button {
   background-color: darkgoldenrod;
   color: white;
   border: none;
@@ -122,11 +122,11 @@ h1 {
   margin: 20px auto; /* Center the submit button */
 }
 
-.admin-button:hover {
+.das-admin-button:hover {
   background-color: darkorange;
 }
 
-.stock-management-container {
+.das-stock-management-container {
   padding: 20px;
   border: 2px solid #4b2e05;
   border-radius: 10px;
@@ -135,59 +135,60 @@ h1 {
   width: 95%; /* Ensure the container takes full width */
 }
 
-.admin-form-group input,
-.admin-form-group select {
+.das-admin-form-group input,
+.das-admin-form-group select {
   width: 100%; /* Ensure input boxes take the full width of their container */
   padding: 8px;
   margin: 5px 0;
   border-radius: 4px;
   border: 1px solid #ccc;
 }
-.sales-container {
+.das-sales-container {
   padding: 20px;
 }
 
-.sales-table {
-  width: 90%;
+.das-sales-table {
+  width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
 }
 
-.sales-table, .sales-table th, .sales-table td {
+.das-sales-table, .das-sales-table th, .das-sales-table td {
   border: 1px solid #ddd;
 }
 
-.sales-table th, .sales-table td {
+.das-sales-table th, .das-sales-table td {
   padding: 8px;
   text-align: left;
 }
 
-.sales-table th {
-  background-color: #d4a373;
+.das-sales-table th {
+  background-color: lemonchiffon;
   font-weight: bold;
 }
 
-.sales-table tbody tr:hover {
+.das-sales-table tbody tr:hover {
   background-color: #f1f1f1;
 }
-.sales-table tbody tr {
-  background-color: #fffacd;
+.das-sales-table tbody tr {
+  background-color: cornsilk;
+ 
 }
 
-.sales-table table {
+.das-sales-table table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.sales-table table, .sales-table table th, .sales-table table td {
-  border: 1px solid #ddd;
+.das-sales-table table, .das-sales-table table th, .das-sales-table table td {
+  border: 2px solid #ddd;
 }
 
-.sales-table table th, .sales-table table td {
+.das-sales-table table th, .das-sales-table table td {
   padding: 6px;
   text-align: left;
 }
-.dassales{
+.das-dassales{
   margin-top: 10px;
     padding: 10px 20px;
     background-color: #f4c542; /* Updated bright yellow button */

@@ -1,45 +1,45 @@
-/* Container for the table and form */
-.orders-container2 {
-    margin: 20px auto; /* Center the container with automatic margins */
-    max-width: 90%; /* Limit the width of the container */
+
+.das-orders-container2 {
+    margin: 20px auto; 
+    max-width: 90%; 
 }
 
-/* Table styling */
-.orders-table2 {
+
+.das-orders-table2 {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
-    margin-bottom: 20px; /* Add margin below the table */
-    border: 2px solid #d4a373; /* Updated bright yellow border */
-    background-color: rgba(255, 255, 224, 0.9); /* Light yellow background */
-    transition: background-color 0.3s ease; /* Transition effect for background color */
+    margin-bottom: 20px; 
+    border: 2px solid #d4a373; 
+    background-color: rgba(255, 255, 224, 0.9); 
+    transition: background-color 0.3s ease;
 }
 
-.orders-table2 th,
-.orders-table2 td {
-    border: 1px solid #f4c542; /* Updated bright yellow border for cells */
+.das-orders-table2 th,
+.das-orders-table2 td {
+    border: 1px solid #f4c542; 
     padding: 8px;
     text-align: left;
-    background-color: #fffacd; /* Light yellow background for cells */
-    color: #333; /* Dark gray text for cells */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Transition effect for cells */
+    background-color: #fffacd; 
+    color: #333; 
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.orders-table2 th {
-    background-color: #d4a373; /* Updated bright yellow for header */
+.das-orders-table2 th {
+    background-color: #d4a373; 
     color: white;
 }
 
-.orders-table2 tbody tr:hover {
-    background-color: #ffec8b; /* Light yellow on row hover */
+.das-orders-table2 tbody tr:hover {
+    background-color: #ffec8b; 
     cursor: pointer;
 }
 
-/* New Order button styling with plus icon */
-.new-order-button {
+
+.das-new-order-button {
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #f4c542; /* Updated bright yellow button */
+    background-color: #f4c542; 
     color: white;
     border: none;
     border-radius: 5px;
@@ -50,79 +50,79 @@
     font-size: 16px;
 }
 
-.new-order-button .plus-icon {
+.das-new-order-button .plus-icon {
     margin-right: 10px;
     font-weight: bold;
-    font-size: 20px; /* Adjusted size for the plus symbol */
+    font-size: 20px; 
 }
 
-.new-order-button:hover {
-    background-color: #ffec8b; /* Lighter yellow on hover */
+.das-new-order-button:hover {
+    background-color: #ffec8b; 
     transform: scale(1.05);
 }
 
-/* Form styling */
-.form-popup2 {
+
+.das-form-popup2 {
     margin-top: 20px;
     padding: 20px;
-    background-color: #fffacd; /* Light yellow background for the form */
-    border: 2px solid #f4c542; /* Updated bright yellow border */
+    background-color: #fffacd; 
+    border: 2px solid #f4c542; 
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px; /* Limit form width */
+    max-width: 600px; 
     margin-left: auto;
-    margin-right: auto; /* Center the form */
-    opacity: 0; /* Start with hidden form */
-    transform: translateY(20px); /* Start with slightly moved form */
-    transition: opacity 0.5s ease, transform 0.5s ease; /* Transition for appearance */
+    margin-right: auto; 
+    opacity: 0; 
+    transform: translateY(20px); 
+    transition: opacity 0.5s ease, transform 0.5s ease; 
 }
 
-.form-popup2.show {
-    opacity: 1; /* Fully visible form */
-    transform: translateY(0); /* Move to its original position */
+.das-form-popup2.show {
+    opacity: 1; 
+    transform: translateY(0);
 }
 
 /* Form styling */
-.form2 h1 {
+.das-form2 h1 {
     margin-bottom: 20px;
-    color: #333; /* Dark gray for form heading */
-    text-align: center; /* Center the heading */
-    font-size: 20px; /* Smaller size for the form title */
-    border: none; /* Removed border */
+    color: #333; 
+    text-align: center; 
+    font-size: 20px; 
+    border: none; 
 }
 
-.form-group2 {
+.das-form-group2 {
     margin-bottom: 15px;
-    color: black; /* Black lines for form fields */
+    color: black; 
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center the form elements */
+    align-items: center; 
 }
 
-.form-group2 label {
-    color: #333; /* Dark gray for labels */
+.das-form-group2 label {
+    color: #333; 
 }
 
-.form-group2 input,
-.form-group2 select {
-    width: 80%; /* Reduce the width of input fields */
+.das-form-group2 input,
+.das-form-group2 select {
+    width: 80%; 
     padding: 10px;
     margin-top: 5px;
-    border: 2px solid black; /* Black border for form fields */
+    border: 2px solid black; 
     border-radius: 10px;
-    background-color: #fffaf0; /* Light cream background */
-    color: #333; /* Dark gray text */
-    transition: border-color 0.3s ease; /* Transition for border color */
+    background-color: #fffaf0; 
+    color: #333;
+    transition: border-color 0.3s ease; 
 }
 
-.form-group2 input:focus,
-.form-group2 select:focus {
-    border-color: #f4c542; /* Change border color on focus */
+.das-form-group2 input:focus,
+.das-form-group2 select:focus {
+    border-color: #f4c542; 
 }
 
 /* Submit button styling */
-.btn {
-    background-color: #f4c542; /* Updated bright yellow for the submit button */
+.das-btn {
+    background-color: #f4c542; 
     color: white;
     border: none;
     cursor: pointer;
@@ -131,15 +131,15 @@
     font-size: 18px;
     border-radius: 5px;
     display: block;
-    margin: 20px auto 0 auto; /* Center the submit button */
+    margin: 20px auto 0 auto; /* Center submit button */
 }
 
-.btn:hover {
-    background-color: #ffec8b; /* Lighter yellow on hover */
+.das-btn:hover {
+    background-color: #ffec8b; 
     transform: scale(1.05);
 }
-/* Add this CSS to OrderDelivery.css */
-.modal-overlay {
+
+.das-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -152,7 +152,7 @@
     z-index: 1000;
   }
   
-  .modal-content {
+  .das-modal-content {
     background: white;
     padding: 20px;
     border-radius: 10px;
@@ -161,7 +161,7 @@
     position: relative;
   }
   
-  .close-modal {
+  .das-close-modal {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -171,7 +171,7 @@
     cursor: pointer;
   }
   
-  .summary-button {
+  .das-summary-button {
     background-color: #f4c542;
     color: white;
     border: none;
@@ -182,33 +182,33 @@
     border-radius: 5px;
   }
   
-  .summary-button:hover {
+  .das-summary-button:hover {
     background-color: #ffec8b;
   }
-  /* Parent container to center the search input */
-  .search-container {
+  
+  .das-search-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%; /* Full width of the container */
-    margin-bottom: 20px; /* Adjust spacing as needed */
+    width: 100%; 
+    margin-bottom: 20px; 
     
   }
   
-  /* Style for search input */
-  .search-input {
+  
+  .das-search-input {
     width: 100%;
-    max-width: 300px; /* Control the width of the search input */
+    max-width: 300px; 
     padding: 10px;
-    padding-left: 35px; /* Add padding to the left to make space for the icon */
+    padding-left: 35px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
   }
   
-  /* Style for search icon */
-  .search-icon {
+  
+  .das-search-icon {
     position: absolute;
     top: 50%;
     left: 10px;
@@ -217,11 +217,11 @@
     font-size: 16px;
     pointer-events: none; /* Prevent the icon from being clickable */
   }
-  .date-picker-container {
+  .das-date-picker-container {
     margin: 20px 0;
   }
   
-  .chart-container {
+  .das-chart-container {
     max-width: 500px;
     margin: 0 auto;
   }
@@ -229,23 +229,23 @@
   h2 {
     text-align: center;
   }
-  /* Styles for the pie chart container */
-.pie-chart-container {
-    width: 400px;  /* Set a maximum width for the pie chart */
-    height: 400px; /* Set a maximum height */
-    margin: 0 auto;  /* Center the pie chart within its container */
+ 
+.das-pie-chart-container {
+    width: 400px;  
+    height: 400px; 
+    margin: 0 auto;  
   }
   
-  .order-summary-content {
-    max-width: 800px; /* Control the modal width */
+  .das-order-summary-content {
+    max-width: 800px; 
     padding: 40px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
   
-  /* Styles for modal */
-  .order-summary-modal {
+ 
+  .das-order-summary-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -257,8 +257,8 @@
     background: rgba(0, 0, 0, 0.5);
   }
   
-  /* Submit button styling */
-  .submit-button {
+  
+  .das-submit-button {
     margin-top: 10px;
     padding: 10px;
     background-color: #4CAF50;
@@ -268,12 +268,12 @@
     cursor: pointer;
   }
   
-  .submit-button:hover {
+  .das-submit-button:hover {
     background-color: #45a049;
   }
   
-  /* View Summary Button Styling */
-  .view-summary-button {
+  
+  .das-view-summary-button {
     margin-top: 20px;
     padding: 10px;
     background-color: #2196F3;
@@ -283,10 +283,10 @@
     cursor: pointer;
   }
   
-  .view-summary-button:hover {
+  .das-view-summary-button:hover {
     background-color: #1E88E5;
   }
-  .delete-button {
+  .das-delete-button {
     background-color: #dc3545;
     color: white;
     padding: 8px 15px;
@@ -296,7 +296,7 @@
     transition: background-color 0.3s ease;
     margin-left: 20%;
   }
-  .update-button {
+  .das-update-button {
     background-color: rgb(0, 181, 0);
     color: white;
     padding: 8px 15px;
@@ -306,8 +306,8 @@
     transition: background-color 0.3s ease;
     margin-left: 20%;
   }
-  .das-submit-button
-  {background-color: #ce9e37; /* Yellow */
+  .das-das-submit-button
+  {background-color: #ce9e37; 
     color: #fff;
     border: none;
     cursor: pointer;
@@ -321,12 +321,12 @@
   }
   .das-bt-con
   {
-  display: flex; /* Ensures the buttons are aligned in a row */
+  display: flex; /*  aligned in  row */
   gap: 100px; 
   
   }
-  /* Close button style */
-  .close-summary-button {
+  
+  .das-close-summary-button {
     margin-top: 50px;
     padding: 10px;
     background-color: #ff5c5c;
@@ -337,11 +337,11 @@
     
   }
   
-  .close-summary-button:hover {
+  .das-close-summary-button:hover {
     background-color: #e04a4a;
   }
   
-  .generate-report-button
+  .das-generate-report-button
   {
     margin-top: 50px;
     padding: 10px;
