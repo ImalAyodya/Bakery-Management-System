@@ -1,60 +1,63 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './Full.css';
 
 function Workers() {
-  const navigate = useNavigate(); // Initialize useNavigate
-  const [newTempory, setNewTempory] = useState({
+  const navigate = useNavigate();
+  const [newTemporary, setNewTemporary] = useState({
     EmployeeID: '',
     NameWithInitials: '',
     PhoneNumber: '',
     AssignedTask: '',
+    AssignedDate: '',
     EmployeeEmail: '',
     Date: '',
     AdminEmail: '',
   });
 
-  const [errors, setErrors] = useState({}); // For storing validation errors
-  const [Tempemployees, setTempEmployees] = useState([]); // Read
+  const [errors, setErrors] = useState({});
+  const [tempEmployees, setTempEmployees] = useState([]);
 
   const handleTempEmployee = (e) => {
     const { name, value } = e.target;
-    setNewTempory({ ...newTempory, [name]: value });
+    setNewTemporary({ ...newTemporary, [name]: value });
   };
 
   // Validation logic
   const validateForm = () => {
     const errors = {};
-    if (!newTempory.EmployeeID.trim()) errors.EmployeeID = 'Employee ID is required';
-    if (!newTempory.NameWithInitials.trim()) errors.NameWithInitials = 'Name is required';
-    if (!newTempory.PhoneNumber || !/^\d{10}$/.test(newTempory.PhoneNumber)) errors.PhoneNumber = 'Valid 10-digit phone number is required';
-    if (!newTempory.AssignedTask.trim()) errors.AssignedTask = 'Assigned task is required';
-    if (!newTempory.EmployeeEmail || !/\S+@\S+\.\S+/.test(newTempory.EmployeeEmail)) errors.EmployeeEmail = 'Valid email is required';
-    if (!newTempory.Date) errors.Date = 'Date is required';
-    if (!newTempory.AdminEmail || !/\S+@\S+\.\S+/.test(newTempory.AdminEmail)) errors.AdminEmail = 'Valid admin email is required';
+    if (!newTemporary.EmployeeID.trim()) errors.EmployeeID = 'Employee ID is required';
+    if (!newTemporary.NameWithInitials.trim()) errors.NameWithInitials = 'Name is required';
+    if (!newTemporary.PhoneNumber || !/^\d{10}$/.test(newTemporary.PhoneNumber)) errors.PhoneNumber = 'Valid 10-digit phone number is required';
+    if (!newTemporary.AssignedTask.trim()) errors.AssignedTask = 'Assigned task is required';
+    if (!newTemporary.EmployeeEmail || !/\S+@\S+\.\S+/.test(newTemporary.EmployeeEmail)) errors.EmployeeEmail = 'Valid email is required';
+    if (!newTemporary.Date) errors.Date = 'Date is required';
+    if (!newTemporary.AdminEmail || !/\S+@\S+\.\S+/.test(newTemporary.AdminEmail)) errors.AdminEmail = 'Valid admin email is required';
     return errors;
   };
 
   const handleTempForSave = (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
     } else {
-      axios
-        .post('http://localhost:8001/TempPost/save', { Tempory: newTempory })
+      axios.post('http://localhost:8001/TempPost/save', { Tempory: newTemporary })
         .then((response) => {
           if (response.data.success) {
-            setTempEmployees([...Tempemployees, response.data.Tempory]);
-            setNewTempory({
+            setTempEmployees([...tempEmployees, response.data.tempory]);
+            setNewTemporary({
               EmployeeID: '',
               NameWithInitials: '',
               PhoneNumber: '',
               AssignedTask: '',
+              AssignedDate: '',
               EmployeeEmail: '',
               Date: '',
               AdminEmail: '',
             });
+            navigate('/Extra'); // Navigate after successful save
           } else {
             alert('Error while adding data.');
           }
@@ -65,10 +68,9 @@ function Workers() {
     }
   };
 
-  // Handle cancel button click
   const handleCancelClick = (e) => {
     e.preventDefault();
-    navigate('/');
+    navigate('/employees');
   };
 
   return (
@@ -82,17 +84,27 @@ function Workers() {
             type="text"
             id="id"
             name="EmployeeID"
-            value={newTempory.EmployeeID}
+            value={newTemporary.EmployeeID}
             onChange={handleTempEmployee}
           />
           {errors.EmployeeID && <p style={{ color: 'red' }}>{errors.EmployeeID}</p>}
+
+          <label htmlFor="date">Date</label>
+          <input
+            type="date"
+            id="date"
+            name="Date"
+            value={newTemporary.Date}
+            onChange={handleTempEmployee}
+          />
+          {errors.Date && <p style={{ color: 'red' }}>{errors.Date}</p>}
 
           <label htmlFor="name">Name with initials</label>
           <input
             type="text"
             id="name"
             name="NameWithInitials"
-            value={newTempory.NameWithInitials}
+            value={newTemporary.NameWithInitials}
             onChange={handleTempEmployee}
           />
           {errors.NameWithInitials && <p style={{ color: 'red' }}>{errors.NameWithInitials}</p>}
@@ -102,7 +114,7 @@ function Workers() {
             type="text"
             id="num"
             name="PhoneNumber"
-            value={newTempory.PhoneNumber}
+            value={newTemporary.PhoneNumber}
             onChange={handleTempEmployee}
           />
           {errors.PhoneNumber && <p style={{ color: 'red' }}>{errors.PhoneNumber}</p>}
@@ -112,7 +124,7 @@ function Workers() {
             type="text"
             id="at"
             name="AssignedTask"
-            value={newTempory.AssignedTask}
+            value={newTemporary.AssignedTask}
             onChange={handleTempEmployee}
           />
           {errors.AssignedTask && <p style={{ color: 'red' }}>{errors.AssignedTask}</p>}
@@ -122,30 +134,34 @@ function Workers() {
             type="email"
             id="email"
             name="EmployeeEmail"
-            value={newTempory.EmployeeEmail}
+            value={newTemporary.EmployeeEmail}
             onChange={handleTempEmployee}
           />
           {errors.EmployeeEmail && <p style={{ color: 'red' }}>{errors.EmployeeEmail}</p>}
 
-          <label htmlFor="date">Date</label>
-          <input
-            type="date"
-            id="date"
-            name="Date"
-            value={newTempory.Date}
-            onChange={handleTempEmployee}
-          />
-          {errors.Date && <p style={{ color: 'red' }}>{errors.Date}</p>}
-
-          <label htmlFor="Aemail">Admin Email</label>
+          <div className='KaviAdminEmail'>
+          <label htmlFor="adminEmail">Admin Email</label>
           <input
             type="email"
-            id="Aemail"
+            id="adminEmail"
             name="AdminEmail"
-            value={newTempory.AdminEmail}
+            value={newTemporary.AdminEmail}
             onChange={handleTempEmployee}
           />
           {errors.AdminEmail && <p style={{ color: 'red' }}>{errors.AdminEmail}</p>}
+          </div>
+
+          <div className='KaviAssiDate'>
+          <label htmlFor="assignedDate">Assigned Date</label>
+          <input
+            type="date"
+            id="assignedDate"
+            name="AssignedDate"
+            value={newTemporary.AssignedDate}
+            onChange={handleTempEmployee}
+          />
+          </div>
+        
 
           <button
             id="Kavibt"

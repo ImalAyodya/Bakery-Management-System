@@ -1,55 +1,38 @@
 
-import React from 'react';
-import ProductManagement from './pages/ProductManagement';
-import ProductWastageManagement from './pages/ProductWastageManagement';
-import RequestStaff from './pages/RequestStaff';
-import ProductionForm from './components/ProductionForm';
-import IngredientRequest from './pages/IngredientRequest';
-import UpdateProduct from './pages/updateProduct';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import CommercialOrder from './CommercialOrder';
-import Onlineorder from './OnlineOrder';
-import Checkout from './Checkout';
-import Home from './Home';
-import OrderDashboard from './OrderDashboard';
-import OnlineOrderDB from './OnlineOrderDB';
-
-import Form from './Form.js';
+import { BrowserRouter, Routes,Route } from 'react-router-dom';
+import './App.css';
+import Form from './EmployeeForm.js';
 import Workers from './workers.js'
 import Salary from './salary.js';
 import Extra from './Extra.js';
-import Edit from './Edit.js';
 import Display from './display.js';
+import Dashboard from './Dashboard.js';
+import Admin from './Admin.js';
+import Registration from './registration.js';
 
 
-
-function App() {
-    return (
+function App(){
+   return(
         <BrowserRouter>
-            <Routes>
-                <Route index element={<ProductWastageManagement />} />
-                <Route path="/product-management" element={<ProductManagement />} />
-                <Route path="/request-staff" element={<RequestStaff />} />
-                <Route path='/request-ingredient' element={<IngredientRequest />} />
-                <Route path='/daily-production' element={<ProductionForm />} />
-                <Route path='/updateProduct/:id' element={<UpdateProduct />} />
+      <Routes>
+         <Route path = '/employees' element = {< Display/>} />
+         <Route path = '/Form' element = {<Form/>}/>
+         <Route path = '/workers' element = {<Workers/>}/>
+         <Route path = '/salary' element = {<Salary/>}/>
+         <Route path = '/Extra' element = {<Extra/>}/>
+         <Route path = '/' element = {<Dashboard/>}/>
+         <Route path = '/Admin' element = {<Admin/>}/>
+         <Route path = '/registration' element = {<Registration/>}/>
 
-                <Route path="/" element={<CommercialOrder />} />
-                <Route path="/Online" element={<Onlineorder />} />
-                <Route path="/CheckoutOrder" element={<Checkout />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/orderDashbrd" element={<OrderDashboard />} />
-                <Route path="/onlineOrderDashbrd" element={<OnlineOrderDB />} />
+         
 
-                <Route path = '/employee' element = {< Display/>} />
-                <Route path = '/Form' element = {<Form/>}/>
-                <Route path = '/workers' element = {<Workers/>}/>
-                <Route path = '/salary' element = {<Salary/>}/>
-                <Route path = '/Extra' element = {<Extra/>}/>
-            </Routes>
-        </BrowserRouter>
-    );
+
+      </Routes>
+       </BrowserRouter>
+   );
 }
 
 export default App;
+
+
+      

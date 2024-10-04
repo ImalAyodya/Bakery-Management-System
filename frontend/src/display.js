@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import bakerImage from './images/baker.jpeg';
+import './Header.css';
+import Admin from './Admin';
+import './Full.css';
 
 function Display(){
 
@@ -9,7 +12,7 @@ function Display(){
         navigate('/Form'); // Navigate to the main page
       };
       const handleExtraClick = () => {
-        navigate('/workers'); // Navigate to the extra page
+        navigate('/Extra'); // Navigate to the extra page
       };
 
       const handleSalaryClick = () => {
@@ -20,6 +23,7 @@ function Display(){
 
     return(
         <>
+         <Admin/>
            <h1 className="Kaviemployee" >  Employee management</h1>
            <div className="Kavibuttons">
            <button   className= "Kavinew"id ="new" onClick = {handleAddClick}>Add new Employee</button>

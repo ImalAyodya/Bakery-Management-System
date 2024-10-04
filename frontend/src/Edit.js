@@ -10,7 +10,8 @@ function Edit(){
                 <input type="text" id="addrs" name="addrs"  />
                 <label htmlFor="num">Phone number</label>
 
-                <button id="butn" type="submit">Save</button>
+                <button id="Kavibutn" type="submit">Save</button>
+                <button id="Kavibutn1" type="submit">Cancel</button>
               
               </form>
             </div>

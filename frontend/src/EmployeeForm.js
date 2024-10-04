@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './Header.css';
+import Admin from './Admin';
+import './Full.css';
 
 function Form() {
   const [employees, setEmployees] = useState([]);
@@ -20,6 +23,8 @@ function Form() {
   const [empId, setEmpId] = useState('');
   const [addAddress, setAddAddress] = useState('');
   const [addPhone, setAddPhone] = useState('');
+  const [addSalary, setAddSalary] = useState('');
+  
 
   const validateForm = () => {
     let formErrors = {};
@@ -66,8 +71,7 @@ function Form() {
     setNewEmployee({ ...newEmployee, [name]: value });
   }
 
-  const handleForSave = (e) => {
-    e.preventDefault();
+  const handleForSave = () => {
 
     if (!validateForm()) return; // Prevent submission if validation fails
 
@@ -90,8 +94,10 @@ function Form() {
         alert('There was an error adding new employees', error);
       });
   };
+   
+  const [addregister, setAddRegister] = useState(false); //popup  registration
 
-  const [addSection, setAddSection] = useState(false);
+  const [addSection, setAddSection] = useState(false); //popup add PERMANANT employee
   const [addEdit, setAddEdit] = useState(false);
 
   const navigate = useNavigate();
@@ -102,6 +108,10 @@ function Form() {
 
   const handleWorkersClick = () => {
     navigate('/workers');
+  };
+   
+  const handleTemporyClick = () => {
+    navigate('/Extra');
   };
 
   const handleUpdate = (empId) => {
@@ -117,12 +127,13 @@ function Form() {
 
     axios.put(`http://localhost:8001/register/update/${empId}`, {
       Address: addAddress,
-      PhoneNumber: addPhone
+      PhoneNumber: addPhone,
+      BasicSalary:addSalary
     })
       .then(response => {
         if (response.data.success) {
           setEmployees(employees.map(emp =>
-            emp._id === empId ? { ...emp, employeeRegister: { ...emp.employeeRegister, Address: addAddress, PhoneNumber: addPhone } } : emp
+            emp._id === empId ? { ...emp, employeeRegister: { ...emp.employeeRegister, Address: addAddress, PhoneNumber: addPhone,BasicSalary:addSalary } } : emp
           ));
           alert('Data updated successfully');
           setAddEdit(false);
@@ -158,19 +169,35 @@ function Form() {
   return (
     <>
       <div className="KaviEmp">
+      <Admin/>
         <div className="Kavidet"><h3>Employee Details</h3></div>
         <div className="Kavitop-section">
           <div className="Kavileft-section">
-            <button id="Kaviadd" onClick={() => setAddSection(true)} className="add">+ Add Employee</button>
+            <button id="Kaviadd" onClick={() => setAddRegister(true)} className="add">+ Add Employee</button>
             <div className="Kavisearch">
               <input type="text" placeholder="Search: Enter ID"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)} />
             </div>
-            <button id="Kaviextra" className="Kaviextra" onClick={handleWorkersClick}>Assign Temporary Workers</button>
+            <button id="Kaviextra" className="Kaviextra" onClick={handleTemporyClick}>Assign Temporary Workers</button>
             <button id="Kavisalary" className="Kavisalary" onClick={handleSalaryClick}>Salary Details</button>
           </div>
         </div>
+
+        {addregister && (
+              <div className="registration-container">
+              <div className="registration-box">
+                <h3>Employee Registration</h3>
+                <form>
+                    <div className="KaviRegistration">
+                  <button id="permanent" type="button" className="registration-btn" onClick={() => setAddSection(true)} >Permanent Employee Registration</button>
+                  <button id="temporary" type="button" className="registration-btn"onClick={handleWorkersClick}>Temporary Employee Registration</button>
+                  </div>
+                </form>
+                </div>
+              </div>
+            
+        )}
 
         {addSection && (
           <div className='form-background'>
@@ -267,6 +294,8 @@ function Form() {
                 <input type="text" id="addrs" name="addrs" value={addAddress} onChange={(e) => setAddAddress(e.target.value)} /><br />
                 <label htmlFor="num">Phone number</label>
                 <input type="text" id="num" name="num" value={addPhone} onChange={(e) => setAddPhone(e.target.value)} />
+                <label htmlFor="num">Basic Salary</label>
+                <input type="number" id="num" name="salary" value={addSalary} onChange={(e) => setAddSalary(e.target.value)} />
                 <div className='btn-container'>
                   <button id="Kavibttn" type="submit">Save</button>
                   <button id="Kavibttn1" type="button" onClick={() => setAddEdit(false)}>Cancel</button>
