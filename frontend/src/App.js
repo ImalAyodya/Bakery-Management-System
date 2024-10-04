@@ -13,6 +13,12 @@ import Checkout from './Checkout';
 import Home from './Home';
 import OrderDashboard from './OrderDashboard';
 import OnlineOrderDB from './OnlineOrderDB';
+import './index.css';
+import Salesm from './Salesm';
+import Nwplan from './Nwplan';
+import Salesdash from './Salesdash';
+import Prform from './Prform';
+import Stables from './Stables';
 import OrderDelivery from './OrderDelivery';
 import Form from './Form';
 import DailyRoutes from './DailyRoutes';
@@ -28,20 +34,37 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route index element={<ProductWastageManagement />} />
+
 
                 <Route index element={<AdminDashboard />} />
                 <Route path="/products" element={<ProductWastageManagement />} />
+
                 <Route path="/product-management" element={<ProductManagement />} />
                 <Route path="/request-staff" element={<RequestStaff />} />
                 <Route path='/request-ingredient' element={<IngredientRequest />} />
                 <Route path='/daily-production' element={<ProductionForm />} />
                 <Route path='/updateProduct/:id' element={<UpdateProduct />} />
+
                 <Route path="/" element={<CommercialOrder />} />
                 <Route path="/Online" element={<Onlineorder />} />
                 <Route path="/CheckoutOrder" element={<Checkout />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/orderDashbrd" element={<OrderDashboard />} />
                 <Route path="/onlineOrderDashbrd" element={<OnlineOrderDB />} />
+
+
+                <Route path='/sales' element={<Salesm/>}/>
+                <Route path='/Prform' element={<Prform/>}/>
+                
+                <Route path='/plan' element={<Nwplan/>}/>
+                <Route path='/Salesdash' element={<Salesdash/>}/>
+                
+                <Route path='/Stables' element={<Stables/>}/>
+                <Route path='/Nwplan' element={<Nwplan/>}/>
+
+
+
                 <Route path = '/Form' element={<Form/>}/>
                 <Route path = '/orderdelivery'element={<OrderDelivery/>}/>
                 <Route path = '/dailyroute'element={<DailyRoutes/>}/>

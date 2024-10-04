@@ -1,14 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const route = require('./routes/saleroute'); // Ensure this is the correct path for your routes
+const DailyDelivery = require('./models/salesdeliveryorders'); // Update the path as needed
+app.use(route); // Use your custom routes
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotebv = require('dotenv');
 require('dotenv').config();
-
 const app = express();
-
 const port = 8000;
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -19,6 +19,26 @@ mongoose.connect(URL, {}).then(() => {
 }).catch((err) => {
     console.log(err);
 })
+
+// Route to add a daily delivery record
+app.post('/api/dailydelivery', async (req, res) => {
+  try {
+    const dailyDelivery = new DailyDelivery(req.body);
+    await dailyDelivery.save();
+    res.status(201).json({
+      success: true,
+      message: 'Daily delivery record added successfully',
+      data: dailyDelivery
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to add daily delivery record',
+      error: error.message
+    });
+  }
+});
 
 const productRoutes = require('./routes/products.js');
 

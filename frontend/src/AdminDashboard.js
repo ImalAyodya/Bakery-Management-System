@@ -7,6 +7,7 @@ import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-sv
 import HeaderAdmin from './HeaderAdmin';
 
 
+
 const AdminDashboard = () => {
     return (
         
@@ -59,7 +60,8 @@ const AdminDashboard = () => {
             </div>
           </Link>
   
-          <Link to="/sales" className="admin-dashboard-page-card">
+          <Link to="/Salesm" className="admin-dashboard-page-card">
+
             <div className="admin-dashboard-page-card-content">
               <h2>Sales Reports</h2>
               <p>View and analyze sales data.</p>
@@ -121,4 +123,5 @@ const AdminDashboard = () => {
 
   
   export default AdminDashboard;
+
   
