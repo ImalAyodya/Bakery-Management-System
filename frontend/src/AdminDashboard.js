@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom';
 import './AdminDashboard.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import Header from './Header';
+import HeaderAdmin from './HeaderAdmin';
+
 
 
 const AdminDashboard = () => {
     return (
         
       <div className="admin-dashboard-page">
-        <Header/>
+
+        <HeaderAdmin/>
         <header className="admin-dashboard-page-header">
           <h1>Bakery Management System - Admin Dashboard</h1>
         </header>
@@ -59,6 +61,7 @@ const AdminDashboard = () => {
           </Link>
   
           <Link to="/sales" className="admin-dashboard-page-card">
+
             <div className="admin-dashboard-page-card-content">
               <h2>Sales Reports</h2>
               <p>View and analyze sales data.</p>
@@ -120,4 +123,5 @@ const AdminDashboard = () => {
 
   
   export default AdminDashboard;
+
   
