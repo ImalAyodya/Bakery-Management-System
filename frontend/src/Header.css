@@ -9,7 +9,7 @@ header{
     display: flex;
     justify-content: center;
     transition: 0.5s ease;
-    transition-property: height, background;
+    transition-property: height;
     background-color: #161616;
     opacity: 0.7;
 }
@@ -17,7 +17,6 @@ header{
 .header.sticky{
     height: calc(2.5rem + 1rem);
     background: rgba(255, 255, 255, 0.1);
-
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
 }

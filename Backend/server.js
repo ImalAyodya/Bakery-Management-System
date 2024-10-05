@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const route = require('./routes/saleroute'); // Ensure this is the correct path for your routes
 const DailyDelivery = require('./models/salesdeliveryorders'); // Update the path as needed
 const postRoutes = require('./routes/routes');
+const postRoute = require('./routes/Emproutes')
 app.use(route); // Use your custom routes
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -45,6 +46,8 @@ app.post('/api/dailydelivery', async (req, res) => {
   
 const routepath = require('./routes/customer');
 app.use(routepath); 
+
+app.use(postRoute)
 
 const productRoutes = require('./routes/products.js');
 

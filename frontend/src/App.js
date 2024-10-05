@@ -6,7 +6,7 @@ import IngredientRequest from './pages/IngredientRequest';
 import UpdateProduct from './pages/updateProduct';
 import Inventory from './Inventory';
 import OrderRequest from './OrderRequest';
-import Dashboard from './Dashboard';
+import Dashboard from './EmployeeDashboard.js';
 import OrderRequest from './OrderRequest';
 import AddQuantity from './AddQuantity';
 import Product_Report from './Product_Report';
@@ -49,7 +49,14 @@ import InquiryForm from './InquiryForm';
 import AdminDashboard from './AdminDashboard';
 import AdminInquiryView from './AdminInquiryView';
 import InquiryView from './InquiryView';
-
+import Form from './EmployeeForm.js';
+import Workers from './workers.js'
+import Salary from './salary.js';
+import Extra from './Extra.js';
+import Display from './display.js';
+import Dashboard from './EmployeeDashboard.js';
+import Admin from './Admin.js';
+import Registration from './registration.js';
 
 
 
@@ -107,6 +114,14 @@ function App() {
                 <Route path="/AdminInquiryView" element={<AdminInquiryView/>} />
                 <Route path="/InquiryView" element={<InquiryView/>} />
                 <Route path="/" element={<AdminDashboard/>} />
+                <Route path = '/employees' element = {< Display/>} />
+                <Route path = '/Form' element = {<Form/>}/>
+                <Route path = '/workers' element = {<Workers/>}/>
+                <Route path = '/salary' element = {<Salary/>}/>
+                <Route path = '/Extra' element = {<Extra/>}/>
+                <Route path = '/' element = {<Dashboard/>}/>
+                <Route path = '/Admin' element = {<Admin/>}/>
+                <Route path = '/registration' element = {<Registration/>}/>
 
             </Routes>
         </BrowserRouter>
