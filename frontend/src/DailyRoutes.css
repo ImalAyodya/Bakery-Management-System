@@ -12,7 +12,7 @@
   border: 2px double #4b2e05;
 }
 
-h1 {
+.das-h1 {
   margin-right: 60%;
 }
 
@@ -163,7 +163,7 @@ h1 {
 }
 
 .das-sales-table th {
-  background-color: lemonchiffon;
+  background-color: burlywood;
   font-weight: bold;
 }
 

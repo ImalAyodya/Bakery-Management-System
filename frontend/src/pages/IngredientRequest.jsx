@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import jsPDF from 'jspdf';
-import '../App.css'; // Assuming this contains your styles
+import '../ProductBackground.css'
 
 const ingredientsList = [
     { id: 1, name: 'Flour', costPerUnit: 34.5 },
@@ -12,6 +12,7 @@ const ingredientsList = [
 
 const IngredientRequest = () => {
     const [selectedIngredientId, setSelectedIngredientId] = useState('');
+    
     const [quantities, setQuantities] = useState({});
     const [totalCost, setTotalCost] = useState(0);
     const [managerEmail, setManagerEmail] = useState('');
@@ -84,7 +85,7 @@ const IngredientRequest = () => {
             </select>
             <button onClick={addIngredient} className="add-ingredient-btn">Add Ingredient</button>
 
-            <form onSubmit={handleEmailSubmit}>
+            <form className='ingredient-form' onSubmit={handleEmailSubmit}>
                 {Object.entries(quantities).map(([id, quantity]) => {
                     const ingredient = ingredientsList.find(ingredient => ingredient.id === parseInt(id));
                     return (
@@ -102,11 +103,11 @@ const IngredientRequest = () => {
                         </div>
                     );
                 })}
-                <div className="total-cost">
+                <div className="product-total-cost">
                     <strong>Total Cost: Rs.{totalCost.toFixed(2)}</strong>
                 </div>
 
-                <div className="email-section">
+                <div className="Product-email-section">
                     <label htmlFor="manager-email">Inventory Manager Email:</label>
                     <input
                         type="email"
@@ -118,10 +119,10 @@ const IngredientRequest = () => {
                     />
                 </div>
 
-                <button type="submit" className="submit-btn">Send Email</button>
+                <button type="submit" className="Product-submit-btn">Send Email</button>
             </form>
 
-            <button onClick={generatePDF} className="generate-report-btn">Generate Report</button>
+            <button onClick={generatePDF} className="product-generate-report-btn">Generate Report</button>
         </div>
     );
 };

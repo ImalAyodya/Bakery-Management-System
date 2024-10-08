@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Production = require('../models/Production');
+const ProductUser = require('../models/productLogin')
 
 // GET all productions
 router.get('/', async (req, res) => {
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// AddT a new production record
+// Add a new production record
 router.post('/', async (req, res) => {
     const { date, products } = req.body;
 
@@ -28,5 +29,4 @@ router.post('/', async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 });
-
 module.exports = router;

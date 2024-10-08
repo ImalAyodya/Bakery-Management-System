@@ -1,4 +1,4 @@
-.top-area{
+.inventory .inventory-top-area{
   display: flex;
   background-color: #ecc865;
   display: block;
@@ -8,17 +8,17 @@
 }
 
 /*main color themes of project : #e2ac17, #fac031*/
-.topic{
+.inventory .topic{
   margin-left: 100px;
 }
 
-.topic p{
+.inventory .topic p{
   padding-top: 20px;
   margin-right: 1000px;
   text-align: left;
 }
 
-.purpose{
+.inventory .inventorypurpose{
   width: 600px;
   font-size: 20px;
   text-align: center;
@@ -28,25 +28,25 @@
   line-height: 35px;
 }
 
-.top-image{
+.inventory .top-image{
   width: 360px;
   height: 270px;
   margin-left: 500px;
   margin-top: -180px;
 }
 
-.topic p{
+.inventory .topic p{
   font-size: 80px;
   color:rgb(76, 77, 5);
 
 }
 
 
-.body{
+.inventory .inventory-body{
   display: flex;
 }
 
-.reports-btn{
+.inventory .reports-btn{
   width: 450px;
   height: 450px;
   background-color: #caaa52;
@@ -59,7 +59,7 @@
   perspective: 1000px;
 }
 
-.report-img{
+.inventory .report-img{
   width: 350px;
   height: 250px;
   margin-left: 48px;
@@ -67,7 +67,7 @@
   border-radius: 8px;
 }
 
-.reports-btn button{
+.inventory .reports-btn button{
   font-family: Trebuchet MS, Helvetica, sans-serif;
   color: rgb(255, 255, 255);
   background-color: #826310;
@@ -80,13 +80,13 @@
   cursor: pointer;
 }
 
-.reports-btn button:hover{
+.inventory .reports-btn button:hover{
   color: rgb(0, 0, 0);
   background-color: #f3d688;
   border: 2px solid #826310;
 }
 
-.dashboard-btn{
+.inventory .dashboard-btn{
   width: 450px;
   height: 450px;
   background-color:  #caaa52;
@@ -100,7 +100,7 @@
 }
 
 
-.invent-img{
+.inventory .invent-img{
   width: 350px;
   height: 250px;
   margin-left: 48px;
@@ -108,7 +108,7 @@
   border-radius: 8px;
 }
 
-.dashboard-btn button{
+.inventory .dashboard-btn button{
   font-family: Trebuchet MS, Helvetica, sans-serif;
   color: rgb(255, 255, 255);
   background-color: #826310;
@@ -121,7 +121,7 @@
   cursor: pointer;
 }
 
-.dashboard-btn button:hover{
+.inventory .dashboard-btn button:hover{
   color: rgb(0, 0, 0);
   background-color: #f3d688;
   border: 2px solid #826310;

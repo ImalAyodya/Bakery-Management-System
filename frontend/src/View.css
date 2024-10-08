@@ -1,4 +1,4 @@
-.container1 {
+.suppliercontainer1 {
     width: 95%;
     margin: 30px auto;
     padding: 20px;
@@ -7,31 +7,31 @@
     border-radius: 12px;
 }
 
-h3 {
+.suppliercontainer1 h3 {
     margin-left: 650px;
     font-size: 30px;
 }
 
-table {
+.supplierTable table {
     width: 100%;
     margin-top: 20px;
     border-spacing: 0 10px;
 }
 
-table, th, td {
+.supplierTable table, th, td {
     border: 1px solid #ddd;
 }
 
-th, td {
+.supplierTable th, td {
     padding: 10px;
     text-align: center;
 }
 
-th {
+.supplierTable th {
     background-color: #ae781c;
 }
 
-.edit {
+.supplieredit {
     font-size: 14px;
     background-color: #ddcd22;
     color: #fff;
@@ -45,11 +45,11 @@ th {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.edit:hover {
+.supplieredit:hover {
     background-color: #ecef7b;
 }
 
-.delete  {
+.supplierdelete  {
     font-size: 14px;
     background-color: #e66525;
     color: #fff;
@@ -62,11 +62,11 @@ th {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.delete:hover {
+.supplierdelete:hover {
     background-color: #db9d46;
 }
 
-.addbtn {
+.supplieraddbtn {
     font-size: 14px;
     background-color: #ae781c;
     color: #fff;
@@ -79,11 +79,11 @@ th {
 }
 
 
-.addbtn:hover {
+.supplieraddbtn:hover {
     background-color: #ded13e;
 }
 
-.search-bar {
+.suppliersearch-bar {
     width: 25%;            
     padding: 10px;
     font-size: 16px;       
@@ -96,15 +96,15 @@ th {
     transition: border-color 0.3s ease;  
   }
   
-  .search-bar:focus {
+  .suppliersearch-bar:focus {
     border-color: #007bff;     
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); 
   }
   
-  .table-wrapper {
+  .suppliertable-wrapper {
     margin-top: 20px;
   }
   
-.id {
+.supplierid {
     font-size: 0px;
 }

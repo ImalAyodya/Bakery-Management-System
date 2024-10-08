@@ -9,7 +9,7 @@ header{
     display: flex;
     justify-content: center;
     transition: 0.5s ease;
-    transition-property: height;
+    transition-property: height, background;
     background-color: #161616;
     opacity: 0.7;
 }
@@ -17,6 +17,7 @@ header{
 .header.sticky{
     height: calc(2.5rem + 1rem);
     background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
 }
@@ -39,13 +40,15 @@ header{
 }
 
           
-.nav-bar logo{
+.nav-bar .logo{
     color: floralwhite;
     
     text-decoration: none;
     text-shadow: var(--text-shadow);
     height: 20px;
-    width: 2px;
+    width: 500px;
+    text-align: left;
+    margin-top: 0px;
 }
 
     .nav-items {
@@ -83,6 +86,24 @@ header{
     font-weight: 500;
     padding: 10px; 
 }
+
+ul.dropdown li{
+    display: block;
+}
+
+ul.dropdown{
+    display: none;
+    position: absolute;
+    background-color: #302e2e; 
+    box-shadow: 45px 2px 5px rgba(3, 3, 3, 0.76); 
+    padding: 0px; 
+    z-index: 999;
+    width: 100%;
+}
+li:hover ul.dropdown{
+    display: block;
+}
+
 /*.nav-items li a {
 	color: var(--white-color);
     font-size: 1em;

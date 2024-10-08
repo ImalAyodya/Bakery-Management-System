@@ -35,6 +35,7 @@
     font-size: 20px;
     border: none;
     
+    
   }
   .Kavisalary {
     color: white;
@@ -466,7 +467,7 @@
     border-radius: 15px ;
     border: none;
   }
-  table input[type="date"] {
+  .KaviinputDate {
     padding: 12px 10px; /* Increase padding for better clarity */
     border: 2px solid #ccc;
     border-radius: 8px;
@@ -479,13 +480,13 @@
     cursor: pointer;
   }
   
-  table input[type="date"]:focus {
+  .KaviinputDate:focus {
     border-color: #e2b94a;
     box-shadow: 0 0 8px rgba(243, 187, 5, 0.4);
     outline: none; /* Remove the default focus outline */
   }
   
-  table button {
+ .KaviAssiButton {
     margin-left: 10px;
     padding: 6px 12px;
     background-color: #f06c2f;
@@ -498,7 +499,7 @@
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
   }
   
-  table button:hover {
+  .KaviAssiButton:hover {
     background-color: #cc7c3b;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
@@ -571,7 +572,7 @@
   
   /* Apply Button */
   .Kavicontrols button {
-    background-color: #C29013;
+    background-color: #c25c13;
     color: white;
     padding: 12px 20px;
     font-size: 20px;
@@ -959,7 +960,7 @@
   
   /*registration.js*/
   /* Styling the container */
-  .registration-container {
+  .Kaviregistration-container {
     position: absolute;
     background-color: #282c2c; /* Solid color without transparency */
     width: 1800px;
@@ -975,7 +976,7 @@
   }
   
   /* Styling the box around the buttons */
-  .registration-box {
+  .Kaviregistration-box {
     background-color: #ffffff;
     border-radius: 10px;
     padding: 40px;
@@ -988,14 +989,14 @@
   }
   
   /* Heading style */
-  .registration-box h3 {
+  .Kaviregistration-box h3 {
     font-size: 30px;
     margin-bottom: 20px;
     color: #0e0d0d;
   }
   
   /* Styling buttons */
-  .registration-btn {
+  .Kaviregistration-btn {
     width: 100%;
     padding: 12px 0;
     margin: 10px 0;

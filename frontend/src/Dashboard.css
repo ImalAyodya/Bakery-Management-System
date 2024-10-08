@@ -1,12 +1,12 @@
-.background{
+.inventoryDashboard .background{
   background-color: #fdfaf4;
   margin-top: -26px;
 }
 
-.body{
+.inventoryDashboard .body{
   display: flex;
 }
-.search{
+.inventoryDashboard .search{
   width:400px;
   height:30px;
   border-radius: 5px;
@@ -17,31 +17,31 @@
   font-size: 14px;
 }
 
-.dashboardtopic{
+.inventoryDashboard .dashboardtopic{
   margin-left: 430px;
   color: #533b00;
   font-size: 40px;
 }
 
-.main{
+.inventoryDashboard .main{
   display: contents;
 }
 
-.bottom-btn, .main{
+.inventoryDashboard .bottom-btn, .inventoryDashboard .main{
   flex:1;
 }
 
-.topic{
+.inventoryDashboard .topic{
     text-align: center;
     font-size: 40px;
     color: #866b27;
   }
   
-  .app h2{
+  .inventoryDashboard .app h2{
     font-size: 25px;
   }
   
-  .main-table{
+  .inventoryDashboard .main-table{
     margin-top: 10px;
     margin-right: 30px;
     border-collapse: collapse;
@@ -50,7 +50,7 @@
     background-color: #f3d175;
   }
   
-  td{
+  .inventoryDashboard td{
     height: 90px;
     width: 400px;
     font-size: 16px;
@@ -58,48 +58,48 @@
     color: #000000;
   }
 
-  .status-inOrder{
+  .inventoryDashboard .status-inOrder{
     color: #177333;
   }
 
-  .status-outOfStock{
+  .inventoryDashboard .status-outOfStock{
     color:#b81c1c
   }
 
-tr:hover{
+.inventoryDashboard tr:hover{
   background-color:#efd38f;
   transition: 0.5s;
 }
 
 
-  .main{
+  .inventoryDashboard .main{
     display: flex;
     margin-left: 50px;
   }
   
-  .colomn-topics{
+  .inventoryDashboard .colomn-topics{
     height: 40px;
     text-align: center;
   }
   
   
-  .table, .sideBtn{
+  .inventoryDashboard .table, .inventoryDashboard .sideBtn{
     flex : 1;
   }
 
-  th{
+  .inventoryDashboard th{
     background-color: #fac031;
     color:#533b00;
     height: 50px;
     font-style: italic;
   }
 
-  th, td{
+  .inventoryDashboard th, .inventoryDashboard td{
     border: 3px solid #e2ac17;
 
   }
 
-  .btns{
+  .inventoryDashboard .btns{
     width:100px;
     padding-left: 30px;
     padding-right: 30px;
@@ -107,7 +107,7 @@ tr:hover{
   
   
   
-  .addBtn{
+  .inventoryDashboard .addBtn{
     background-color: #cba12b;
     color:rgb(0, 0, 0);
     border-radius: 8px;
@@ -119,13 +119,13 @@ tr:hover{
    
   }
 
-  .sideBtn .addBtn:hover{
+  .inventoryDashboard .sideBtn .addBtn:hover{
     background-color: #fcbe12;
     border: 3px solid rgb(142, 130, 0);
     transition: 0.2s;
   }
 
-.removeBtn{
+.inventoryDashboard .removeBtn{
   background-color: #e8b21f;
   color:rgb(0, 0, 0);
   border-radius: 8px;
@@ -137,12 +137,12 @@ tr:hover{
   border: 3px solid rgb(142, 130, 0);
 }
 
-.deleteColomn{
+.inventoryDashboard .deleteColomn{
   padding-left: 30px;
   padding-right: 30px;
 }
 
-.delete{
+.inventoryDashboard .delete{
   width:130px;
   height: 30px;
   border-color: #000000;
@@ -153,32 +153,32 @@ tr:hover{
 }
 
 
-.delete:hover{
+.inventoryDashboard .delete:hover{
   background-color: rgb(195, 37, 37);
   color: white;
 
 }
 
 
-  .sideBtn .removeBtn:hover{
+  .inventoryDashboard .sideBtn .removeBtn:hover{
     background-color: #fcbe12;
     border: 3px solid rgb(154, 142, 5);
     transition: 0.2s;
   }
   
   
-  .itemNo{
+  .inventoryDashboard .itemNo{
     width: 100px;
   }
-  .available{
+  .inventoryDashboard .available{
     width: 100px;
   }
   
-  .reOrder{
+  .inventoryDashboard .reOrder{
     width: 100px;
   }
 
-  .bottom-btn{
+  .inventoryDashboard .bottom-btn{
     width: 200px;
     height: 550px;
     background-color: #fac031;
@@ -191,19 +191,19 @@ tr:hover{
 
 
 
-  .bottom-btn .new-ingre{
+  .inventoryDashboard .bottom-btn .new-ingre{
     background-color: #e2ac17;
-    border: 3px solid #5b45098d;
-    color:rgb(5, 5, 5);
+    color:rgb(0, 0, 0);
+    border-radius: 8px;
     font-size: 20px;
-    width: 200px;
-    height: 50px;
+    width: 100px;
+    height: 25px;
     cursor: pointer;
-    border-radius: 7px;
-
+    border: 3px solid rgb(154, 142, 5);
+   
   }
 
-  .bottom-btn .new-ingre:hover{
+  .inventoryDashboard .bottom-btn .new-ingre:hover{
     background-color: #5b45098d;
     transition: 0.2s;
     border: 3px solid #c9b16d;
@@ -211,7 +211,7 @@ tr:hover{
   }
 
 
-  .bottom-btn .productSentBtn{
+  .inventoryDashboard .bottom-btn .productSentBtn{
     background-color: #e2ac17;
     border: 3px solid #5b45098d;
     color:rgb(5, 5, 5);
@@ -225,7 +225,7 @@ tr:hover{
 
   }
 
-  .bottom-btn .productSentBtn:hover{
+  .inventoryDashboard .bottom-btn .productSentBtn:hover{
     background-color: #5b45098d;
     transition: 0.2s;
     border: 3px solid #c9b16d;
@@ -235,22 +235,21 @@ tr:hover{
 
 
 
-
-  .bottom-btn .del-ingre{
+  .inventoryDashboard .bottom-btn .del-ingre{
     margin-left: 10px;
     margin-top: 10px;
     width: 200px;
     height: 50px;
   }
 
-  .bottom-btn .new-ingre{
+  .inventoryDashboard .bottom-btn .new-ingre{
     margin-left: 7px;
     margin-top: 20px;
     width: 410px;
     height: 50px;
   }
 
-  .bottom-btn .report{
+  .inventoryDashboard .bottom-btn .report{
     background-color: #e2ac17;
     border: 3px solid #5b45098d;
     color:rgb(5, 5, 5);
@@ -263,7 +262,7 @@ tr:hover{
     border-radius: 7px;
   }
 
-  .bottom-btn .report:hover{
+  .inventoryDashboard .bottom-btn .report:hover{
     background-color: #5b45098d;
     transition: 0.2s;
     border: 3px solid #c9b16d;
@@ -271,7 +270,7 @@ tr:hover{
   }
 
 
-  .bottom-btn .order{
+  .inventoryDashboard .bottom-btn .order{
     background-color: #e2ac17;
     border: 3px solid #5b45098d;
     color:rgb(5, 5, 5);
@@ -284,7 +283,7 @@ tr:hover{
     border-radius: 7px;
   }
 
-  .bottom-btn .order:hover{
+  .inventoryDashboard .bottom-btn .order:hover{
     background-color: #5b45098d;
     transition: 0.2s;
     border: 3px solid #c9b16d;
@@ -292,7 +291,7 @@ tr:hover{
   }
 
 
-  .bottom-btn .productSentBtn{
+  .inventoryDashboard .bottom-btn .productSentBtn{
     background-color: #e2ac17;
     border: 3px solid #5b45098d;
     color:rgb(5, 5, 5);
@@ -305,7 +304,7 @@ tr:hover{
     border-radius: 7px;
   }
 
-  .bottom-btn .productSentBtn:hover{
+  .inventoryDashboard .bottom-btn .productSentBtn:hover{
     background-color: #5b45098d;
     transition: 0.2s;
     border: 3px solid #c9b16d;
@@ -314,7 +313,7 @@ tr:hover{
 
 
 
-  .bottom-btn .sup_report{
+  .inventoryDashboard .bottom-btn .sup_report{
     background-color: #e2ac17;
     border: 3px solid #5b45098d;
     color:rgb(5, 5, 5);
@@ -327,14 +326,14 @@ tr:hover{
     border-radius: 7px;
   }
 
-  .bottom-btn .sup_report:hover{
+  .inventoryDashboard .bottom-btn .sup_report:hover{
     background-color: #5b45098d;
     transition: 0.2s;
     border: 3px solid #c9b16d;
     color: azure;
   }
 
-  .bottom-btn .product_report{
+  .inventoryDashboard .bottom-btn .product_report{
     background-color: #e2ac17;
     border: 3px solid #5b45098d;
     color:rgb(5, 5, 5);
@@ -347,7 +346,7 @@ tr:hover{
     border-radius: 7px;
   }
 
-  .bottom-btn .product_report:hover{
+  .inventoryDashboard .bottom-btn .product_report:hover{
     background-color: #5b45098d;
     transition: 0.2s;
     border: 3px solid #c9b16d;
@@ -357,7 +356,7 @@ tr:hover{
 
 
   /* ------------------------Add New Ingredient section---------------------------------*/
-  .add-main{
+  .inventoryDashboard .add-main{
     width:1519px;
     backdrop-filter: 20px;
     left: 0;
@@ -369,7 +368,7 @@ tr:hover{
   }
   
 
-.add-body{
+.inventoryDashboard .add-body{
     display: flex;
     position: absolute;
     margin-left: 325px;
@@ -382,22 +381,22 @@ tr:hover{
     border: 4px solid rgb(136, 131, 204);
 }
 
-.add-topic, .add-quantity,.next-body{
+.inventoryDashboard .add-topic, .inventoryDashboard .add-quantity,.inventoryDashboard .next-body{
     flex: 1;
 }
 
-.next-body{
+.inventoryDashboard .next-body{
   width:1530px;
   background-color: rgba(0, 0, 0, 0.70);
   transition:all 0.5s;
   margin-top: -87px;
 }
 
-.add-quantity .ad{
+.inventoryDashboard .add-quantity .ad{
     margin-left: 10px;
 }
 
-.add-topic{
+.inventoryDashboard .add-topic{
     margin-left: 10px;
     text-align: center;
     margin-top: 10px;
@@ -408,26 +407,26 @@ tr:hover{
     border: 1px solid rgb(57, 55, 89);
 }
 
-.add-topic .ad{
+.inventoryDashboard .add-topic .ad{
     margin-left: 0px;
     margin-top: 100px;
     color:rgb(184, 184, 229)
 }
 
-.input{
+.inventoryDashboard .input{
     margin-left: 30px;
     width: 300px;
     height: 25px;
 }
 
-.addSize{
+.inventoryDashboard .addSize{
   font-size: 20px;
   margin-left: 10px;
   margin-top: 130px;
   color:rgb(255, 255, 255)
 }
 
-.addSubmit{
+.inventoryDashboard .addSubmit{
   cursor: pointer;
   color: white;
   width: 250px;
@@ -437,34 +436,32 @@ tr:hover{
   margin-left: 60px;
 }
 
-.addSubmit:hover{
+.inventoryDashboard .addSubmit:hover{
   background-color: rgb(22, 33, 56);
 }
 
-.back-btn{
+.inventoryDashboard .back-btn{
     width: 200px;
     height: 35px;
-    margin-left: 85px;
 }
 
-.add-itemId{
+.inventoryDashboard .add-itemId{
   display: none;
 }
 
 
 /*--------------------------remove quantity btn-----------------------------------*/
 
-.rem-itemId{
+.inventoryDashboard .rem-itemId{
   display: none;
 }
 
-.itemName{
+.inventoryDashboard .itemName{
   font-size: 24px;
   
-
 }
 
-.remove-main{
+.inventoryDashboard .remove-main{
   width:1473px;
   height: 680px;
   backdrop-filter: 20px;
@@ -478,7 +475,7 @@ tr:hover{
 }
 
 
-.remove-body{
+.inventoryDashboard .remove-body{
   display: flex;
   position: absolute;
   margin-left: 350px;
@@ -491,11 +488,11 @@ tr:hover{
   border: 4px solid rgb(204, 131, 131);
 }
 
-.remove-topic, .remove-quantity,.next-body{
+.inventoryDashboard .remove-topic, .inventoryDashboard .remove-quantity,.inventoryDashboard .next-body{
   flex: 1;
 }
 
-.next-body{
+.inventoryDashboard .next-body{
 width:1519px;
 height: 770px;
 background-color: rgba(0, 0, 0, 0.90);
@@ -503,11 +500,11 @@ transition:all 0.5s;
 margin-top: -87px;
 }
 
-.remove-quantity p{
+.inventoryDashboard .remove-quantity p{
   margin-left: 10px;
 }
 
-.remove-topic{
+.inventoryDashboard .remove-topic{
   margin-left: 10px;
   text-align: center;
   margin-top: 10px;
@@ -518,26 +515,26 @@ margin-top: -87px;
   border: 1px solid rgb(89, 55, 55);
 }
 
-.remove-topic .rm{
+.inventoryDashboard .remove-topic .rm{
   margin-left: 10px;
   margin-top: 100px;
   color:rgb(229, 184, 184)
 }
 
-.remove-size{
+.inventoryDashboard .remove-size{
   font-size: 20px;
   margin-left: 10px;
   margin-top: 130px;
   color:rgb(255, 255, 255)
 }
 
-.input{
+.inventoryDashboard .input{
   margin-left: 30px;
   width: 300px;
   height: 25px;
 }
 
-.removeSubmit{
+.inventoryDashboard .removeSubmit{
   cursor: pointer;
   font-size: 20px;
   color: white;
@@ -547,11 +544,11 @@ margin-top: -87px;
   margin-left: 60px;
 }
 
-.removeSubmit:hover{
+.inventoryDashboard .removeSubmit:hover{
   background-color: #512c28;
 }
 
-.back-btn{
+.inventoryDashboard .back-btn{
   width: 200px;
   height: 35px;
   margin-left: 85px;
@@ -560,37 +557,36 @@ margin-top: -87px;
   cursor: pointer;
 }
 
-.back-btn:hover{
+.inventoryDashboard .back-btn:hover{
   background-color: #c6aa63;
 }
 
 
 
-
 /*-----------------------Add Item Btn-----------------------*/
 
-.addItem-main{
+.inventoryDashboard .addItem-main{
   width:1519px;
   height: 780px;
   backdrop-filter: 20px;
   left: 0;
   right: 0;
-  top: 91px;
+  top: 63px;
   backdrop-filter: 80px;
   position: absolute;
   background-color: rgba(208, 201, 201, 0.95);
 
 }
 
-.addItem-topic, .addItem-form{
+.inventoryDashboard .addItem-topic, .inventoryDashboard .addItem-form{
   flex: 1;
 }
 
-.addItemNext-body{
+.inventoryDashboard .addItemNext-body{
 width:400px;
-height: 670px;
+height: 700px;
 transition:all 0.5s;
-margin-top: 80px;
+margin-top: 20px;
 margin-left: 537px;
 border: 4px solid rgb(32, 29, 61);
 background-color: rgb(183, 175, 175);
@@ -598,7 +594,7 @@ border-radius: 7px;
 }
 
 
-.addItem-topic{
+.inventoryDashboard .addItem-topic{
   margin-left: 10px;
   text-align: center;
   margin-top: -80px;
@@ -607,20 +603,20 @@ border-radius: 7px;
   height: 420px;
 }
 
-.addItem-topic p{
+.inventoryDashboard .addItem-topic p{
   margin-left: 0px;
   margin-top: 50px;
   color:rgb(32, 36, 90);
 }
 
 
-.addItem-form{
+.inventoryDashboard .addItem-form{
   text-align: center;
   border-radius: 8px;
   margin-top: -200px;
 }
 
-.addItem-form p{
+.inventoryDashboard .addItem-form p{
   color: rgb(34, 34, 57);
   font-size: 18px;
   margin-left: 20px;
@@ -629,20 +625,21 @@ border-radius: 7px;
 }
 
 
-.addItem-input{
+.inventoryDashboard .addItem-input{
   margin-left: 20px;
   width: 318px;
+  height: 30px
 }
 
-.addItem-select{
+.inventoryDashboard .addItem-select{
   margin-left: 20px;
   width: 324px;
-  height: 25px;
+  height: 30px;
 
 }
 
 
-.addItem-btn{
+.inventoryDashboard .addItem-btn{
   width: 250px;
   height: 35px;
   background-color: rgb(41, 17, 198);
@@ -652,11 +649,11 @@ border-radius: 7px;
   cursor: pointer;
 }
 
-.addItem-btn:hover{
+.inventoryDashboard .addItem-btn:hover{
   background-color: rgb(31, 13, 145);
 }
 
-.addCancel{
+.inventoryDashboard .addCancel{
   width: 250px;
   height: 35px;
   margin-top: 10px;
@@ -667,7 +664,7 @@ border-radius: 7px;
   cursor: pointer;
 }
 
-.addCancel:hover{
+.inventoryDashboard .addCancel:hover{
   background-color: rgb(31, 13, 145);
 
 }
@@ -675,7 +672,7 @@ border-radius: 7px;
 
 
 /*-------------------------Production section-----------------------------*/
-.productAdd-main {
+.inventoryDashboard .productAdd-main {
   position: fixed;
   top: 0;
   left: 0;
@@ -688,7 +685,7 @@ border-radius: 7px;
   z-index: 1000; /* Ensure popup is above other content */
 }
 
-.product-body {
+.inventoryDashboard .product-body {
   background-color: #fff;
   padding: 30px;
   border-radius: 8px;
@@ -698,20 +695,20 @@ border-radius: 7px;
   text-align: center;
 }
 
-.product-topic {
+.inventoryDashboard .product-topic {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-.product-form p {
+.inventoryDashboard .product-form p {
   margin-bottom: 15px;
   font-size: 16px;
   color: #333;
   text-align: left;
 }
 
-.product-input {
+.inventoryDashboard .product-input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -721,7 +718,7 @@ border-radius: 7px;
   margin-top: 5px;
 }
 
-.product-btn {
+.inventoryDashboard .product-btn {
   width: 100%;
   padding: 10px;
   background-color: #3498db;
@@ -734,11 +731,11 @@ border-radius: 7px;
   transition: background-color 0.3s ease;
 }
 
-.product-btn:hover {
+.inventoryDashboard .product-btn:hover {
   background-color: #2980b9;
 }
 
-.productCancelBtn {
+.inventoryDashboard .productCancelBtn {
   width: 100%;
   padding: 10px;
   background-color: #e74c3c;
@@ -751,6 +748,7 @@ border-radius: 7px;
   transition: background-color 0.3s ease;
 }
 
-.productCancelBtn:hover {
+.inventoryDashboard .productCancelBtn:hover {
   background-color: #c0392b;
 }
+

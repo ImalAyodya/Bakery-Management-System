@@ -1,5 +1,5 @@
 const mongoose=require('mongoose');
-const DailySchema=new mongoose.Schema({
+const SalesDailySchema=new mongoose.Schema({
 dailydelivery:{
     date:{type:String},
     vehicleno:{type:String},
@@ -15,4 +15,4 @@ dailydelivery:{
 
 
 },{timestamps:true});
-module.exports=mongoose.model('deliverysales',DailySchema)
+module.exports=mongoose.model('Deliverysales',SalesDailySchema)

@@ -232,9 +232,10 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/register');
-const Post2 = require('../models/TempPost');
+const TempWork = require('../models/TempWorks');
 const Post3 = require('../models/SalaryPost');
 const mongoose = require('mongoose');
+const EmployeeUser = require('../models/EmployeeLogin')
 
 
 //create data
@@ -334,30 +335,35 @@ router.delete("/register/delete/:id" , async(req, res)=>{
        
  });
 
-// Create Temporary Worker
-router.post('/TempPost/save', async (req, res) => {
+// Save temporary worker data
+router.post('/TempWorks/save', async (req, res) => {
     try {
-        const { Tempory } = req.body;
-        const newPost2 = new Post2({
-            Tempory
-        });
+        // Use req.body directly without destructuring Tempory
+        const newTempWorker = new TempWork(req.body);
 
-        await newPost2.save();
+        // Save the new worker data
+        await newTempWorker.save();
+
+        // Return a success response
         return res.status(200).json({
-            success: true,
-            tempory: newPost2
+            success: "Data saved successfully",
+            Tempory: newTempWorker
         });
     } catch (err) {
+        console.error('Error while saving temp worker:', err);
+        // Catch any validation or saving errors
         return res.status(400).json({
             error: err.message
         });
     }
 });
 
+
+
 // Read Temporary Workers
-router.get("/TempPost", async (req, res) => {
+router.get("/TempWorks", async (req, res) => {
     try {
-        const TempPost = await Post2.find().exec();
+        const TempPost = await TempWork.find().exec();
         return res.status(200).json({
             success: "Successfully retrieved",
             Tempory: TempPost
@@ -370,12 +376,12 @@ router.get("/TempPost", async (req, res) => {
 });
 
 // Update Assigned Date
-router.put("/TempPost/update/:id", async (req, res) => {
+router.put("/TempWorks/update/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const { AssignedDate } = req.body;
 
-        const updatedPost1 = await Post2.findByIdAndUpdate(
+        const updatedPost1 = await TempWork.findByIdAndUpdate(
             id,
             { 'Tempory.AssignedDate': AssignedDate },
             { new: true }
@@ -399,9 +405,9 @@ router.put("/TempPost/update/:id", async (req, res) => {
 });
 
 // Delete Temporary Worker
-router.delete("/TempPost/delete/:id", async (req, res) => {
+router.delete("/TempWorks/delete/:id", async (req, res) => {
     try {
-        const deletePost2 = await Post2.findByIdAndDelete(req.params.id).exec();
+        const deletePost2 = await TempWork.findByIdAndDelete(req.params.id).exec();
 
         if (!deletePost2) {
             return res.status(404).json({
@@ -419,5 +425,122 @@ router.delete("/TempPost/delete/:id", async (req, res) => {
         });
     }
 });
+
+ //salary create
+
+ router.post('/SalaryPost/save', async(req, res) => {
+     try{
+      
+       const{Salary} = req.body;
+       const newPost3 = new Post3({
+          Salary
+        })
+
+         await newPost3.save();
+        return res.status(200).json({
+          success: true,
+          salary : newPost3
+
+        });
+   }catch(err){
+        return res.status(400).json({
+            error:err.message
+       });
+    }
+
+ });
+
+
+ /*--------------------------Login-----------------------------*/
+// Routes
+
+/**
+ * @route   POST /EmployeeUser
+ * @desc    Create a new user
+ * @access  Public
+ */
+router.post('/EmployeeUser', async (req, res) => {
+    const { username, password } = req.body;
+  
+    // Simple validation
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Please enter both username and password' });
+    }
+  
+    try {
+      // Check if user already exists
+      const existingUser = await EmployeeUser.findOne({ username });
+      if (existingUser) {
+        return res.status(400).json({ message: 'Username already exists' });
+      }
+  
+      // Create new user
+      const newUser = new EmployeeUser({
+        username,
+        password
+      });
+  
+      // Save user to database
+      await newUser.save();
+  
+      res.status(201).json({ message: 'User created successfully' });
+  
+    } catch (error) {
+      console.error('Error creating user:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+  /**
+   * @route   POST /login
+   * @desc    Authenticate user and return success message
+   * @access  Public
+   */
+router.post('/employeelogin', async (req, res) => {
+    const { username, password } = req.body;
+  
+    // Simple validation
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Please enter both username and password' });
+    }
+  
+    try {
+      // Check for existing user
+      const user = await EmployeeUser.findOne({ username });
+      if (!user) {
+        return res.status(401).json({ message: 'Invalid username or password' });
+      }
+  
+      // Validate password
+      const isMatch = await user.isValidPassword(password);
+      if (!isMatch) {
+        return res.status(401).json({ message: 'Invalid username or password' });
+      }
+  
+      // Successful login
+      res.status(200).json({ message: `Welcome, ${user.username}! You have successfully logged in.` });
+  
+    } catch (error) {
+      console.error('Login error:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+  /**
+   * @route   GET /inventory-data
+   * @desc    Retrieve inventory data (protected route)
+   * @access  Public for simplicity
+   */
+  router.get('/employee-data', (req, res) => {
+    // For simplicity, we're not implementing authentication here
+    res.json({ data: 'Here is your employee data!' });
+  });
+  
+
+
+
+
+
+
 
 module.exports = router;

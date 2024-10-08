@@ -13,7 +13,7 @@ function Salary() {
 
   useEffect(() => {        
     // Fetch employee data from the backend
-    axios.get('http://localhost:8001/register')
+    axios.get('http://localhost:8000/register')
       .then(response => {
         if (response.data.success) {
           setEmployees(response.data.mypost);
@@ -107,7 +107,7 @@ function Salary() {
           NetSalary: emp.netSalary || '0.00',
         };
 
-        await axios.post('http://localhost:8001/SalaryPost/save', { Salary: salaryData });
+        await axios.post('http://localhost:8000/SalaryPost/save', { Salary: salaryData });
       }));
 
       alert('Salaries saved successfully!');

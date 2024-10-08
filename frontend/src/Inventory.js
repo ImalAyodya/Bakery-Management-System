@@ -13,6 +13,7 @@ function InventoryUI(){
   return(
 
   <>
+  <div className='inventory'>
   <Header/>
     <div className='top-area'>
       <div className= 'topic'>
@@ -26,7 +27,7 @@ function InventoryUI(){
 
     </div>
 
-    <div className='purpose'>
+    <div className='inventorypurpose'>
       <h2>Our Inventory Management System</h2><p>streamlines the process of 
         tracking and managing your inventory efficiently. Designed 
         to provide real-time updates and detailed insights, our 
@@ -37,7 +38,7 @@ function InventoryUI(){
       <h3>"Optimize your inventory, maximize your efficiency."</h3>
     </div>
 
-  <div className= "body">
+  <div className= "inventory-body">
 
     <div className = 'reports-btn'>
       <img className='report-img' src = {Reports} alt=""/>
@@ -56,6 +57,7 @@ function InventoryUI(){
 
   <br/><br/><br/><br/>
 
+  </div>
 
   </>
 );

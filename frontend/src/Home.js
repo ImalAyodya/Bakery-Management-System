@@ -11,12 +11,15 @@ import breads from './images/wheatbread.jpg';
 import Cakes from './images/cake.jpg';
 import Sweetes from './images/donut.webp';
 import discount from './images/15Off.jpeg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 import './Home.css';
 
 
 function Home(){
     const product = useNavigate();
+    const Navigate = useNavigate();
     return(
         <div className="Home">
                     <Header/>
@@ -25,7 +28,7 @@ function Home(){
                 
                             <div className="home-text">
                                 <h3 >Welcome</h3>
-                                <h1>Expertly Baked Delights</h1>
+                                <h1 className='h1Home'>Expertly Baked Delights</h1>
                                 <p>Bite into delightful suprices. Bake your heart out <br/> Baked with love.Enrich every moment</p>
                                 <a href="#" onClick={ ()=> product ('/Online')} className="btn">Our Products</a>
                             </div>
@@ -106,20 +109,31 @@ function Home(){
 				</div>
 
 				<div className="news-text">
-					<h3>Checkout Now and Receive</h3>
-					<h2>Get 20% Off your first Order</h2>
+                <h3 class="flex-space">
+                    <span>Checkout Now and Receive</span>
+                    <span>Place an inquiry</span>
+                    
+                </h3>                
+                 <h2 class="flex-space-2">
+                    <h2>Get 20% Off your first Order</h2>
+                    <button className='inquirybtn'onClick={()=>Navigate('./InquiryForm')}>inquiry</button>
+                </h2>
+					
 					<p>Enter your email for exclusive offer. You'll receive an email shortly with your unique code</p>
 				</div>
+                
 
 				<div className="letter">
 					
 						<input type="email" name="email" placeholder="Your Email" required/>
-						<input type="submit" value="Subscribe" required/>
+						<input className= "subscribe" type="submit" value="Subscribe" required/>
 					
 				</div>
 			</div>
 		
             </section>
+
+            
 
 
 
@@ -155,13 +169,14 @@ function Home(){
             </div>
 
             <div className="footer_tag">
-                <h2>Follows</h2>
+                <h2>Follow Us</h2>
                 
-        <a href="#"><i class="uil uil-facebook-f"></i></a>
-        <a href="#"><i class="uil uil-instagram"></i></a>
-        <a href="#"><i class="uil uil-twitter"></i></a>
+                        <a href="#"><FontAwesomeIcon icon={faFacebookF} /></a>
+                        <a href="#"><FontAwesomeIcon icon={faInstagram} /></a>
+                        <a href="#"><FontAwesomeIcon icon={faTwitter} /></a>
     
             </div>
+            
 
         </div>
 

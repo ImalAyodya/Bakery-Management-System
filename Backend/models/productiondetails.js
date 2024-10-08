@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const productionSchema = new mongoose.Schema({
+const SalesproductionSchema = new mongoose.Schema({
   productID: {
     type: String,
     required: true,
@@ -19,6 +19,6 @@ const productionSchema = new mongoose.Schema({
   },
 });
 
-const Production = mongoose.model('Production', productionSchema);
+const SalesProduction = mongoose.model('production', SalesproductionSchema);
 
-module.exports = Production;
+module.exports = SalesProduction;

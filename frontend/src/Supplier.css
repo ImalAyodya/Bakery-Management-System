@@ -1,4 +1,4 @@
-.top-area{
+.suppliertop-area{
   display: flex;
   background-color: #e2ac17;
   display: block;
@@ -7,25 +7,25 @@
   height: 450px;
 }
 
-.topic{
+.suppliertopic{
   margin-left: 100px;
 }
 
-.topic p{
+.suppliertopic p{
   padding-top: 40px;
   font-size: 100px;
   font-style: italic;
 }
 
-.img {
-  background-image: url(C:\Users\kshma\Desktop\Project_2.0\new-react\src\Images\b2.jpg);
+.supplierimg {
+  background-image: url('images/b2.jpg');
   background-size: cover;
   background-position: center; 
   background-repeat: no-repeat;
   height: 1050px; 
 }
 
-.purpose{
+.supplierpurpose{
   width: 600px;
   font-size: 20px;
   color: #ffffff;
@@ -35,14 +35,14 @@
   line-height: 35px;
 }
 
-.top-image{
+.suppliertop-image{
   width: 360px;
   height: 270px;
   margin-left: 500px;
   margin-top: -180px;
 }
 
-.body{
+.supplierbody{
   display: flex;
 }
 

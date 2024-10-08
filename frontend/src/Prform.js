@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import Buttonrow from "./components/Buttonrow";
+import Buttonrow from './Components/Buttonrow'
 import './tables.css';
+import './salesnew.css';
 
 // Define the backend API endpoint
 const API_URL = 'http://localhost:8000/productions';  // Update the URL if needed
@@ -12,6 +13,7 @@ function Prform() {
     const [unitCost, setUnitCost] = useState('');
     const [productQuantity, setProductQuantity] = useState('');
     const [searchDate, setSearchDate] = useState(''); // Add searchDate state
+    const [productSearch, setProductSearch] = useState(''); // Add product search state
 
     // Fetch production details from the backend
     const fetchProductions = async () => {
@@ -29,12 +31,19 @@ function Prform() {
         fetchProductions();
     }, []);
 
-    // Filter productions by the search date
+    // Filter productions by the search date and product name
     const filteredProductions = productions.filter(production => {
-        if (!searchDate) return true; // Return all if no search input
         const productionDate = new Date(production.date).toLocaleDateString();
         const searchDateFormatted = new Date(searchDate).toLocaleDateString();
-        return productionDate === searchDateFormatted;
+
+        // Apply filters for both date and product name
+        const matchesDate = searchDate ? productionDate === searchDateFormatted : true;
+        const matchesProductName = productSearch
+            ? production.products.some(product => 
+                product.productName.toLowerCase().includes(productSearch.toLowerCase()))
+            : true;
+
+        return matchesDate && matchesProductName;
     });
 
     // Handle form submission
@@ -71,22 +80,38 @@ function Prform() {
         <>
             <h1 className="salesmanag">Production Details</h1>
             <Buttonrow />
-            <hr />
+            <hr className='saleshr'/>
 
+
+            <div className='salestables'>
             <div className="table4">
                 <h6 className="tableheading">Production Details</h6>
-                <div className="search-container">
-                <input 
-                    type="date" 
-                    className="search" 
-                    id="search" 
-                    name="search" 
-                    placeholder='Search by Date' 
-                    value={searchDate} 
-                    onChange={(e) => setSearchDate(e.target.value)} 
-                    
-                />
+
+                {/* Date Range Search Bar */}
+                <div className="prsearch-container">
+                    <input 
+                        type="date" 
+                        className="search" 
+                        id="search" 
+                        name="search" 
+                        placeholder='Search by Date' 
+                        value={searchDate} 
+                        onChange={(e) => setSearchDate(e.target.value)} 
+                    />
                 </div>
+
+                {/* Product Name Search Bar */}
+                <div className="prsearch-container" style={{ marginTop: '1rem' }}>
+                    <input
+                        type="text"
+                        className="prsearch"
+                        placeholder="Search by Product Name"
+                        value={productSearch}
+                        onChange={(e) => setProductSearch(e.target.value)}
+                    />
+                </div>
+
+
                 <table>
                     <thead>
                         <tr>
@@ -99,65 +124,32 @@ function Prform() {
                     <tbody>
                         {filteredProductions.length > 0 ? (
                             filteredProductions.map((production, index) => (
-                                <tr key={index}>
-                                    <td>{new Date(production.date).toLocaleDateString()}</td>
-                                    <td colSpan={3}>
-                                        {production.products.map((product, productIndex) => (
-                                            <div key={productIndex}>
-                                                <strong>{product.productName}</strong> <br />
-                                                Quantity: {product.quantity} <br />
-                                                Unit cost: Rs. {product.unitPrice}
-                                                <hr />
-                                            </div>
-                                        ))}
-                                    </td>
-                                </tr>
+                                production.products.map((product, productIndex) => (
+                                    <tr key={`${index}-${productIndex}`}>
+                                        {productIndex === 0 && (
+                                            <td rowSpan={production.products.length}>
+                                                {new Date(production.date).toLocaleDateString()}
+                                            </td>
+                                        )}
+                                        <td>{product.productName}</td>
+                                        <td>{product.quantity}</td>
+                                        <td>Rs. {product.unitPrice}</td>
+
+                                      
+                                    </tr>
+                                   
+                                ))
                             ))
-                        ) : (
+                        ): (
+                            
                             <tr>
                                 <td colSpan="4">No production data available</td>
                             </tr>
                         )}
                     </tbody>
                 </table>
+                </div>
             </div>
-
-            {/* <form onSubmit={handleSubmit}>
-                <div><h1 className="getdet">Calculate And Proceed</h1></div>
-                <label htmlFor="date">Date :</label>
-                <input 
-                    type="date" 
-                    id="date" 
-                    name="date" 
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                /><br />
-                <label htmlFor="productid">Product ID :</label>
-                <input 
-                    type="text" 
-                    id="productid" 
-                    name="productid" 
-                    value={productID}
-                    onChange={(e) => setProductID(e.target.value)}
-                /><br />
-                <label htmlFor="unitCost">Unit Cost :</label>
-                <input 
-                    type="text" 
-                    id="unitCost" 
-                    name="unitCost" 
-                    value={unitCost}
-                    onChange={(e) => setUnitCost(e.target.value)}
-                /><br />
-                <label htmlFor="productQuantity">Product Quantity :</label>
-                <input 
-                    type="text" 
-                    id="productQuantity" 
-                    name="productQuantity" 
-                    value={productQuantity}
-                    onChange={(e) => setProductQuantity(e.target.value)}
-                /><br />
-                <button type="submit" id="calcbuttonn">Calculate</button>
-            </form> */}
         </>
     );
 }

@@ -176,7 +176,11 @@
 .box-text button:hover {
     background-color: #a07509;  
 }
-
+.orderbtn{
+    size: 0cap;
+    margin-left: 800px;
+    
+}
 
 /*cart css*/
 .cart {
@@ -185,7 +189,7 @@
     right: 0;
     width: 500px;
  
-    max-height: 100vh;
+    max-height: 50vh;
     overflow-y: auto;
     background: rgba(240, 219, 31, 0.9);
     color: black;
@@ -276,6 +280,17 @@
 
 .Cancelbtn:hover {
     background-color: #52530fe5; 
+  }
+  .orderbtn{
+    background: #d39f1c;
+    color: rgb(12, 4, 4);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 550px;
+    margin-right: 250px;
+    font-size: 25px;
   }
 /*.cart{
     background-color: #fac031;

@@ -5,14 +5,14 @@ body {
     background-color: #f4f4f4;
 }
 
-.container {
+.customercontainer {
     width: 70%;
     height: 90%;
     margin: auto;
     overflow: hidden;
 }
 
-.c-m-s {
+.customerc-m-s {
     height: 90%;
     padding: 20px;
     margin: 20px 0;
@@ -21,7 +21,7 @@ body {
     background: rgba(186, 129, 30, 0.8);
 }
 
-.c-m-s h2 {
+.customerc-m-s h2 {
     color: #fff;
     margin: 0;
     padding: 0;
@@ -30,17 +30,17 @@ body {
     font-style: italic;
 }
 
-.c-m-s img {
+.customerc-m-s img {
     width: 400px;
 }
 
-.img {
+.customerimg {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.p {
+.customerp {
     width: 60%;
     margin-top: 70px;
     text-align: center;
@@ -49,66 +49,44 @@ body {
     margin-left: 20%;
 }
 
-.customer {
-    background: #fff;
-    padding: 20px;
-    margin: 50px;
-    margin-top: 100px;
-    margin-left: 200px;
-    box-shadow: 0 0 10px #aaa;
-    border-radius: 10px;
-    width: 200px;
-    
-}
+.Customerbody{
+    display: flex;
+  }
 
-.customer h3 {
+.Customer-btn h3 {
     margin: 0;
     padding: 0;
+    margin-top: 50px;
     text-align: center;
 }
-
-.customer button[type="submit"] {
-    background-color: #4c5420;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    margin-left: 55px;
-    border-radius: 10px;
-}
-
-.customer button[type="submit"]:hover {
-    background-color: #db9d46;
-}
-
-.inquiry {
-    background: #fff;
-    padding: 20px;
-    margin: 50px;
+  
+.Customer-btn{
+    width: 300px;
+    height: 300px;
+    background-color: #fdfdfc;
+    /* background: rgba(174, 120, 28, 0.8); */
+    margin-left: 150px;
     margin-top: 100px;
-    margin-left: 600px;
+    border-width: 7px;
+    border-radius: 20px;
     box-shadow: 0 0 10px #aaa;
-    border-radius: 10px;
-    width: 200px;
-    
+    perspective: 1000px;
 }
-
-.inquiry h3 {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-.inquiry button[type="submit"] {
-    background-color: #4c5420;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
+  
+.Customer-btn button{
+    font-family: Trebuchet MS, Helvetica, sans-serif;
+    color: #ffffff;
+    background-color: #e66525;
+    font-size: 18px;
+    margin-top: 100px;
+    width: 150px;
+    height: 40px;
+    margin-left: 75px;
+    border-radius: 20px;
     cursor: pointer;
-    margin-left: 55px;
-    border-radius: 10px;
 }
-
-.inquiry button[type="submit"]:hover {
+  
+.Customer-btn button:hover{
+    color: #ffffff;
     background-color: #db9d46;
 }

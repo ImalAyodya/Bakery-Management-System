@@ -12,7 +12,7 @@ function Extra() {
 
     useEffect(() => {
         // Read
-        axios.get('http://localhost:8001/TempPost')
+        axios.get('http://localhost:8000/TempWorks')
             .then((response) => {
                 if (response.data.success) {
                     setTempEmployees(response.data.Tempory);
@@ -27,7 +27,7 @@ function Extra() {
 
     const handleTempDelete = (id) => {
         // delete
-        axios.delete(`http://localhost:8001/TempPost/delete/${id}`)
+        axios.delete(`http://localhost:8000/TempWorks/delete/${id}`)
             .then((response) => {
                 if (response.data.success) {
                     setTempEmployees(Tempemployees.filter((Temp) => Temp._id !== id));
@@ -53,7 +53,7 @@ function Extra() {
         const dateToUpdate = editedDate[id] || 'Not Assigned'; // Default to 'Not Assigned' if no input
     
         // Send the updated date to the backend
-        axios.put(`http://localhost:8001/TempPost/update/${id}`, { AssignedDate: dateToUpdate })
+        axios.put(`http://localhost:8000/TempWorks/update/${id}`, { AssignedDate: dateToUpdate })
             .then((response) => {
                 if (response.data.success) {
                     setTempEmployees(
@@ -142,11 +142,12 @@ function Extra() {
                                 <td><b>{Temp.Tempory.AssignedTask}</b></td>
                                 <td>
                                     <input
+                                        className='KaviinputDate'
                                         type="date"
                                         value={editedDate[Temp._id] || Temp.Tempory.AssignedDate}
                                         onChange={(e) => handleDateChange(Temp._id, e.target.value)}
                                     />
-                                    <button onClick={() => updateAssignedDate(Temp._id)}>Save Date</button>
+                                    <button className='KaviAssiButton' onClick={() => updateAssignedDate(Temp._id)}>Save Date</button>
                                 </td>
                                 <td><b>{Temp.Tempory.EmployeeEmail}</b></td>
                                 <td>

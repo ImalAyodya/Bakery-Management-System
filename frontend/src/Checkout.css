@@ -18,6 +18,14 @@
     padding: 90px;
     color: #0e0a0a
 }
+
+
+.checkout-cartitemlist .cartItems{
+    color: black;
+
+}
+
+
 .checkoutLayout .right{
     /*background-color: #5f4f06a9;*/
    background-color: #c29013;
@@ -132,9 +140,52 @@
     border-radius: 5px;
     margin-left: 0px;
 }
-
-.row.pricelabel{
+.row .pricelabel{
+    width: 400px;
+}
+ .price-tot{
+    margin-left: 20px;
+    
+}
+.row .pricelabel .label{
    
     font-size: large;
     font-weight: bold; 
+    
 } 
+.checkout-cartitemlist h2{
+    font-size: 40px;
+    font-weight: bold; 
+    color: #ddd;
+    text-align: left;
+
+}
+.autofill{
+    border: none;         /* No border */
+    background: transparent; /* Transparent background */
+    color: inherit;         /* Inherit text color */
+    font-size: inherit;     /* Inherit font size */
+    outline: none;          /* No focus outline */
+    padding: 0;             /* Remove default padding */
+}
+
+.autofill:focus {
+    outline: none;          /* Ensure no focus outline */
+    box-shadow: none;       /* No shadow when focused */
+}
+.row .autofill-qty{
+    border: none;         /* No border */
+    background: transparent; /* Transparent background */
+    color: inherit;         /* Inherit text color */
+    font-size: inherit;     /* Inherit font size */
+    outline: none;          /* No focus outline */
+    padding: 0;             /* Remove default padding */
+    text-align: center;
+    margin-left: 0px;
+    padding-block: 0px;
+}
+
+.row .autofill-qty:focus {
+    outline: none;          /* Ensure no focus outline */
+    box-shadow: none;       /* No shadow when focused */
+}

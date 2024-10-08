@@ -5,7 +5,7 @@ import './Header.css';
 import Admin from './Admin';
 import './Full.css';
 
-function Form() {
+function EmployeeForm() {
   const [employees, setEmployees] = useState([]);
   const [newEmployee, setNewEmployee] = useState({
     EmployeeID: '',
@@ -53,7 +53,7 @@ function Form() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8001/register')
+    axios.get('http://localhost:8000/register')
       .then(response => {
         if (response.data.success) {
           setEmployees(response.data.mypost);
@@ -75,7 +75,7 @@ function Form() {
 
     if (!validateForm()) return; // Prevent submission if validation fails
 
-    axios.post('http://localhost:8001/register/create', { employeeRegister: newEmployee })
+    axios.post('http://localhost:8000/register/create', { employeeRegister: newEmployee })
       .then(response => {
         if (response.data.success) {
           setEmployees([...employees, response.data.employeeRegister]);
@@ -125,7 +125,7 @@ function Form() {
       return;
     }
 
-    axios.put(`http://localhost:8001/register/update/${empId}`, {
+    axios.put(`http://localhost:8000/register/update/${empId}`, {
       Address: addAddress,
       PhoneNumber: addPhone,
       BasicSalary:addSalary
@@ -148,7 +148,7 @@ function Form() {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8001/register/delete/${id}`)
+    axios.delete(`http://localhost:8000/register/delete/${id}`)
       .then(response => {
         if (response.data.success) {
           setEmployees(employees.filter(emp => emp._id !== id));
@@ -184,14 +184,15 @@ function Form() {
           </div>
         </div>
 
+       
         {addregister && (
-              <div className="registration-container">
-              <div className="registration-box">
+              <div className="Kaviregistration-container">
+              <div className="Kaviregistration-box">
                 <h3>Employee Registration</h3>
                 <form>
                     <div className="KaviRegistration">
-                  <button id="permanent" type="button" className="registration-btn" onClick={() => setAddSection(true)} >Permanent Employee Registration</button>
-                  <button id="temporary" type="button" className="registration-btn"onClick={handleWorkersClick}>Temporary Employee Registration</button>
+                  <button id="permanent" type="button" className="Kaviregistration-btn" onClick={() => setAddSection(true)} >Permanent Employee Registration</button>
+                  <button id="temporary" type="button" className="Kaviregistration-btn"onClick={handleWorkersClick}>Temporary Employee Registration</button>
                   </div>
                 </form>
                 </div>
@@ -309,4 +310,4 @@ function Form() {
   );
 }
 
-export default Form;
+export default EmployeeForm;

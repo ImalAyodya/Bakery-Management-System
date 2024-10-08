@@ -78,6 +78,7 @@ function OrderRequest() {
 
     return (
         <>
+        <div className='OrderRequest'>
             <div className='addOrder-main'>
                 <Header />
                 <p className='topic'><b>Place Order Request</b></p>
@@ -136,6 +137,7 @@ function OrderRequest() {
                         >Cancel</button>
                     </form>
                 </div>
+            </div>
             </div>
         </>
     );

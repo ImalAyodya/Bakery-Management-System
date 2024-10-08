@@ -7,65 +7,95 @@ function Workers() {
   const navigate = useNavigate();
   const [newTemporary, setNewTemporary] = useState({
     EmployeeID: '',
+    Date: '',
     NameWithInitials: '',
     PhoneNumber: '',
     AssignedTask: '',
-    AssignedDate: '',
     EmployeeEmail: '',
-    Date: '',
-    AdminEmail: '',
   });
 
   const [errors, setErrors] = useState({});
   const [tempEmployees, setTempEmployees] = useState([]);
+
+  // Validation logic
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Check if EmployeeID is not empty
+    if (!newTemporary.EmployeeID.trim()) {
+      newErrors.EmployeeID = 'Employee ID is required';
+    }
+
+    // Check if Date is not empty
+    if (!newTemporary.Date) {
+      newErrors.Date = 'Date is required';
+    }
+
+    // Check if NameWithInitials is not empty
+    if (!newTemporary.NameWithInitials.trim()) {
+      newErrors.NameWithInitials = 'Name with initials is required';
+    }
+
+    // Check if PhoneNumber is not empty and follows a valid format
+    const phonePattern = /^[0-9]{10}$/;
+    if (!newTemporary.PhoneNumber.trim()) {
+      newErrors.PhoneNumber = 'Phone number is required';
+    } else if (!phonePattern.test(newTemporary.PhoneNumber)) {
+      newErrors.PhoneNumber = 'Phone number must be 10 digits';
+    }
+
+    // Check if AssignedTask is not empty
+    if (!newTemporary.AssignedTask.trim()) {
+      newErrors.AssignedTask = 'Assigned task is required';
+    }
+
+    // Check if EmployeeEmail is not empty and is a valid email format
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!newTemporary.EmployeeEmail.trim()) {
+      newErrors.EmployeeEmail = 'Employee email is required';
+    } else if (!emailPattern.test(newTemporary.EmployeeEmail)) {
+      newErrors.EmployeeEmail = 'Please enter a valid email address';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Returns true if no errors
+  };
 
   const handleTempEmployee = (e) => {
     const { name, value } = e.target;
     setNewTemporary({ ...newTemporary, [name]: value });
   };
 
-  // Validation logic
-  const validateForm = () => {
-    const errors = {};
-    if (!newTemporary.EmployeeID.trim()) errors.EmployeeID = 'Employee ID is required';
-    if (!newTemporary.NameWithInitials.trim()) errors.NameWithInitials = 'Name is required';
-    if (!newTemporary.PhoneNumber || !/^\d{10}$/.test(newTemporary.PhoneNumber)) errors.PhoneNumber = 'Valid 10-digit phone number is required';
-    if (!newTemporary.AssignedTask.trim()) errors.AssignedTask = 'Assigned task is required';
-    if (!newTemporary.EmployeeEmail || !/\S+@\S+\.\S+/.test(newTemporary.EmployeeEmail)) errors.EmployeeEmail = 'Valid email is required';
-    if (!newTemporary.Date) errors.Date = 'Date is required';
-    if (!newTemporary.AdminEmail || !/\S+@\S+\.\S+/.test(newTemporary.AdminEmail)) errors.AdminEmail = 'Valid admin email is required';
-    return errors;
-  };
-
   const handleTempForSave = (e) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-    } else {
-      axios.post('http://localhost:8001/TempPost/save', { Tempory: newTemporary })
-        .then((response) => {
-          if (response.data.success) {
-            setTempEmployees([...tempEmployees, response.data.tempory]);
-            setNewTemporary({
-              EmployeeID: '',
-              NameWithInitials: '',
-              PhoneNumber: '',
-              AssignedTask: '',
-              AssignedDate: '',
-              EmployeeEmail: '',
-              Date: '',
-              AdminEmail: '',
-            });
-            navigate('/Extra'); // Navigate after successful save
-          } else {
-            alert('Error while adding data.');
-          }
-        })
-        .catch((error) => {
-          alert('Error while adding data.');
-        });
+
+    // Validate the form before submitting
+    if (!validateForm()) {
+      return;
     }
+
+    // Send data via axios to the backend
+    axios.post('http://localhost:8000/TempWorks/save', { Tempory: newTemporary })
+      .then((response) => {
+        if (response.data.success) {
+          setTempEmployees([...tempEmployees, response.data.Tempory]);
+          setNewTemporary({
+            EmployeeID: '',
+            Date: '',
+            NameWithInitials: '',
+            PhoneNumber: '',
+            AssignedTask: '',
+            EmployeeEmail: '',
+          });
+          navigate('/Extra'); // Navigate after successful save
+        } else {
+          alert('Error while adding data.');
+        }
+      })
+      .catch((error) => {
+        alert('Error while adding data.');
+        console.error(error); // Log the error for debugging
+      });
   };
 
   const handleCancelClick = (e) => {
@@ -76,13 +106,13 @@ function Workers() {
   return (
     <>
       <div className="Kaviex">
-        <form>
+        <form onSubmit={handleTempForSave}>
           <h3>Temporary Workers Details</h3>
 
           <label htmlFor="id">Employee Id</label>
           <input
             type="text"
-            id="id"
+            id="EmployeeID"
             name="EmployeeID"
             value={newTemporary.EmployeeID}
             onChange={handleTempEmployee}
@@ -92,7 +122,7 @@ function Workers() {
           <label htmlFor="date">Date</label>
           <input
             type="date"
-            id="date"
+            id="Date"
             name="Date"
             value={newTemporary.Date}
             onChange={handleTempEmployee}
@@ -102,7 +132,7 @@ function Workers() {
           <label htmlFor="name">Name with initials</label>
           <input
             type="text"
-            id="name"
+            id="NameWithInitials"
             name="NameWithInitials"
             value={newTemporary.NameWithInitials}
             onChange={handleTempEmployee}
@@ -112,7 +142,7 @@ function Workers() {
           <label htmlFor="num">Phone number</label>
           <input
             type="text"
-            id="num"
+            id="PhoneNumber"
             name="PhoneNumber"
             value={newTemporary.PhoneNumber}
             onChange={handleTempEmployee}
@@ -122,7 +152,7 @@ function Workers() {
           <label htmlFor="at">Assigned task</label>
           <input
             type="text"
-            id="at"
+            id="AssignedTask"
             name="AssignedTask"
             value={newTemporary.AssignedTask}
             onChange={handleTempEmployee}
@@ -132,44 +162,18 @@ function Workers() {
           <label htmlFor="email">Employee Email</label>
           <input
             type="email"
-            id="email"
+            id="EmployeeEmail"
             name="EmployeeEmail"
             value={newTemporary.EmployeeEmail}
             onChange={handleTempEmployee}
           />
           {errors.EmployeeEmail && <p style={{ color: 'red' }}>{errors.EmployeeEmail}</p>}
 
-          <div className='KaviAdminEmail'>
-          <label htmlFor="adminEmail">Admin Email</label>
           <input
-            type="email"
-            id="adminEmail"
-            name="AdminEmail"
-            value={newTemporary.AdminEmail}
-            onChange={handleTempEmployee}
-          />
-          {errors.AdminEmail && <p style={{ color: 'red' }}>{errors.AdminEmail}</p>}
-          </div>
-
-          <div className='KaviAssiDate'>
-          <label htmlFor="assignedDate">Assigned Date</label>
-          <input
-            type="date"
-            id="assignedDate"
-            name="AssignedDate"
-            value={newTemporary.AssignedDate}
-            onChange={handleTempEmployee}
-          />
-          </div>
-        
-
-          <button
             id="Kavibt"
             type="submit"
-            onClick={handleTempForSave}
-          >
-            Save
-          </button>
+            value="Save"
+          />
           <button
             id="Kavibt1"
             onClick={handleCancelClick}

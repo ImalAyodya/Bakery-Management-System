@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');  //import kergnnva mongoose eke rquire keyword eke use kerela ek assign kerngnnva const kiela variable ekk hdela
+const { v4: uuidv4 } = require('uuid'); 
 const schema = mongoose.Schema;
+
 
 const OnlineOrderSchema  = new schema({
     OnlineOrder: {
+        orderId: { type: String, default: uuidv4 },
         customerName : {type:String, required:true},
         phoneNumber : {type:Number, required:true},
         address : {type:String, required:true},
@@ -18,6 +21,7 @@ const OnlineOrderSchema  = new schema({
         status: { type: String, enum: ['Pending', 'Confirmed', 'Prepared', 'Delivered', 'Cancelled'], default: 'Pending' },
     }
 }, { timestamps: true });
+
 
 const OnlineOrder = mongoose.model('onlineorder',OnlineOrderSchema)
 module.exports=OnlineOrder;

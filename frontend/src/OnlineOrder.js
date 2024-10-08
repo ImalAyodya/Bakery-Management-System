@@ -2,7 +2,7 @@
 import  "./Onlineorder.css";
 import { Navigate, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-// import { useCart } from './CartContext';
+//import { useCart } from './CartContext';
 import  Header from './Header';
 import icon from './images/icon.png';
 import bun1 from './images/sausagesbun.jpg';
@@ -113,13 +113,20 @@ const handleCheckout = () => {
                             <p id="category-name">Bread</p>    
                         </div>
 
+                        <div id="Pastry" class="Pastry">
+                            <p id="category-name">Pastry</p>    
+                        </div>
+
+                        <div id="Rolls" class="Rolls">
+                            <p id="category-name">Rolls</p>    
+                        </div>
+                        
+
                         <div id="desserts" class="desserts">
                             <p id="category-name">desserts</p>
                         </div>
 
-                        <div id="snacks" class="snacks">
-                            <p id="category-name">Snacks</p> 
-                        </div>
+                        
 
                     
                  </div> 
@@ -141,8 +148,8 @@ const handleCheckout = () => {
                                         <img src={bun1} className="buns" alt='buns'/>
                                         <div className="box-text">
                                                     <h5 className="Name">Sausage Bun</h5>
-                                                    <p className="price">$32</p>
-                                                    <button onClick={() => addToCart({ productName:'Sausage Bun', unitPrice: 32, quantity: 1 })}>add to cart</button>   
+                                                    <p className="price">Rs.80</p>
+                                                    <button onClick={() => addToCart({ productName:'Sausage Bun', unitPrice: 80, quantity: 1 })}>add to cart</button>   
                                         </div>
                                 </div>
 
@@ -150,8 +157,8 @@ const handleCheckout = () => {
                                         <img src={bun2} className="buns" alt='buns'/>
                                         <div className="box-text">
                                                     <h5>Egg Bun</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ productName: 'Egg Bun', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                    <p>Rs.80</p>
+                                                    <button onClick={() => addToCart({ productName: 'Egg Bun', unitPrice: 80, quantity: 1  })}>add to cart</button>   
                                         </div>
                                 </div>
 
@@ -159,8 +166,8 @@ const handleCheckout = () => {
                                         <img src={bun3} className="buns" alt='buns'/>
                                         <div className="box-text">
                                                     <h5>Fish Bun</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ productName: 'Fish Bun', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                    <p>Rs.60</p>
+                                                    <button onClick={() => addToCart({ productName: 'Fish Bun', unitPrice: 60, quantity: 1  })}>add to cart</button>   
                                         </div>
                                 </div>
 
@@ -168,8 +175,8 @@ const handleCheckout = () => {
                                         <img src={bun4} className="buns" alt='buns'/>
                                         <div className="box-text">
                                                     <h5>Chicken Bun</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ productName: 'Chicken Bun', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                    <p>Rs.100</p>
+                                                    <button onClick={() => addToCart({ productName: 'Chicken Bun', unitPrice: 100, quantity: 1  })}>add to cart</button>   
                                         </div>
                                 </div>
                       </div>
@@ -179,8 +186,8 @@ const handleCheckout = () => {
                                             <img src={bun5} className="buns" alt='buns'/>
                                             <div className="box-text">
                                                         <h5>Cheese Omlet Bun</h5>
-                                                        <p>$32</p>
-                                                        <button onClick={() => addToCart({ productName: 'Cheese Bun', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                        <p>Rs.150</p>
+                                                        <button onClick={() => addToCart({ productName: 'Cheese Bun', unitPrice: 150, quantity: 1  })}>add to cart</button>   
                                             </div>
                                     </div>
 
@@ -188,8 +195,8 @@ const handleCheckout = () => {
                                             <img src={bun6} className="buns" alt='buns'/>
                                             <div className="box-text">
                                                         <h5>Kibula Bun</h5>
-                                                        <p>$32</p>
-                                                        <button onClick={() => addToCart({ productName: 'Kibula Bun', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                        <p>Rs.60</p>
+                                                        <button onClick={() => addToCart({ productName: 'Kibula Bun', unitPrice: 60, quantity: 1  })}>add to cart</button>   
                                             </div>
                                     </div>
 
@@ -197,8 +204,8 @@ const handleCheckout = () => {
                                             <img src={bun7} className="buns" alt='buns'/>
                                             <div className="box-text">
                                                         <h5>Sinisambal Bun</h5>
-                                                        <p>$32</p>
-                                                        <button onClick={() => addToCart({ productName: 'Sinisambal Bun', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                        <p>Rs.70</p>
+                                                        <button onClick={() => addToCart({ productName: 'Sinisambal Bun', unitPrice: 70, quantity: 1  })}>add to cart</button>   
                                             </div>
                                     </div>
 
@@ -206,8 +213,8 @@ const handleCheckout = () => {
                                             <img src={bun8} className="buns" alt='buns'/>
                                             <div className="box-text">
                                                         <h5>Burger Bun</h5>
-                                                        <p>$32</p>
-                                                        <button onClick={() => addToCart({ productName: 'Burger Bun', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                        <p>Rs.200</p>
+                                                        <button onClick={() => addToCart({ productName: 'Burger Bun', unitPrice: 200, quantity: 1  })}>add to cart</button>   
                                             </div>
                                     </div>
                        </div> 
@@ -220,8 +227,8 @@ const handleCheckout = () => {
                                         <img src={bread1} className="bread" alt='bread'/>
                                         <div className="box-text">
                                                     <h5>White Bread</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ productName: 'White Bread', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                    <p>Rs.130</p>
+                                                    <button onClick={() => addToCart({ productName: 'White Bread', unitPrice: 130, quantity: 1  })}>add to cart</button>   
                                                     {/*onClick={() => addToCart({ name: 'Sausage Bun', price: 32 })}*/}
                                         </div>
                                 </div>
@@ -230,8 +237,8 @@ const handleCheckout = () => {
                                         <img src={bread2} className="bread" alt='bread'/>
                                         <div className="box-text">
                                                     <h5>Brown Bread</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Brown Bread', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                    <p>Rs.150</p>
+                                                    <button onClick={() => addToCart({  productName: 'Brown Bread', unitPrice: 150, quantity: 1  })}>add to cart</button>   
                                         </div>
                                 </div>
 
@@ -239,8 +246,8 @@ const handleCheckout = () => {
                                         <img src={bread3} className="bread" alt='bread'/>
                                         <div className="box-text">
                                                     <h5>Wheat Bread</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Wheat Bread', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                    <p>Rs.180</p>
+                                                    <button onClick={() => addToCart({  productName: 'Wheat Bread', unitPrice: 180, quantity: 1  })}>add to cart</button>   
                                         </div>
                                 </div>
 
@@ -248,8 +255,8 @@ const handleCheckout = () => {
                                         <img src={bread4} className="bread" alt='bread'/>
                                         <div className="box-text">
                                                     <h5>White Slice Bread</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'White Slice Bread', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                    <p>Rs.200</p>
+                                                    <button onClick={() => addToCart({  productName: 'White Slice Bread', unitPrice: 200, quantity: 1  })}>add to cart</button>   
                                         </div>
                                 </div>
                       </div>
@@ -262,8 +269,8 @@ const handleCheckout = () => {
                                         <img src={pastry1} className="pastry" alt='pastry'/>
                                         <div className="box-text">
                                                     <h5>Fish Pastry</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Fish Pastry', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                    <p>Rs.80</p>
+                                                    <button onClick={() => addToCart({  productName: 'Fish Pastry', unitPrice: 80, quantity: 1  })}>add to cart</button>   
                                         </div>
                                 </div>
 
@@ -271,8 +278,8 @@ const handleCheckout = () => {
                                         <img src={pastry2} className="pastry" alt='pastry'/>
                                         <div className="box-text">
                                                     <h5>Chicken Puff</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Chicken Puff', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                    <p>Rs.150</p>
+                                                    <button onClick={() => addToCart({  productName: 'Chicken Puff', unitPrice: 150, quantity: 1  })}>add to cart</button>   
                                         </div>
                                 </div>
 
@@ -280,8 +287,8 @@ const handleCheckout = () => {
                                         <img src={pastry3} className="pastry" alt='pastry'/>
                                         <div className="box-text">
                                                     <h5>Cheese Pastry</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Cheese Pastry', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                    <p>Rs.150</p>
+                                                    <button onClick={() => addToCart({  productName: 'Cheese Pastry', unitPrice: 150, quantity: 1  })}>add to cart</button>   
                                         </div>
                                 </div>
 
@@ -289,8 +296,8 @@ const handleCheckout = () => {
                                         <img src={pastry4} className="pastry" alt='pastry'/>
                                         <div className="box-text">
                                                     <h5>Veg Pastry</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Veg Pastry', unitPrice: 23, quantity: 1  })}>add to cart</button>   
+                                                    <p>Rs.70</p>
+                                                    <button onClick={() => addToCart({  productName: 'Veg Pastry', unitPrice: 70, quantity: 1  })}>add to cart</button>   
                                         </div>
                                 </div>
                       </div>
@@ -302,8 +309,8 @@ const handleCheckout = () => {
                                 <img src={rolls1} className="rolls" alt='rolls'/>
                                         <div className="box-text">
                                                     <h5>Fish Roll</h5>
-                                                    <p>$32</p>
-                                                    <button  onClick={() => addToCart({ name: 'Fish Roll', unitPrice: 23, quantity: 1  })}>add to  cart</button>   
+                                                    <p>Rs.100</p>
+                                                    <button  onClick={() => addToCart({  productName: 'Fish Roll', unitPrice: 100, quantity: 1  })}>add to  cart</button>   
                                         </div>
                                 </div>
 
@@ -311,8 +318,8 @@ const handleCheckout = () => {
                                         <img src={rolls2} className="rolls" alt='rolls'/>
                                         <div className="box-text">
                                                     <h5>Egg Roll</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Egg Roll', price: 23, quantity: 1  })}>add to  cart</button>   
+                                                    <p>Rs.120</p>
+                                                    <button onClick={() => addToCart({  productName: 'Egg Roll',  unitPrice: 120, quantity: 1  })}>add to  cart</button>   
                                         </div>
                                 </div>
 
@@ -320,8 +327,8 @@ const handleCheckout = () => {
                                         <img src={rolls3} className="rolls" alt='rolls'/>
                                         <div className="box-text">
                                                     <h5>Chicken Egg Roll</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Chicken Egg Roll', price: 23, quantity: 1  })}>add to  cart</button>   
+                                                    <p>Rs.140</p>
+                                                    <button onClick={() => addToCart({  productName: 'Chicken Egg Roll',  unitPrice: 140, quantity: 1  })}>add to  cart</button>   
                                         </div>
                                 </div>
 
@@ -329,8 +336,8 @@ const handleCheckout = () => {
                                         <img src={rolls4} className="rolls" alt='rolls'/>
                                         <div className="box-text">
                                                     <h5>Vegi Roll</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Vegi Roll', price: 23, quantity: 1  })}>add to  cart</button>   
+                                                    <p>Rs.90</p>
+                                                    <button onClick={() => addToCart({  productName: 'Vegi Roll',  unitPrice: 90, quantity: 1  })}>add to  cart</button>   
                                         </div>
                                 </div>
                       </div>
@@ -343,8 +350,8 @@ const handleCheckout = () => {
                                         <img src={dessert1} className="dessert" alt='dessert'/>
                                         <div className="box-text">
                                                     <h5>Eclair</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Eclair', price: 23, quantity: 1  })}>add to  cart</button>   
+                                                    <p>Rs.150</p>
+                                                    <button onClick={() => addToCart({  productName: 'Eclair',  unitPrice: 150, quantity: 1  })}>add to  cart</button>   
                                         </div>
                                 </div>
 
@@ -352,8 +359,8 @@ const handleCheckout = () => {
                                         <img src={dessert2} className="dessert" alt='dessert'/>
                                         <div className="box-text">
                                                     <h5>Donut</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Donut', price: 23, quantity: 1  })}>add to  cart</button>   
+                                                    <p>Rs.120</p>
+                                                    <button onClick={() => addToCart({  productName: 'Donut',  unitPrice: 120, quantity: 1  })}>add to  cart</button>   
                                         </div>
                                 </div>
 
@@ -361,8 +368,8 @@ const handleCheckout = () => {
                                         <img src={dessert3} className="dessert" alt='dessert'/>
                                         <div className="box-text">
                                                     <h5>Chocolate Ball</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Chocolate Ball', price: 23, quantity: 1  })}>add to  cart</button>   
+                                                    <p>Rs.100</p>
+                                                    <button onClick={() => addToCart({  productName: 'Chocolate Ball',  unitPrice: 100, quantity: 1  })}>add to  cart</button>   
                                         </div>
                                 </div>
 
@@ -370,8 +377,8 @@ const handleCheckout = () => {
                                         <img src={dessert4} className="dessert" alt='dessert'/>
                                         <div className="box-text">
                                                     <h5>Apple Cake</h5>
-                                                    <p>$32</p>
-                                                    <button onClick={() => addToCart({ name: 'Apple Cake', price: 23, quantity: 1  })}>add to  cart</button>   
+                                                    <p>Rs.100</p>
+                                                    <button onClick={() => addToCart({  productName: 'Apple Cake',  unitPrice: 100, quantity: 1  })}>add to  cart</button>   
                                         </div>
                                 </div>
                       </div>
@@ -398,7 +405,7 @@ const handleCheckout = () => {
                             {cartItems.map((item, index) => (
                                 <li key={index}>
                                         <div className="item-info-name">
-                                                {item.productName}   </div>    <div className="item-info-price">${item.unitPrice}</div> 
+                                                {item.productName}   </div>    <div className="item-info-price">Rs.{item.unitPrice}</div> 
                                         
                                         <div className="item-actions">
 
@@ -412,7 +419,7 @@ const handleCheckout = () => {
                             ))}
 
                         </ul>
-                        <h3>Total Price: ${getTotalPrice()}</h3>
+                        <h3>Total Price: Rs.{getTotalPrice()}</h3>
 
                         <button type="submit" className="Checkoutbtn" onClick= {handleCheckout}>Checkout</button>
                         <button type="button" className="Cancelbtn" onClick={clearCart}>Cancel</button>
@@ -438,7 +445,7 @@ const handleCheckout = () => {
                                 ))}
                                 </ul>
                         </div>*/}
-            <button type="submit" className="orderbtn" onClick={ ()=> checkout('/CheckoutOrder')}>Checkout</button>//main contact
+            <button type="submit" className="orderbtn" onClick= {handleCheckout}>Checkout</button>//main contact
             
         </div>   
         </>

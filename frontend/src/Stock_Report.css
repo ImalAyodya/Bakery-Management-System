@@ -1,5 +1,5 @@
 /* Main container */
-.report-container {
+.stockReport .report-containerInventory {
     width: 80%;
     margin: 50px auto;
     padding: 20px;
@@ -10,25 +10,25 @@
 }
 
 /* Page title */
-.report-container h1 {
+.stockReport .report-containerInventory h1 {
     margin-bottom: 30px;
     font-size: 28px;
     color: #333;
 }
 
 /* Table design */
-.report-table {
+.stockReport .report-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-.report-table th, .report-table td {
+.stockReport .report-table th, .report-table td {
     padding: 15px;
     text-align: left;
 }
 
-.report-table th {
+.stockReport .report-table th {
     background-color: #f7f373;
     color: rgb(3, 3, 3);
     font-weight: bold;
@@ -37,38 +37,38 @@
     text-transform: uppercase;
 }
 
-.report-table td {
+.stockReport .report-table td {
     font-size: 18px;
     text-align: center;
     color: #333;
 }
 
 /* Highlight every other row */
-.report-table tr:nth-child(even) {
+.stockReport .report-table tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
 /* Summary section */
-.report-summary {
+.stockReport .report-summary {
     margin-top: 20px;
     text-align: left;
     display: flex;
     justify-content: space-between;
 }
 
-.report-summary h3 {
+.stockReport .report-summary h3 {
     font-size: 18px;
     font-weight: bold;
     color: #333;
 }
 
-.report-summary span {
+.stockReport .report-summary span {
     font-size: 18px;
     color: #2ecc71;
 }
 
 /* Download report button */
-.generate-btn {
+.stockReport .generate-btn {
     padding: 10px 20px;
     background-color: #28a745;
     color: white;
@@ -79,6 +79,6 @@
     transition: background-color 0.3s ease;
 }
 
-.generate-btn:hover {
+.stockReport .generate-btn:hover {
     background-color: #218838;
 }

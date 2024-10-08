@@ -4,6 +4,7 @@ const router=express.Router();//path hadagnna express eke router kyna eka gtta
 const path = require('../models/orderdelivery')//full post.js file eka varible ekata dagtta
 const path2 = require('../models/dailydelivery')//full post.js file eka varible ekata dagtta
 const Vehicle = require('../models/deliveryvehicle');
+const DeliveryUser = require('../models/deliveryLogin')
 //create data
 router.post('/deliveryorder/save', async(req,res)=>{
     try{
@@ -250,6 +251,94 @@ router.delete('/deliveryvehicle/delete/:id', async (req, res) => {
         });
     }
 });
+
+
+
+
+/*--------------------------Login-----------------------------*/
+// Routes
+
+/**
+ * @route   POST /DeliveryUser
+ * @desc    Create a new user
+ * @access  Public
+ */
+router.post('/DeliveryUser', async (req, res) => {
+    const { username, password } = req.body;
+  
+    // Simple validation
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Please enter both username and password' });
+    }
+  
+    try {
+      // Check if user already exists
+      const existingUser = await DeliveryUser.findOne({ username });
+      if (existingUser) {
+        return res.status(400).json({ message: 'Username already exists' });
+      }
+  
+      // Create new user
+      const newUser = new DeliveryUser({
+        username,
+        password
+      });
+  
+      // Save user to database
+      await newUser.save();
+  
+      res.status(201).json({ message: 'User created successfully' });
+  
+    } catch (error) {
+      console.error('Error creating user:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+  /**
+   * @route   POST /login
+   * @desc    Authenticate user and return success message
+   * @access  Public
+   */
+router.post('/Deliverylogin', async (req, res) => {
+    const { username, password } = req.body;
+  
+    // Simple validation
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Please enter both username and password' });
+    }
+  
+    try {
+      // Check for existing user
+      const user = await DeliveryUser.findOne({ username });
+      if (!user) {
+        return res.status(401).json({ message: 'Invalid username or password' });
+      }
+  
+      // Validate password
+      const isMatch = await user.isValidPassword(password);
+      if (!isMatch) {
+        return res.status(401).json({ message: 'Invalid username or password' });
+      }
+  
+      // Successful login
+      res.status(200).json({ message: `Welcome, ${user.username}! You have successfully logged in.` });
+  
+    } catch (error) {
+      console.error('Login error:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+  /**
+   * @route   GET /inventory-data
+   * @desc    Retrieve inventory data (protected route)
+   * @access  Public for simplicity
+   */
+  router.get('/Delivery-data', (req, res) => {
+    // For simplicity, we're not implementing authentication here
+    res.json({ data: 'Here is your Delivery data!' });
+  });
 
 
 module.exports=router;

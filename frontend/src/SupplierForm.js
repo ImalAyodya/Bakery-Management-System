@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './SupplierForm.css';
 
-function App() {
+function SupplierForm() {
   const [newItem, setNewItem] = useState({
     companyName: '',
     companyAddress: '',
@@ -76,16 +76,16 @@ function App() {
   return (
     <div>
       <header></header>
-      <div className="container">
+      <div className="suppliercontainer">
         <h2>Supplier Registration</h2>
-        <form onSubmit={handleFormSubmit}>
+        <form className='supplierform' onSubmit={handleFormSubmit}>
           <p>Company Name :</p>
-          <div className="input_box">
+          <div className="supplierinput_box">
             <input
               type="text"
               placeholder="Enter your Company Name"
               name="companyName"
-              className="name"
+              className="suppliername"
               value={newItem.companyName}
               onChange={handleInputChange}
             />
@@ -94,12 +94,12 @@ function App() {
           <br />
 
           <p>Address :</p>
-          <div className="input_box">
+          <div className="supplierinput_box">
             <input
               type="text"
               placeholder="Enter your Address"
               name="companyAddress"
-              className="name"
+              className="suppliername"
               value={newItem.companyAddress}
               onChange={handleInputChange}
             />
@@ -108,26 +108,25 @@ function App() {
           <br />
 
           <p>Email :</p>
-          <div className="input_box">
+          <div className="supplierinput_box">
             <input
               type="email"
               placeholder="Enter your Email"
               name="email"
-              className="name"
+              className="suppliername"
               value={newItem.email}
               onChange={handleInputChange}
             />
             {errors.email && <p className="error">{errors.email}</p>}
           </div>
           <br />
-
           <p>Mobile Number :</p>
-          <div className="input_box">
+          <div className="supplierinput_box">
             <input
               type="text"
               placeholder="Enter your Mobile Number"
               name="mobileNumber"
-              className="name"
+              className="suppliername"
               value={newItem.mobileNumber}
               onChange={handleInputChange}
             />
@@ -136,12 +135,12 @@ function App() {
           <br />
 
           <p>Business Registration Number :</p>
-          <div className="input_box">
+          <div className="supplierinput_box">
             <input
               type="text"
               placeholder="Enter your Business Registration Number"
               name="businessRegistrationNumber"
-              className="name"
+              className="suppliername"
               value={newItem.businessRegistrationNumber}
               onChange={handleInputChange}
             />
@@ -150,10 +149,10 @@ function App() {
           <br />
 
           <p>Supplier Type :</p>
-          <div className="input_box">
+          <div className="supplierinput_box">
             <select
               name="supplierType"
-              className="order_type"
+              className="supplierorder_type"
               value={newItem.supplierType}
               onChange={handleInputChange}
             >
@@ -166,10 +165,10 @@ function App() {
           <br />
 
           <p>Product Categories :</p>
-          <div className="input_box">
+          <div className="supplierinput_box">
             <select
               name="productCategories"
-              className="order_type"
+              className="supplierorder_type"
               value={newItem.productCategories}
               onChange={handleInputChange}
             >
@@ -184,21 +183,21 @@ function App() {
           </div>
           <br />
           <p>Price :</p>
-          <div className="input_box">
+          <div className="supplierinput_box">
             <input
               type="text"
               placeholder="Enter Price"
-              name="Price"
-              className="name"
+              name="price"
+              className="suppliername"
               value={newItem.price}
               onChange={handleInputChange}
             />
           </div>
           <br />
 
-          <div className="input_group">
-            <div className="input_box">
-              <button className='add' type="submit">Send</button>
+          <div className="supplierinput_group">
+            <div className="supplierinput_box">
+              <button className='supplieradd' type="submit">Send</button>
             </div>
           </div>
         </form>
@@ -207,4 +206,4 @@ function App() {
   );
 }
 
-export default App;
+export default SupplierForm;

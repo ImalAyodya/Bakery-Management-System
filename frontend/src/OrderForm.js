@@ -111,14 +111,13 @@ function OrderForm() {
   return (
     <div>
       <header></header>
-      <div className="container">
+      <div className="suppliercontainer">
         <h2>Order Placements</h2>
-        <form onSubmit={handleFormSubmit}>
-
-          <p>Company Name:</p>
-          <div className="input_box">
+        <form className='supplierform' onSubmit={handleFormSubmit}>
+        <p>Company Name:</p>
+          <div className="supplierinput_box">
             <select
-              className="order_type"
+              className="supplierorder_type"
               name="companyName"
               value={newItem.companyName}
               onChange={handleInputChange}
@@ -135,11 +134,11 @@ function OrderForm() {
           <br />
 
           <p>Order Date:</p>
-          <div className="input_box">
+          <div className="supplierinput_box">
             <input
               type="date"
               name="date"
-              className="name"
+              className="suppliername"
               value={newItem.date}
               onChange={handleInputChange}
             />
@@ -148,9 +147,9 @@ function OrderForm() {
           <br />
 
           <p>Product Categories:</p>
-          <div className="input_box">
+          <div className="supplierinput_box">
             <select
-              className="order_type"
+              className="supplierorder_type"
               name="productCategories"
               value={newItem.productCategories}
               onChange={handleInputChange}
@@ -167,12 +166,12 @@ function OrderForm() {
           <br />
 
           <p>Quantity:</p>
-          <div className="input_box">
+          <div className="supplierinput_box">
             <input
               type="text"
               placeholder={quantityPlaceholder}
               name="quantity"
-              className="name"
+              className="suppliername"
               value={newItem.quantity}
               onChange={handleInputChange}
             />
@@ -181,11 +180,11 @@ function OrderForm() {
           <br />
 
           <p>Price:</p>
-          <div className="input_box">
+          <div className="supplierinput_box">
             <input
               type="text"
               name="price"
-              className="name"
+              className="suppliername"
               value={newItem.price}
               readOnly
               onChange={handleInputChange}
@@ -193,9 +192,9 @@ function OrderForm() {
           </div>
           <br />
 
-          <div className="input_group">
-            <div className="input_box">
-              <button className='add' type="submit">Send</button>
+          <div className="supplierinput_group">
+            <div className="supplierinput_box">
+              <button className='supplieradd' type="submit">Send</button>
             </div>
           </div>
         </form>
@@ -205,4 +204,3 @@ function OrderForm() {
 }
 
 export default OrderForm;
-

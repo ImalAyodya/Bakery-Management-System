@@ -9,7 +9,7 @@ function Display(){
     const navigate = useNavigate();
 
     const handleAddClick = () => {
-        navigate('/Form'); // Navigate to the main page
+        navigate('/EmployeeForm'); // Navigate to the main page
       };
       const handleExtraClick = () => {
         navigate('/Extra'); // Navigate to the extra page

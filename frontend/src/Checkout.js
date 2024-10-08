@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
 
+
+
 //import { useCart } from './CartContext';
 import './Checkout.css';
 
@@ -190,19 +192,19 @@ function Checkout(){
   
           alert('Data added successfully');
           navigate('/Online', { state: { cartItems: [] } }); // Cart items passed as empty array
-          //const notificationMessage = `Order ${generatedOrderId} has been successfully placed! Created at: ${currentDate}`;
-          const orderPlacedMessage = `Order ${generatedOrderId} has been successfully placed! at: ${currentDate}`;
-          //const orderCreatedMessage = `Created at: ${currentDate}`;
           
+          const orderPlacedMessage = `Order ${generatedOrderId} has been successfully placed! at: ${currentDate}`;
           const notifications = JSON.parse(sessionStorage.getItem('notifications')) || [];
-          //notifications.push(notificationMessage);
-
           notifications.push(orderPlacedMessage); // Push order placed message
-          //notifications.push(orderCreatedMessage);
+      
           sessionStorage.setItem('notifications', JSON.stringify(notifications)); 
-            
-          sessionStorage.setItem('recentOrderId', generatedOrderId); // Store recent order ID in session storage 
-
+          
+           // Track unread notifications separately
+           const unreadNotifications = JSON.parse(sessionStorage.getItem('unreadNotifications')) || [];
+           unreadNotifications.push(orderPlacedMessage);
+           sessionStorage.setItem('unreadNotifications', JSON.stringify(unreadNotifications));
+           sessionStorage.setItem('recentOrderId', generatedOrderId); // Store recent order ID in session storage 
+          
                 
         } else {
           alert('Failed to add order');
@@ -229,7 +231,7 @@ function Checkout(){
                         <div className="list">
                             <div className="checkout-cartitemlist">
             
-                                       <h2>Cart Items</h2>
+                                       <h2 className='cartItems'>Cart Items</h2>
                                         <ul>
                                             {items.map((item, index) => (
                                             <li key={index}>
@@ -315,14 +317,14 @@ function Checkout(){
                             </div>
 
                             <div className="row">
-                                <div>Total Quantity</div>
-                                <input type="number"   className='autofill' name="totalQuantity" value={totalQuantity} onChange={handleInputChange} readOnly />
+                                <div className='pricelabel'><label>Total Quantity</label></div>
+                                <input type="number"   className='autofill-qty' name="totalQuantity" value={totalQuantity} onChange={handleInputChange} readOnly />
                                 {/*<div className="totalQuantity" >{getTotalQuantity()}</div> */}  {/*value={newOnlineOrder.totQuantity} onChange={handleInputChange}*/}
                             </div>
 
                             <div className="row">
-                                <div className='pricelabel' ><h3>Total Price</h3></div>
-                                <div>Rs.</div><input type="number" className='autofill' value={totalPrice} onChange={handleInputChange} readOnly />
+                                <div className='pricelabel'><label>Total Price</label></div>
+                                <div className='price-tot'>Rs.</div><input type="number" className='autofill-qty' value={totalPrice} onChange={handleInputChange} readOnly />
                                 {/*<div className="totalPrice" >${getTotalPrice()}</div>*/} {/*value={newOnlineOrder.totPrice} onChange={handleInputChange}*/}
                             </div>
                     </div>

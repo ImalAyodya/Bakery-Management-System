@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Buttonrow from "./components/Buttonrow";
+import Buttonrow from './Components/Buttonrow'
 import './tables.css';
 import jsPDF from 'jspdf';//generate PDF files directly in the browser
 import html2canvas from 'html2canvas';//HTML elements into canvas images.
 
 const API_URL_PRODUCTIONS = 'http://localhost:8000/productions';//This URL is used to fetch or send data related to production
-const API_URL_ONLINE_SALES = 'http://localhost:8000/onlineorder';
-const API_URL_WHOLESALE_SALES = 'http://localhost:8000/order';
+const API_URL_ONLINE_SALES = 'http://localhost:8000/onlineorders';
+const API_URL_WHOLESALE_SALES = 'http://localhost:8000/wholesaleorders';
 const API_URL_DELIVERY_SALES = 'http://localhost:8000/post2';
 
 function SalesSummaryTable() {
@@ -21,6 +21,9 @@ function SalesSummaryTable() {
   // Date range for filtering
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
+  
+  // Product name search
+  const [productSearch, setProductSearch] = useState('');
 
   // Fetch production details
   const fetchProductions = async () => {
@@ -34,33 +37,6 @@ function SalesSummaryTable() {
       setError('Error fetching productions');
     }
   };
-
- 
-
-// Function to generate PDF
-const generatePDF = () => {
-  const input = document.getElementById('sales-summary-table');
-  if (!input) {
-    console.error('Sales summary table not found');
-    return; // Prevent further execution if the element doesn't exist
-  }
-
-  html2canvas(input, { scale: 2 }).then((canvas) => {
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF();
-    const imgWidth = 190; // Adjust width to fit PDF page
-    const pageHeight = pdf.internal.pageSize.height;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    const heightLeft = imgHeight;
-
-    let position = 0;
-
-    pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-    pdf.save('sales-summary.pdf'); // Save the PDF
-  }).catch(error => {
-    console.error('Error generating PDF:', error);
-  });
-};
 
   // Fetch online orders
   const fetchOnlineSales = async () => {
@@ -101,6 +77,32 @@ const generatePDF = () => {
     }
   };
 
+    //download pdf
+    const handleDownloadPDF = () => {
+      const input = document.querySelector(".salestables"); // Target the table element
+      html2canvas(input).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF();
+        const imgWidth = 210; // A4 page width in mm
+        const pageHeight = 295; // A4 page height in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
+    
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+    
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+    
+        pdf.save("sales-summary.pdf");
+      });
+    };
+
   useEffect(() => {
     fetchProductions();
     fetchOnlineSales();
@@ -112,10 +114,10 @@ const generatePDF = () => {
     return productions.flatMap((production) => {
       return production.products.map((product) => {
         const { productName, quantity: productQuantity, unitPrice: unitCost } = product;
-  
+
         let soldQuantity = 0;
         let totalEarnings = 0;
-  
+
         onlineSales.forEach(sale => {
           const cartItems = sale.OnlineOrder?.cartItems || [];
           cartItems.forEach(item => {
@@ -127,7 +129,7 @@ const generatePDF = () => {
             }
           });
         });
-  
+
         wholesaleSales.forEach(sale => {
           const products = sale.WholesaleOrder?.products || [];
           products.forEach(item => {
@@ -139,7 +141,7 @@ const generatePDF = () => {
             }
           });
         });
-  
+
         deliverySales.forEach(delivery => {
           const products = delivery.dailydelivery?.products || [];
           products.forEach(item => {
@@ -151,13 +153,13 @@ const generatePDF = () => {
             }
           });
         });
-  
+
         const notSoldQuantity = productQuantity - soldQuantity;
         const totalQuantity = productQuantity; 
         const productionCost = productQuantity * unitCost;
         const netEarnings = totalEarnings;
         const profit = totalEarnings - (soldQuantity * unitCost);
-  
+
         return {
           productID: productName,
           date: production.date,
@@ -180,22 +182,27 @@ const generatePDF = () => {
     }
   }, [productions, onlineSales, wholesaleSales, deliverySales]);
 
-  // Function to filter sales by date range
-  const filterSalesByDate = (salesData) => {
-    if (!fromDate || !toDate) return salesData;
-
-    const from = new Date(fromDate);
-    const to = new Date(toDate);
-
-    return salesData.filter(item => {
-      const itemDate = new Date(item.date);
-      return itemDate >= from && itemDate <= to;
-    });
+  // Function to filter sales by date range and product name
+  const filterSalesByDateAndProduct = (salesData) => {
+    let filteredData = salesData;
+    if (fromDate && toDate) {
+      const from = new Date(fromDate).setHours(0, 0, 0, 0);
+      const to = new Date(toDate).setHours(23, 59, 59, 999);
+      filteredData = filteredData.filter(item => {
+        const itemDate = new Date(item.date).setHours(0, 0, 0, 0);
+        return itemDate >= from && itemDate <= to;
+      });
+    }
+    if (productSearch) {
+      filteredData = filteredData.filter(item =>
+        item.productID.toLowerCase().includes(productSearch.toLowerCase())
+      );
+    }
+    return filteredData;
   };
 
-  // Calculate totals for styled cards
   const calculateTotals = () => {
-    const filteredSummary = filterSalesByDate(summary);
+    const filteredSummary = filterSalesByDateAndProduct(summary);
     return filteredSummary.reduce(
       (totals, item) => {
         totals.totalEarnings += item.totalEarnings;
@@ -228,28 +235,40 @@ const generatePDF = () => {
     <>
       <h1 className="salesmanag">Sales Summary</h1>
       <Buttonrow />
-      <hr />
+      <hr className='saleshr'/>
 
-      {/* Date Range Filter */}
-      <div className='search-container'>
-        <div className="date-filter">
-          <label>From: </label>
-          <input
-            type="date"
-            value={fromDate}
-            onChange={(e) => setFromDate(e.target.value)}
-            className="search-input"
-          />
-          <label>To: </label>
-          <input
-            type="date"
-            value={toDate}
-            onChange={(e) => setToDate(e.target.value)}
-            className="search-input"
-          />
-          <i className="fas fa-search search-icon"></i>
-        </div>
-      </div>
+     {/* Date Range and Product Name Search */}
+<div className='search-container'>
+  {/* Date Range Filter */}
+  <div className="date-filter">
+    <label>From: </label>
+    <input
+      type="date"
+      value={fromDate}
+      onChange={(e) => setFromDate(e.target.value)}
+      className="search-input"
+    />
+    <label>To: </label>
+    <input
+      type="date"
+      value={toDate}
+      onChange={(e) => setToDate(e.target.value)}
+      className="search-input"
+    />
+  </div>
+
+  {/* Product Name Search (Moved under Date Range Search) */}
+  <div className="search-container" style={{ marginTop: '1rem' }}>
+    <label>Product Name: </label>
+    <input
+      type="text"
+      value={productSearch}
+      onChange={(e) => setProductSearch(e.target.value)}
+      className="search-input"
+      placeholder="Search by product name"
+    />
+  </div>
+</div>
 
       {/* Total Summary Cards */}
       <div className="summary-cards">
@@ -271,49 +290,51 @@ const generatePDF = () => {
         </div>
       </div>
 
-      <div className="table4" id="sales-summary-table">
-  <h6 className="tableheading">Sales Summary Table</h6>
-  {loading && <p>Loading data...</p>}
-  {error && <p className="error-message">{error}</p>}
-  {!loading && !error && (
-    <table>
-      <thead>
-  <tr>
-    <th>Product ID</th>
-    <th>Date</th>
-    <th>Cost for Production</th>
-    <th>Total Quantity</th> 
-    <th>Sold Quantity</th>
-    <th>Not Sold Quantity</th>
-    <th>Total Earnings</th>
-    <th>Profit</th>
-  </tr>
-</thead>
-<tbody>
-  {filterSalesByDate(summary).length > 0 ? (
-    filterSalesByDate(summary).map((item, index) => (
-      <tr key={index}>
-        <td>{item.productID}</td>
-        <td>{formatDate(item.date)}</td>
-        <td>{formatCurrency(item.productionCost)}</td>
-        <td>{item.totalQuantity}</td> 
-        <td>{item.soldQuantity}</td>
-        <td>{item.notSoldQuantity}</td>
-        <td>{formatCurrency(item.totalEarnings)}</td>
-        <td>{formatCurrency(item.profit)}</td>
-      </tr>
-    ))
-  ) : (
-    <tr>
-      <td colSpan="8">No sales summary data available</td>
-    </tr>
-  )}
-</tbody>
-    </table>
-  )}
-</div>
-
-      <button onClick={generatePDF} className="download-btn">Download PDF</button>
+      {/* Sales Summary Table */}
+      <div className="salestables">
+        
+        <table className="table5">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Product Name</th>
+              <th>Total Quantity</th>
+              <th>Sold Quantity</th>
+              <th>Not Sold Quantity</th>
+              <th>Total Earnings</th>
+              <th>Production Cost</th>
+              <th>Profit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan="8">Loading...</td>
+              </tr>
+            ) : error ? (
+              <tr>
+                <td colSpan="8">Error loading data</td>
+              </tr>
+            ) : (
+              filterSalesByDateAndProduct(summary).map((item, index) => (
+                <tr key={index}>
+                  <td>{formatDate(item.date)}</td>
+                  <td>{item.productID}</td>
+                  <td>{item.totalQuantity}</td>
+                  <td>{item.soldQuantity}</td>
+                  <td>{item.notSoldQuantity}</td>
+                  <td>{formatCurrency(item.totalEarnings)}</td>
+                  <td>{formatCurrency(item.productionCost)}</td>
+                  <td>{formatCurrency(item.profit)}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+      <button className="sdeletebutton"onClick={handleDownloadPDF} >
+      Download PDF
+    </button>
     </>
   );
 }

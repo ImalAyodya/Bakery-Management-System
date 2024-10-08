@@ -57,7 +57,8 @@ function Stock_Report() {
   }, []);
 
   return (
-    <div className="report-container">
+    <div className='stockReport'>
+    <div className="report-containerInventory">
       <h1>Warehouse Ingredient Report</h1>
 
       <table className="report-table">
@@ -79,7 +80,7 @@ function Stock_Report() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table><br/>
 
       {/* Display Total Stocks and Total Cost */}
       <div className="report-summary">
@@ -92,6 +93,7 @@ function Stock_Report() {
       </div>
 
       <button className="generate-btn" onClick={() => Navigate('/dashboard')}>Back to Dashboard</button>
+    </div>
     </div>
   );
 }

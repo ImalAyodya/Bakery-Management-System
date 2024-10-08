@@ -55,6 +55,7 @@ function Order_Report(){
 
     return(
         <>
+        <div className='OrderReport'>
         <div className='Order-main'>
             <Header/>
             <h1><center><u>Ingredient Order Request deails</u></center></h1><br/><br/>
@@ -72,7 +73,7 @@ function Order_Report(){
             </div>
             ))}
 
-            <button className='Order_backBtn' onClick={()=>Navigate('/dashboard')}>Back</button>
+        </div>
         </div>
         </>
     )

@@ -22,6 +22,10 @@ const  inquirychema= new mongoose.Schema({
             type: String,
             required: true
         },
+        status:{
+            type: String,
+            enum: ['Pending','Confirmed'], default:'Pending'
+        },
     }
 });
 const Inquiry = mongoose.model('inquiry',inquirychema);

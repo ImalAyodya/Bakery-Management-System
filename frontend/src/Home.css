@@ -46,18 +46,28 @@
 }
 .home-text h1{
 	margin: 20px 0px 20px;
-	font-size: 4.8rem;
+    font-size: inherit;
+	/*font-size: 4.8rem;*/
 	line-height: 1.1;
     color:#130849;
 }
+.home-text h1.h1Home {
+    font-family: 'Arial', sans-serif; /* Choose your desired font */
+    font-size: 3.5rem;                /* Adjust the font size */
+    color: #2c3e50;                   /* Set the text color */
+    text-align: left;               /* Center the text */
+    margin-top: 20px;                 /* Add top margin */
+    margin-bottom: 20px;              /* Add bottom margin */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Optional: Add text shadow */
+  }
 .home-text h3{
     
 	color:#f54300;
-	font-size: 35px;
+	font-size: 65px;
 	font-weight: 600;
 }
 .home-text p{
-	font-size: 1rem;
+	font-size: 1.5rem;
 	color: #130849;
 	line-height: 27px;
 	font-weight: 400;
@@ -85,7 +95,7 @@
 	height: 600px;
     padding: 0px;
     padding-top: 30px;
-    margin-right: 30px;
+    margin-right: 0px;
 }
 
 .about{
@@ -108,6 +118,7 @@
 	margin: 15px 0px 15px;
 	font-size: var(--h2-font);
 	line-height: 1.1;
+    text-align: left;
 }
 .about-text h3{
 	color: var(--second-color);
@@ -126,9 +137,57 @@
 
 
 .section4{
+    display: flex;
     padding: 80px 18%;
+    padding-left: 30px;
+    padding-top: 10px;
     height: 400px;
-    width: 500px;
+    width: 700px;
+    margin-left: 10px;
+}
+.flex-space {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    width: 2100px;/* Vertically align items, optional */
+}
+.flex-space-2{
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    width: 1220px;
+}
+.flex-space span {
+    flex: 1;
+}
+.inquiry-sec {
+    margin-left: 60px; /* Optional: adjust spacing between the inquiry section and newsletter content */
+    margin-top: 30px;
+    padding-right: 10px;
+    
+}
+
+.inquiry-sec h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.inquirybtn {
+    padding: 10px 20px;
+    background-color: #fac031; /* Inquiry button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border-radius: 30px;
+    width: 180px;
+    height: 50px;
+    text-decoration: 430px;
+    font-size: 22px;
+}
+
+.inquiry-sec button:hover {
+    background-color: #997415; /* Hover effect for the inquiry button */
 }
 
 
@@ -142,7 +201,7 @@
 .newsletter-content{
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
+	align-items: left;
 	justify-content: space-between;
 	gap: 10px;
     
@@ -174,6 +233,7 @@
 	font-family: 'Open Sans', sans-serif;
 }
 .letter {
+    padding-left: 0px;
 	position: relative;
 	width: 350px;
 	max-width: 100%;
@@ -195,23 +255,68 @@
 	border-radius: 30px;
 	background:  #fac031;
 	color: #fff;
-	top: 1px;
+	top: 0px;
 	right: 0px;
 	cursor: pointer;
 }
 
-/*footer css*/
+.subscribe{
+    margin-top: 5px;
+}
 
-footer{
+/*footer css*/
+footer {
+    background: linear-gradient(to top right, #fac031, rgb(223, 213, 213)); /* Background color */
+    padding: 5px; /* Padding around the footer */
+    border-radius: 10px;
+}
+
+.main_footer {
+    display: flex; /* Use flexbox */
+    justify-content: space-between; /* Space between items */
+    align-items: flex-start; /* Align items at the start */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+}
+
+.footer_tag {
+    flex: 1; /* Allow equal space for each footer tag */
+    min-width: 265px; /* Minimum width for each tag */
+    margin: 20px; /* Margin around each tag */
+    padding-right: 10px;
+}
+
+.footer_tag h2 {
+    margin-bottom: 5px; /* Space below the heading */
+}
+
+.footer_tag p {
+    margin: 5px 10px; /* Space between paragraphs */
+}
+
+.footer_tag a {
+    margin-right: 20px; /* Space between social media icons */
+    color: #333; /* Color of the links */
+    text-decoration: none; /* Remove underline */
+    font-size: 40px; /* Size of the icons */
+}
+
+.footer_tag a:hover {
+    color: #ff9900; /* Change color on hover */
+}
+
+
+
+/*footer{
     width: 100%;
     height: 300px;
     padding: 0px 0 0 20px;
     background: #e2ac17;
+    border-radius: 10px;
 }
 
 footer .main_footer{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 3fr 3fr 3fr 3fr ;
 }
 
 footer .main_footer .footer_tag{
@@ -251,7 +356,7 @@ footer .end span{
     color: #fac031;
     margin-left: 10px;
 }
-
+*/
 ::-webkit-scrollbar{
     width: 13px;
 }
@@ -379,3 +484,17 @@ footer .end span{
 }*/
 
 
+
+@media (max-width: 768px) {
+    .home-section {
+      grid-template-columns: 1fr; /* Stack columns vertically */
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+  
+    .home-text h1.h1Home {
+      font-size: 6rem; /* Further reduce font size on smaller screens */
+      white-space: normal; /* Allow wrapping if needed */
+    }
+  }
+  

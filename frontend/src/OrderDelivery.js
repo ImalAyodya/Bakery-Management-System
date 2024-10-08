@@ -19,6 +19,8 @@ function OrderDelivery() {
   const [itemId, setItemId] = useState('');
   const [addStatus, setAddStatus] = useState('');
   const [oDelivery, setODelivery] = useState([]);
+  const [vehicles, setVehicles] = useState([]);//new new
+
   const [newDelivery, setNewDelivery] = useState({
     orderid: '',
     orderlocation: '',
@@ -28,21 +30,54 @@ function OrderDelivery() {
     diliverydate: '',
     diliverystatus: '',
   });
-//search function
+  //----------new new vehicles read wena code eka---------
+  useEffect(() => {
+    const fetchVehicles = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/deliveryvehicle');
+        if (response.data.success) {
+          setVehicles(response.data.vehicles);
+        } else {
+          alert('Failed to fetch vehicles');
+        }
+      } catch (error) {
+        console.error('Error fetching vehicles:', error);
+      }
+    };
+  
+    fetchVehicles();
+  }, []);
+  
+  //--new new iwriii------------------
+//search function-------------------
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm2, setSearchTerm2] = useState('');
+  const [searchTerm3, setSearchTerm3] = useState('');
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
+  const handleSearchChange2 = (e) => {
+    setSearchTerm2(e.target.value);
+  };
+  const handleSearchChange3 = (e) => {
+    setSearchTerm3(e.target.value);
+  };
 
   const filteredOrders = oDelivery.filter((delivery) =>
-    delivery.OrderDelivery?.orderid.toLowerCase().includes(searchTerm.toLowerCase())
+  { const x= delivery.OrderDelivery?.orderid.toLowerCase().includes(searchTerm.toLowerCase());
+    const y= delivery.OrderDelivery?.orderlocation.toLowerCase().includes(searchTerm2.toLowerCase());
+    const z= delivery.OrderDelivery?.diliverydate.toLowerCase().includes(searchTerm3.toLowerCase());
+   return x && y && z
+  }
   );
+  //search iwriiiii-------------------------
 //input chnage 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewDelivery({ ...newDelivery, [name]: value });
   };
-//read eka
+ 
+//read eka-------------------------------------------------
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('http://localhost:8000/deliveryorder/save', { OrderDelivery: newDelivery })
@@ -59,7 +94,7 @@ function OrderDelivery() {
         alert('There was an error', error);
       });
   };
-//create eka
+//create eka-------------------------------------------------
   useEffect(() => {
     axios.get('http://localhost:8000/deliveryorder')
       .then(response => {
@@ -73,7 +108,7 @@ function OrderDelivery() {
         alert('There was an error fetching the posts', error);
       });
   }, []);
-//update eka
+//update eka------------------------------------
   const handleUpdate = (itemId) => {
     axios.put(`http://localhost:8000/deliveryorder/update/${itemId}`, { diliverystatus: addStatus })
       .then(response => {
@@ -91,7 +126,7 @@ function OrderDelivery() {
         alert('Error occurred');
       });
   };
-
+//delete ka---------------------
   const handleDelete = (id) => {
     axios.delete(`http://localhost:8000/deliveryorder/delete/${id}`)
       .then(response => {
@@ -106,7 +141,7 @@ function OrderDelivery() {
         alert('There was an error', error);
       });
   };
-  
+  //delete eka iwri--------------------------------
   const [showForm, setShowForm] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [selectedDate, setSelectedDate] = useState(''); // Added state for date selection
@@ -117,36 +152,51 @@ function OrderDelivery() {
     config: { tension: 200, friction: 20 },
   });
  
-  // Pie chart data and logic
-  const getOrderDataForDate = (date) => {
-    const filteredOrdersByDate = oDelivery.filter(
-      (order) => order.OrderDelivery?.diliverydate === date
-    );
-    const locationCounts = {};
+  //pie chart starts------------------------------------
+  // Function to extract the last part of the address (location)
+const getLocationFromAddress = (address) => {
+  const parts = address.split(',');
+  return parts[parts.length - 1].trim(); // Get the last part and trim any extra spaces
+};
 
-    filteredOrdersByDate.forEach((order) => {
-      const location = order.OrderDelivery?.orderlocation || 'Unknown';
-      if (locationCounts[location]) {
-        locationCounts[location] += 1;
-      } else {
-        locationCounts[location] = 1;
-      }
-    });
+// Function to get order data for a specific date and group by location
+const getOrderDataForDate = (date) => {
+  const filteredOrdersByDate = oDelivery.filter(
+    (order) => order.OrderDelivery?.diliverydate === date
+  );  
+const locationCounts = {};
 
-    return locationCounts;
-  };
+  filteredOrdersByDate.forEach((order) => {
+    // Get the full address
+    const fullAddress = order.OrderDelivery?.orderlocation || 'Unknown';
+    
+    // Extract the location (last part of the address)
+    const location = getLocationFromAddress(fullAddress);
+    
+    // Group by location
+    if (locationCounts[location]) {
+      locationCounts[location] += 1;
+    } else {
+      locationCounts[location] = 1;
+    }
+  });
 
-  const pieData = {
-    labels: Object.keys(getOrderDataForDate(selectedDate)),
-    datasets: [
-      {
-        label: 'Orders by Location',
-        data: Object.values(getOrderDataForDate(selectedDate)),
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#66BB6A', '#FFA726'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#66BB6A', '#FFA726'],
-      },
-    ],
-  };
+  return locationCounts;
+};
+
+// Pie chart data using the sorted location counts
+const pieData = {
+  labels: Object.keys(getOrderDataForDate(selectedDate)), // Locations as labels
+  datasets: [
+    {
+      label: 'Orders by Location',
+      data: Object.values(getOrderDataForDate(selectedDate)), // Order counts for each location
+      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#66BB6A', '#FFA726'],
+      hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#66BB6A', '#FFA726'],
+    },
+  ],
+};
+//-----------------pie chart done--------------------------------
 //showing and closing forms
   const handleNewOrderClick = () => {
     setShowForm(!showForm);
@@ -168,7 +218,13 @@ function OrderDelivery() {
   const closeModal = () => {
     setAddDelivery(false);
   };
-//report make and generate pdf
+  
+ 
+
+  
+
+  
+//report make and generate pdf------------------------------
 const handleGenerateReport = () => {
   const doc = new jsPDF();
 
@@ -206,13 +262,14 @@ const handleGenerateReport = () => {
 
   doc.save(`Delivery_Report_${selectedDate}.pdf`);
 };
+//-----------------------------------------------------------
 
 
   return (
     <div>
       <HeaderAdmin/>
       <br></br><br></br><br></br>
-      <h1>Manage Delivery Executive</h1>
+      <h1 className='das-h1'>Manage Delivery Executive</h1>
       <div className="das-button-container1">
         <button className="das-btn1" onClick={() => navigate('/Form')}>View Vehicles and Drivers</button><br />
         <button className="das-btn1" onClick={() => navigate('/OrderDelivery')}>Order Delivery</button><br />
@@ -220,10 +277,17 @@ const handleGenerateReport = () => {
       </div>
   <hr/>
       
-      
+  
       <div className="das-search-container">
         <input type="text" placeholder="Search by Order ID" className="das-search-input" value={searchTerm} 
           onChange={handleSearchChange}  />
+          
+          <input type="text" placeholder="Search by Location" className="das-search-input" value={searchTerm2} 
+          onChange={handleSearchChange2}  />
+
+<input type="text" placeholder="Search by Delivery Date" className="das-search-input" value={searchTerm3} 
+          onChange={handleSearchChange3}  />
+          
         <i className="das-fas fa-search search-icon"></i>
       </div>
       
@@ -231,11 +295,11 @@ const handleGenerateReport = () => {
       <div className="das-orders-container2">
       <button className="das-new-order-button" onClick={handleNewOrderClick}>
           <span className="das-plus-icon">+</span>
-          {showForm ? 'Hide New Order Form' : 'Place New Order'}
+          {showForm ? 'Hide New Order Form' : 'Place New Order Delivery'}
         </button>
         <br />
         <button className="das-summary-button" onClick={handleShowSummary}>
-          View Order Summary
+          View  Delivery Summary
         </button>
        
         <table className="das-orders-table2">
@@ -275,14 +339,14 @@ const handleGenerateReport = () => {
 
       <animated.div style={formAnimation} className="das-form-popup2">
         <form className="das-form2" onSubmit={handleSubmit}>
-          <h1>New Order Delivery</h1>
+          <h1 className='das-h1'>New Order Delivery</h1>
           <div className="das-form-group2">
             <label htmlFor="das-orderId">Order ID:</label>
             <input type="text" id="orderId" name="orderid" value={newDelivery.orderid} onChange={handleInputChange}pattern="[A-Za-z0-9]+" title="Please enter numbers only" required />
           </div>
           <div className="das-form-group2">
             <label htmlFor="orderLocation">Order Location:</label>
-            <input type="text" id="orderLocation" name="orderlocation" value={newDelivery.orderlocation} onChange={handleInputChange} minlength="5"  pattern="[A-Za-z0-9\s]+"  required />
+            <input type="text" id="orderLocation" name="orderlocation" value={newDelivery.orderlocation} onChange={handleInputChange} minlength="5"  pattern="[a-zA-Z0-9\s,.-]{10,200}"   required />
           </div>
           <div className="das-form-group2">
             <label htmlFor="ordertype">Order Type:</label>
@@ -292,24 +356,29 @@ const handleGenerateReport = () => {
               <option value="Online order -small">Online order -small</option>
               <option value="Online order-large">Online order-large</option>
               </select>
+              
           </div>
           <div className="das-form-group2">
             <label htmlFor="assignedDriver">Assigned Driver:</label>
-            <select id="assignedDriver" name="assigneddriver" value={newDelivery.assigneddriver} onChange={handleInputChange} required>
-              <option value="" disabled>Select a driver</option>
-              <option value="d001-Mr.kamal">d001-Mr.kamal</option>
-              <option value="d002-Mr.Namal">d002-Mr.Namal</option>
-              <option value="d003-Mr.Perera">d003-Mr.Perera</option>
-              <option value="d004-Mr.Lohith">d004-Mr.Lohith</option>
-              <option value="d005-Mr.Nawan">d005-Mr.Nawan</option>
-            </select>
+            <select id="assignedDriver" name="assigneddriver" value={newDelivery.assigneddriver} onChange={handleInputChange} required >
+           <option value="" disabled>Select a Driver</option>
+            {vehicles.map((vehicle) => (
+      <option key={vehicle._id} value={`${vehicle.VehicleDriver.driverid} - ${vehicle.VehicleDriver.drivername}`}>
+        {vehicle.VehicleDriver.driverid} - {vehicle.VehicleDriver. drivername} 
+      </option>
+    ))} </select>
           </div>
           <div className="das-form-group2">
             <label htmlFor="deliveryVehicle">Delivery Vehicle:</label>
-            <input type="text" id="deliveryVehicle" name="diliveryvehicle" value={newDelivery.diliveryvehicle} onChange={handleInputChange} required/ >
-              
-            
-          </div>
+            <select  id="deliveryVehicle" name="diliveryvehicle" value={newDelivery.diliveryvehicle} onChange={handleInputChange} required>
+             <option value="" disabled>Select a vehicle</option>
+    {vehicles.map((vehicle) => (
+      <option key={vehicle._id} value={`${vehicle.VehicleDriver.vehicleid} - ${vehicle.VehicleDriver.vehicletype}`}>
+        {vehicle.VehicleDriver.vehicleid} - {vehicle.VehicleDriver. vehicletype} 
+      </option>
+    ))} 
+  </select>
+   </div>
           <div className="das-form-group2">
             <label htmlFor="deliveryDate">Delivery Date:</label>
             <input type="date" id="deliveryDate" name="diliverydate" value={newDelivery.diliverydate} onChange={handleInputChange} required />
@@ -356,11 +425,13 @@ const handleGenerateReport = () => {
       {showSummary && (
         <div className="das-order-summary-modal">
           <div className="das-order-summary-content">
-            <h2>Order Summary</h2>
+            <h2 className='das-h2'>Delivery Summary per day</h2>
             <label htmlFor="selectDate">Select Date:</label>
             <input
+            
               type="date"
               id="selectDate"
+              className="das-sort-date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
             />

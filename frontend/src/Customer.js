@@ -72,7 +72,7 @@ function Customer() {
 
         // Validate the form before submission
         if (validate()) {
-            axios.post('http://localhost:8001/customer/save', { customer: newItem })
+            axios.post('http://localhost:8000/customer/save', { customer: newItem })
                 .then(response => {
                     if (response.data.success) {
                         setItems([...items, response.data.customer]);
@@ -90,10 +90,11 @@ function Customer() {
 
     return (
         <>
-            <div className="Cus"></div>
-            <div className="det"><h1>Customer Registration</h1></div>
+        <div className='Customer'>
+            <div className="customerCus"></div>
+            <div className="customerdet"><h1>Customer Registration</h1></div>
 
-            <div className="fm">
+            <div className="customerfm">
                 <form onSubmit={handleFormSubmit}>
                     <label htmlFor="name">Name</label>
                     <input type="text" id="name" name="name" value={newItem.name} onChange={handleInputChange} />
@@ -114,7 +115,6 @@ function Customer() {
                     <input type="email" id="email" name="Email" value={newItem.Email} onChange={handleInputChange} />
                     {errors.Email && <span className="error">{errors.Email}</span>}
                     <br/>
-
                     <label htmlFor="uName">User Name</label>
                     <input type="text" id="uName" name="user_name" value={newItem.user_name} onChange={handleInputChange} />
                     {errors.user_name && <span className="error">{errors.user_name}</span>}
@@ -125,8 +125,9 @@ function Customer() {
                     {errors.password && <span className="error">{errors.password}</span>}
                     <br/>
 
-                    <button type="submit" className="submit-button">Submit</button><br></br>
+                    <button type="submit" className="customersubmit-button">Submit</button><br></br>
                 </form>
+            </div>
             </div>
         </>
     );

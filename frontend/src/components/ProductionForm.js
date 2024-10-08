@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ProductionTable from './ProductionTable';
 import axios from 'axios';
+import '../ProductBackground.css'
 
 const ProductionForm = ({ fetchProductions }) => {
     const [date, setDate] = useState('');
@@ -31,8 +32,8 @@ const ProductionForm = ({ fetchProductions }) => {
     return (
         <div className="App">
             <h1>Daily Production Tracker</h1>
-        <form onSubmit={handleSubmit}>
-            <div className="form-group">
+        <form className='Productform' onSubmit={handleSubmit}>
+            <div className="Product-form-group">
                 <label>Date:</label>
                 <input
                     type="date"
@@ -40,8 +41,9 @@ const ProductionForm = ({ fetchProductions }) => {
                     onChange={(e) => setDate(e.target.value)}
                     required
                 />
-            </div>
+            </div><br />
 
+            
             {products.map((product, index) => (
                 <div key={index} className="product-entry">
                     <input
@@ -51,7 +53,7 @@ const ProductionForm = ({ fetchProductions }) => {
                         value={product.productName}
                         onChange={(event) => handleProductChange(index, event)}
                         required
-                    />
+                    /><br />
                     <input
                         type="number"
                         name="quantity"
@@ -71,10 +73,10 @@ const ProductionForm = ({ fetchProductions }) => {
                 </div>
             ))}
 
-            <button type="button" onClick={handleAddProduct}>
+            <button className='Product-save-btn' type="button" onClick={handleAddProduct}>
                 Add Another Product
             </button>
-            <button type="submit">Submit Production</button>
+            <button className='Product-save-btn' type="submit">Submit Production</button>
         </form>
         <h2>Production Records</h2>
         <ProductionTable  />

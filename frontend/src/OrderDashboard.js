@@ -6,6 +6,7 @@ import axios from 'axios'; //frontend connect
 import  "./OrderDashboard.css";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import icon from './images/notifyicon.png';
 
 function OrderDashboard() {
   
@@ -14,6 +15,52 @@ function OrderDashboard() {
   const [editingOrderId, setEditingOrderId] = useState(null);
  const [temporaryStatus, setTemporaryStatus] = useState('');
  const [searchQuery, setSearchQuery] = useState('');
+ const [notifications, setNotifications] = useState([]);
+ const [showNotifications, setShowNotifications] = useState(false); // State to control visibility
+ const [unreadNotifications, setUnreadNotifications] = useState([]);
+ const [unreadCount, setUnreadCount] = useState(0);
+
+
+
+ useEffect(() => {
+  const storedNotifications = JSON.parse(sessionStorage.getItem('notifications')) || [];
+  const storedUnreadNotifications = JSON.parse(sessionStorage.getItem('unreadNotifications')) || [];
+
+  
+  setNotifications(storedNotifications);
+  setUnreadNotifications(storedUnreadNotifications);
+  setUnreadCount(storedUnreadNotifications.length); // Count of unread notifications
+
+}, []);
+
+
+const handleIconClick = () => {
+  setShowNotifications(prev => !prev); // Toggle notifications
+
+  // If notifications are now being shown, mark them as read
+    if (!showNotifications && unreadCount > 0) {
+    // Mark all notifications as read
+     setUnreadNotifications([]);
+     setUnreadCount(0);
+
+      sessionStorage.setItem('unreadNotifications', JSON.stringify([])); // Update sessionStorage
+    }
+};
+
+
+
+ // Function to delete a notification
+const deleteNotification = (indexToDelete) => {
+  const updatedNotifications = notifications.filter((_, index) => index !== indexToDelete);
+
+      // Update state and sessionStorage
+      setNotifications(updatedNotifications);
+      sessionStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+            // Update notifications and unread notifications
+          // const updatedUnreadNotifications = updatedNotifications.filter((notification) =>
+          //   unreadNotifications.includes(notification)
+          // );
+};
 
   useEffect(() =>{
       axios.get('http://localhost:8000/wholesaleOrder')
@@ -125,23 +172,24 @@ function OrderDashboard() {
   
     // Add the bakery name and current date
     doc.setFontSize(16);
-    doc.text('Miyurasa Bakers', 14, 20);
-    doc.setFontSize(12);
-    doc.text(`Date: ${currentDate}`, 14, 30);
-    doc.text('Wholesale Orders Report', 14, 40);
+  doc.text('Miyurasa Bakers - Monthly Wholesale Order Report', 45, 23);
+  doc.setFontSize(12);
+  doc.text(`Report Generated: ${currentDate}`, 14, 37);
+  doc.text(`Month: Oct 2024`, 14, 32);
+  doc.text(`Report By: Order Manager - Malmi Bandara`, 14, 42);
   
     // Define multi-level table headers
     const headers = [
       [
         { content: 'Customer ID', rowSpan: 2 },
         { content: 'Customer Name', rowSpan: 2 },
-        { content: 'Products', colSpan: 5 },
+        { content: '                       Products', colSpan: 5 },
         { content: 'Total Amount', rowSpan: 2 },
         { content: 'Order Schedule', rowSpan: 2 },
         { content: 'Delivery Date', rowSpan: 2 },
         { content: 'Order Date', rowSpan: 2 },
         { content: 'Status', rowSpan: 2 },
-        { content: 'Action', rowSpan: 2 } // Optional: Omit or replace in PDF
+      
       ],
       ['Product', 'Quantity', 'UOM', 'Unit Price', 'Amount']
     ];
@@ -164,7 +212,7 @@ function OrderDashboard() {
           deliveryDate: index === 0 ? formatDate(deliveryDate) : '',
           createdAt: index === 0 ? formatDate(createdAt) : '',
           status: index === 0 ? status : '',
-          action: '' // Optional: Omit or replace
+        
         });
       });
     });
@@ -188,13 +236,13 @@ function OrderDashboard() {
         row.action
       ]),
       startY: 50,
-      styles: { fontSize: 8, cellPadding: 2 },
+      styles: { fontSize: 8, cellPadding: 1},
       headStyles: { fillColor: [22, 160, 133], textColor: [255, 255, 255] },
       alternateRowStyles: { fillColor: [240, 240, 240] },
       margin: { horizontal: 14 },
       theme: 'striped',
       columnStyles: {
-        0: { cellWidth: 'auto' }, // Customer ID
+        0: { cellWidth: 'wrap' }, // Customer ID
         1: { cellWidth: 'auto' }, // Customer Name
         2: { cellWidth: 'auto' }, // Product
         3: { cellWidth: 'auto' }, // Quantity
@@ -206,13 +254,13 @@ function OrderDashboard() {
         9: { cellWidth: 'auto' }, // Delivery Date
         10: { cellWidth: 'auto' }, // Order Date
         11: { cellWidth: 'auto' }, // Status
-        12: { cellWidth: 'auto' }, // Action
+      
       },
-      // Optional: Adjust table width or handle page breaks
+      
     });
   
     // Save the PDF
-    doc.save('wholesale-orders-report.pdf');
+    doc.save('wholesale-Monthly-Orders-Report.pdf');
   };
   
   
@@ -220,29 +268,53 @@ function OrderDashboard() {
     return(
         <>
         <h1>Wholesale Order Dashboard</h1>
+
+        <div className="iconnotify" onClick={handleIconClick}>
+            <img className="iconnotifyimg" src={icon} alt="Cart Icon" />
+            <div className="totalQuantityOnline">{unreadCount}</div>
+        </div>
+
+        {showNotifications && ( // Render notifications only if visible
+      <div className="notification-list">
+        {notifications.length > 0 ? (
+          notifications.map((notification, index) => (
+            <div key={index} className="notification-item">
+            
+              <p>{notification}</p>
+        
+              
+              <button onClick={() => deleteNotification(index)} className="delete-button">
+                Delete
+              </button>
+            </div>
+          ))
+        ) : (
+          <p>No notifications available</p>
+        )}
+      </div>
+      )}
+        
+
+        
         <button className="generate-report-button" onClick={generateReport}  type="button" >Generate Report</button>
-        <div className="search-container">
+        <div className="search-container-WO">
                 <input
                     type="text"
-                    className="search-input"
+                    className="search-input-WO"
                     placeholder="Search by CustomerID or Order Status"
                     value={searchQuery}
                     onChange={handleSearchChange}
-                    //value={searchQuery}
-                    //onChange={(e) => setSearchQuery(e.target.value)}
+                
                 />
-                <button className="search-button" onClick={handleSearchChange}>Search</button>
+                <button className="search-button-WO" onClick={handleSearchChange}>Search</button>
             </div>
       <table className='ordertable'>
         <thead className='ordertbheading'>
           <tr className='ordertbtr'>
+          <th className='orderth'>Order ID</th>
             <th className='orderth'>Customer ID</th>
             <th className='orderth'>Customer Name</th>
-            <th colSpan="5" className='orderthpp'>Products{/*<th className='orderth1'>Product</th>
-            <th className='orderth1'>Quantity</th>
-            <th className='orderth1'>UOM</th>
-            <th className='orderth1'>Unit Price</th>
-            <th className='orderth1'>Amount</th>*/}</th>
+            <th colSpan="5" className='orderthpp'>Products</th>
             <th className='orderth'>Total Amount</th>
             <th className='orderth'>Order Schedule</th>
             <th className='orderth'>Delivery Date</th>
@@ -253,6 +325,7 @@ function OrderDashboard() {
 
          
           <tr className='ordertbtr'>
+            <th className='orderth'></th> 
             <th className='orderth'></th> 
             <th className='orderth'></th> 
             <th className='orderth'>Product</th>
@@ -274,6 +347,9 @@ function OrderDashboard() {
             <tr className='ordertrbdy' key={`${order._id}-${index}`}>
               {index === 0 && (
                 <>
+                  <td rowSpan={order.WholesaleOrder.products.length}>
+                    {order.WholesaleOrder.orderId}
+                  </td>
                   <td rowSpan={order.WholesaleOrder.products.length}>
                     {order.WholesaleOrder.customerID}
                   </td>
@@ -340,23 +416,12 @@ function OrderDashboard() {
         Save
       </button>
                     <button className="action-button cancel-button" onClick={() => {handleCancelClick();setTemporaryStatus(order.WholesaleOrder.status); }}>
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-                      
                       Cancel</button>
                   </>
                 ) : (
                   <button className="action-button update-button" onClick={() => handleUpdateClick(order._id)}>Update</button>
                 )}
-                  {/*<button className="action-button update-button" onClick={() => updateOrderStatus(order._id, 'Confirmed')}>Update</button>*/}
-               
-                    {/*button className="action-button update-button">Update</button>*/}
+                
                     <button className="action-button delete-button" onClick={() => handleDelete(order._id)}>Delete</button>
                   </td>
                 </>
@@ -365,42 +430,7 @@ function OrderDashboard() {
           ))
         ))}
         </tbody>
-          {/*<tr className='ordertrbdy' key={order._id}>
-          <td>{order.WholesaleOrder.customerID}</td>
-          <td>{order.WholesaleOrder.customerName}</td>
-        
-
-         {order.WholesaleOrder.products.map((product, index) => (
-                    <div key={index}>
-                       <td>
-                        <td>{product.product}</td>
-                          <td>{product.quantity}</td>
-                          <td>{product.uom}</td>
-                          <td>{product.unitPrice}</td>
-                          <td>{product.amount}</td>
-                       </td>
-                        
-                    </div>
-                  ))}
-        
-            
-                
-             
-            
-          
-          <td>{order.WholesaleOrder.totalAmount}</td>
-
-          <td>{order.WholesaleOrder.orderSchedule}</td>
-          <td>{order.WholesaleOrder.deliveryDate}</td>
-          <td>{order.WholesaleOrder.createdAt}</td>
-          <td>{order.WholesaleOrder.status}</td>
-         <td>
-                        <button className="action-button update-button">Update</button>
-                        <button className="action-button delete-button">Delete</button>
-         </td>
-        </tr>
-
-         ))}*/}
+     
 
 
         

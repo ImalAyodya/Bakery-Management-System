@@ -3,32 +3,33 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import './CustomerView.css';
 
-function OrdersView(){
+function InquiryView(){
     const navigate = useNavigate();
 
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-      axios.get('http://localhost:8001/posts') 
-          .then(response => {
-              if (response.data.success) {
-                  setItems(response.data.order);
-              } else {
-                  alert('Failed to fetch posts');
-              }
-          })
-          .catch(error => {
-              alert('There was an error fetching the posts!', error);
-          });
-  });
-
+      axios.get('http://localhost:8000/inquiry/read')
+        .then(response => {
+          if (response.data.success) {
+            setItems(response.data.inquiry);
+          } else {
+            alert('Failed to fetch posts');
+          }
+        })
+        .catch(error => {
+          alert('There was an error fetching the posts!', error);
+        });
+    }, []);
+  
     return(
     <>
     <header>
     </header>
 
-      <div className="container1">
-        <h3>Orders Details</h3>
+      <div className="customercontainer1">
+        <h3>Inquiry Details</h3>
+        <div className='customerTable'>
         <table border="1" cellPadding="10" cellSpacing="0">
           <thead>
             <tr>
@@ -48,14 +49,15 @@ function OrdersView(){
                   <td>{item.inquiryTable?.Phone_Number}</td>
                   <td>{item.inquiryTable?.PreferredMethodOfResponse}</td>
                   <td>{item.inquiryTable?.QuestionorConcerns}</td>
-                  <td>Pendding</td>
+                  <td>{item.inquiryTable?.status}</td>
               </tr>
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </>
   );
 }
 
-export default OrdersView;
+export default InquiryView;

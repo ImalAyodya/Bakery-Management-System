@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');  //import kergnnva mongoose eke rquire keyword eke use kerela ek assign kerngnnva const kiela variable ekk hdela
+const { v4: uuidv4 } = require('uuid'); 
 const schema = mongoose.Schema;
 
 const OrderSchema  = new schema({
     WholesaleOrder:{
+        orderId: { type: String, default: uuidv4 },
         customerID: { type: String, required: true },
         customerName: { type: String, required: true },
         

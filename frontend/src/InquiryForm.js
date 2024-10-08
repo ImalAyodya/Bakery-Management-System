@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Inquiry.css';
+import { useNavigate } from 'react-router-dom';
 
-function Inquiry() {
+function InquiryForm() {
+
+    const navigate = useNavigate();
+
     const [newItem, setNewItem] = useState({
         Name: '',
         Email: '',
         Phone_Number: '',
         PreferredMethodOfResponse: '',
         QuestionorConcerns: '',
+         status:'Pending'
     });
 
     const [errors, setErrors] = useState({}); // State for storing validation errors
@@ -65,7 +70,7 @@ function Inquiry() {
 
         // Validate the form before submission
         if (validate()) {
-            axios.post('http://localhost:8001/inquiry/save', { inquiryTable: newItem })
+            axios.post('http://localhost:8000/inquiry/save', { inquiryTable: newItem })
                 .then(response => {
                     if (response.data.success) {
                         setItems([...items, response.data.inquiryTable]);
@@ -74,8 +79,11 @@ function Inquiry() {
                             Email: '',
                             Phone_Number: '',
                             PreferredMethodOfResponse: '',
-                            QuestionorConcerns: ''
+                            QuestionorConcerns: '',
+                             status:'Pending'
                         });
+                        alert('Data Added Successfullyy');
+
                         setErrors({});
                     } else {
                         alert('Failed to add new customer');
@@ -88,10 +96,10 @@ function Inquiry() {
     };
 
     return (
-        <div className='inquiry-body'>
+        <div className='customerinquiry-body'>
             <h1>Inquiry Management</h1>
 
-            <form onSubmit={handleFormSubmit} className="inquiry-form">
+            <form onSubmit={handleFormSubmit} className="customerinquiry-form">
                 <h2>Submit an Inquiry</h2>
 
                 <label className='iName' htmlFor="name">Name:</label>
@@ -113,7 +121,6 @@ function Inquiry() {
                     onChange={handleInputChange}
                 />
                 {errors.Email && <p className="error">{errors.Email}</p>} {/* Display error */}
-
                 <label htmlFor="iphone">Phone Number:</label>
                 <input
                     type="tel"
@@ -146,10 +153,11 @@ function Inquiry() {
                 ></textarea>
                 {errors.QuestionorConcerns && <p className="error">{errors.QuestionorConcerns}</p>} {/* Display error */}
 
-                <button type="submit">Submit</button>
+                <button type="submit">Submit</button><br></br>
+                <button type="submit" onClick={() => navigate('/InquiryView')}>Inquiry</button>
             </form>
         </div>
     );
 }
 
-export default Inquiry;
+export default InquiryForm;

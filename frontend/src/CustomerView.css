@@ -1,4 +1,4 @@
-.container1 {
+.customercontainer1 {
     width: 95%;
     margin: 30px auto;
     padding: 20px;
@@ -7,31 +7,31 @@
     border-radius: 12px;
 }
 
-h3 {
+.customercontainer1 h3 {
     margin-left: 450px;
     font-size: 30px;
 }
 
-table {
+.customerTable table {
     width: 100%;
     margin-top: 20px;
     border-spacing: 0 10px;
 }
 
-table, th, td {
+.customerTable table, th, td {
     border: 1px solid #ddd;
 }
 
-th, td {
+.customerTable th, td {
     padding: 10px;
     text-align: center;
 }
 
-th {
+.customerTable th {
     background-color: #ae781c;
 }
 
-.edit {
+.customeredit {
     font-size: 14px;
     background-color: #ddcd22;
     color: #fff;
@@ -45,11 +45,11 @@ th {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.edit:hover {
+.customeredit:hover {
     background-color: #ecef7b;
 }
 
-.delete  {
+.customerdelete  {
     font-size: 14px;
     background-color: #e66525;
     color: #fff;
@@ -62,11 +62,11 @@ th {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.delete:hover {
+.customerdelete:hover {
     background-color: #db9d46;
 }
 
-.add {
+.customeradd {
     font-size: 14px;
     background-color: #ae781c;
     color: #fff;
@@ -79,7 +79,7 @@ th {
 }
 
 /* Ensure the popup background covers the entire screen */
-.popup-background {
+.customerpopup-background {
     position: fixed;
     top: 0;
     left: 0;
@@ -93,7 +93,7 @@ th {
 }
 
 /* Center the popup form */
-.popup-form {
+.customerpopup-form {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
@@ -102,13 +102,12 @@ th {
 }
 
 /* Add additional styling as needed */
-.submit-button {
+.customersubmit-button {
     margin-top: 10px;
 }
 
 
 
-.add:hover {
+.customeradd:hover {
     background-color: #ded13e;
 }
-

@@ -1,29 +1,29 @@
 /* Customer.css */
 
-body {
+/* body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url('img/bakery_bg.jpg');
+    background-image: url('images/bakery_bg.jpg');
     background-size: cover;
     background-position: center;
-}
+} */
 
-.Cus {
+.customerCus {
     background-color: rgba(0, 0, 0, 0.9); 
     color: white;
     text-align: center;
     padding: 20px;
 }
 
-.det {
+.customerdet {
     margin: 20px;
     text-align: center;
     color: white;
     font-size: 24px; 
 }
 
-.fm {
+.customerfm {
     background-color: rgba(255, 255, 255, 0.9); 
     margin: 0 auto;
     padding: 20px;
@@ -32,18 +32,18 @@ body {
     max-width: 400px;
 }
 
-form h3 {
+.Customer form h3 {
     color: #cb9715;
     text-align: center;
 }
 
-label {
+.Customer label {
     display: block;
     margin-top: 10px;
     color: #333;
 }
 
-input[type="text"], input[type="number"], input[type="email"] {
+.Customer input[type="text"], input[type="number"], input[type="email"] {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
@@ -52,7 +52,7 @@ input[type="text"], input[type="number"], input[type="email"] {
     box-sizing: border-box;
 }
 
-.submit-button, #add {
+.customersubmit-button, #add {
     background-color: #cb9715;
     color: white;
     border: none;
@@ -65,7 +65,7 @@ input[type="text"], input[type="number"], input[type="email"] {
     box-sizing: border-box;
 }
 
-.submit-button:hover, #add:hover {
+.customersubmit-button:hover, #add:hover {
     background-color: #563f04;
 }
 

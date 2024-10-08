@@ -1,8 +1,8 @@
 import React,{useState, useEffect} from 'react';
 import './Nwplan.css';
 import './tables.css';
-import TargetPlan from './components/targetplanbtn';
-import Buttonrow from "./components/Buttonrow";
+import TargetPlan from './Components/targetplanbtn';
+import Buttonrow from './Components/Buttonrow';
 import axios from 'axios';
 
 function Nwplanedit() {
@@ -45,8 +45,8 @@ function Nwplanedit() {
           <td className=''><b> {plan.targetPlan.productID}</b></td>
           <td className=''><b> {plan.targetPlan.predictedQuantity }</b></td> 
           <td>
-            <button className='tablebutton' >Update</button>
-            <button className='tablebutton' onClick={()=> handleDelete(plan._id)}>Delete</button>
+            <button className='editbutton' >Update</button>
+            <button className='deletebutton' onClick={()=> handleDelete(plan._id)}>Delete</button>
           </td>
         </tr>
         ))

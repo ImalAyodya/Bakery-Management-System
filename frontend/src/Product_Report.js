@@ -55,6 +55,7 @@ function Product_Report(){
 
     return(
         <>
+        <div className='ProductReport'>
         <div className='product-main'>
             <Header/>
             <h1><center><u>Sent stock Details to Production Section</u></center></h1><br/><br/>
@@ -70,8 +71,7 @@ function Product_Report(){
                 <button className='stockDeleteBtn' onClick={() => {handleDelete(item._id)}}>Delete</button>
             </div>
             ))}
-
-        <button className='backBtn' onClick={() => Navigate('/dashboard')}>Back</button>
+        </div>
         </div>
         </>
     )

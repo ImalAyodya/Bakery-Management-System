@@ -2,13 +2,36 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DailyRoutes.css';
+import { useEffect } from "react";
 import axios from 'axios';
 import HeaderAdmin from './HeaderAdmin';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
-
 function DailyRoutes() {
   const navigate = useNavigate();
+  const [vehicles, setVehicles] = useState([]);//new new
+  //----------new new vehicles read wena code eka---------
+ useEffect(() => {
+    const fetchVehicles = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/deliveryvehicle');
+        if (response.data.success) {
+          setVehicles(response.data.vehicles);
+        } else {
+          alert('Failed to fetch vehicles');
+        }
+      } catch (error) {
+        console.error('Error fetching vehicles:', error);
+      }
+    };
+  
+    fetchVehicles();
+  }, []);
+  
+
+
+
+//--new new iwriii------------------
 
   // State for the entire form data
   const [newrouteDelivery, setnewrouteDelivery] = useState({
@@ -129,7 +152,7 @@ function DailyRoutes() {
         <button className="das-btn1" onClick={() => navigate('/dailyroute')}>Daily Delivery Stocks</button>
       </div>
 
-      <h1>Daily Delivery Stock Management</h1><br />
+      <h1 className='das-h1'>Daily Delivery Stock Management</h1><br />
       <button className="das-dassales" onClick={() => navigate('/ViewDailySales')}>+ View Daily Sales</button>
       <br></br> 
       <div className="das-admin-page-container">
@@ -160,12 +183,13 @@ function DailyRoutes() {
                   onChange={handleInputChange}
                   required
                 >
-                 <option value="" disabled>Select a Vehicle</option>
-              <option value="T001-three wheeler">T001-three wheeler</option>
-              <option value="T002-three wheeler">T002-three wheeler</option>
-              <option value="V003-Mini van">V003-Mini van</option>
-              <option value="V004-Mini Van">V004-Mini Van</option>
-              <option value="T005-three wheeler">T005-three wheeler</option>
+                   <option value="" disabled>Select a vehicle</option>
+    {vehicles.map((vehicle) => (
+      <option key={vehicle._id} value={`${vehicle.VehicleDriver.vehicleid} - ${vehicle.VehicleDriver.vehicletype}`}>
+        {vehicle.VehicleDriver.vehicleid} - {vehicle.VehicleDriver. vehicletype} 
+      </option>
+    ))} 
+                 
               </select>
               </div>
 
@@ -179,12 +203,13 @@ function DailyRoutes() {
                   onChange={handleInputChange}
                   required
                 >
-                <option value="" disabled>Select a driver</option>
-              <option value="d001-Mr.kamal">d001-Mr.kamal</option>
-              <option value="d002-Mr.Namal">d002-Mr.Namal</option>
-              <option value="d003-Mr.Perera">d003-Mr.Perera</option>
-              <option value="d004-Mr.Lohith">d004-Mr.Lohith</option>
-              <option value="d005-Mr.Nawan">d005-Mr.Nawan</option>
+                  <option value="" disabled>Select a Driver</option>
+            {vehicles.map((vehicle) => (
+      <option key={vehicle._id} value={`${vehicle.VehicleDriver.driverid} - ${vehicle.VehicleDriver.drivername}`}>
+        {vehicle.VehicleDriver.driverid} - {vehicle.VehicleDriver. drivername} 
+      </option>
+    ))} 
+                
               </select>
                 
               </div>

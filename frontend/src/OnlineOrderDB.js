@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import icon from './images/notifyicon.png';
+import  "./OnlineOrderDB.css";
 
 function OnlineOrderDB(){
 
@@ -11,7 +13,53 @@ function OnlineOrderDB(){
     const [editingOrderId, setEditingOrderId] = useState(null);
     const [temporaryStatus, setTemporaryStatus] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+    const [notifications, setNotifications] = useState([]);
+    const [showNotifications, setShowNotifications] = useState(false); // State to control visibility
+    const [unreadNotifications, setUnreadNotifications] = useState([]);
+    const [unreadCount, setUnreadCount] = useState(0);
+
+
+
+    useEffect(() => {
+      const storedNotifications = JSON.parse(sessionStorage.getItem('notifications')) || [];
+      const storedUnreadNotifications = JSON.parse(sessionStorage.getItem('unreadNotifications')) || [];
+
+      
+      setNotifications(storedNotifications);
+      setUnreadNotifications(storedUnreadNotifications);
+      setUnreadCount(storedUnreadNotifications.length); // Count of unread notifications
+
+    }, []);
+
+
+    const handleIconClick = () => {
+      setShowNotifications(prev => !prev); // Toggle notifications
   
+      // If notifications are now being shown, mark them as read
+        if (!showNotifications && unreadCount > 0) {
+        // Mark all notifications as read
+         setUnreadNotifications([]);
+         setUnreadCount(0);
+
+          sessionStorage.setItem('unreadNotifications', JSON.stringify([])); // Update sessionStorage
+        }
+    };
+
+  
+  
+     // Function to delete a notification
+    const deleteNotification = (indexToDelete) => {
+      const updatedNotifications = notifications.filter((_, index) => index !== indexToDelete);
+
+          // Update state and sessionStorage
+          setNotifications(updatedNotifications);
+          sessionStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+                // Update notifications and unread notifications
+              // const updatedUnreadNotifications = updatedNotifications.filter((notification) =>
+              //   unreadNotifications.includes(notification)
+              // );
+    };
+
     useEffect(() =>{
         axios.get('http://localhost:8000/onlineorder')
         .then(response =>{
@@ -36,8 +84,10 @@ function OnlineOrderDB(){
             // Update the local state with the new data
             setOrders(orders.map(order => 
               order._id === orderId ? { ...order, OnlineOrder: { ...order.OnlineOrder, status: newStatus } } : order
+            
             ));
-           
+            
+      
           } else {
             alert("Failed to update status");
           }
@@ -108,24 +158,28 @@ const generateReport = () => {
 
   const doc = new jsPDF();
   const currentDate = new Date().toLocaleDateString(); // Format the date as needed
+   const month = currentDate.toLocaleString('default', { month: 'long' }); // E.g., "October"
+  
 
   // Add the bakery name and date
   doc.setFontSize(16);
-  doc.text('Miyurasa Bakers', 14, 26);
+  doc.text('Miyurasa Bakers - Monthly Online Order Report', 50, 23);
   doc.setFontSize(12);
-  doc.text(`Date: ${currentDate}`, 14, 37);
-  doc.text('Online Orders Report', 14, 32);
-
+  doc.text(`Report Generated: ${currentDate}`, 14, 37);
+  doc.text(`Month: Oct 2024`, 14, 32);
+  doc.text(`Report By: Order Manager - Malmi Bandara`, 14, 42);
+  
   // Define multi-level table headers
   const headers = [
       [
-          { content: 'Customer Name', rowSpan: 2 },
-          { content: 'Phone Number', rowSpan: 2 },
-          { content: 'Address', rowSpan: 2 },
-          { content: 'Payment Method', rowSpan: 2 },
-          { content: 'Cart Items', colSpan: 3 },
-          { content: 'Total Product Qty', rowSpan: 2 },
-          { content: 'Total Amount', rowSpan: 2 },
+          { content: 'Order Id', rowSpan: 2 },
+          { content: 'Customer Name', rowSpan: 2},
+          { content: 'Phone Number', rowSpan: 2},
+          { content: 'Address', rowSpan: 2},
+          { content: 'Payment Method', rowSpan: 2},
+          { content: '         Cart Items', colSpan: 3 },
+          { content: 'Total Product Qty', rowSpan: 2},
+          { content: 'Total Amount', rowSpan: 2},
           { content: 'Order Date', rowSpan: 2 },
           { content: 'Order Status', rowSpan: 2 }
           // Optional: Can be left blank or omitted
@@ -140,9 +194,10 @@ const generateReport = () => {
   // Flatten the orders data
   const rows = [];
   orders.forEach(order => {
-      const { customerName, phoneNumber, address, paymentMethod, totQuantity, totPrice, createdAt, status } = order.OnlineOrder;
+      const { orderId,customerName, phoneNumber, address, paymentMethod, totQuantity, totPrice, createdAt, status } = order.OnlineOrder;
       order.OnlineOrder.cartItems.forEach((product, index) => {
           rows.push({
+              orderId: index === 0 ? orderId : '',
               customerName: index === 0 ? customerName : '',
               phoneNumber: index === 0 ? phoneNumber : '',
               address: index === 0 ? address : '',
@@ -161,6 +216,7 @@ const generateReport = () => {
 
   // Define table body with repeated customer details
   const tableBody = rows.map(row => [
+      row.orderId,
       row.customerName,
       row.phoneNumber,
       row.address,
@@ -186,17 +242,18 @@ const generateReport = () => {
       margin: { horizontal: 12 },
       theme: 'striped',
       columnStyles: {
-          0: { cellWidth: 'auto' }, // Customer Name
-          1: { cellWidth: 'auto' }, // Phone Number
-          2: { cellWidth: 'auto' }, // Address
-          3: { cellWidth: 'auto' }, // Payment Method
-          4: { cellWidth: 'auto' }, // Product
-          5: { cellWidth: 'auto' }, // Unit Price
-          6: { cellWidth: 'auto' }, // Quantity
-          7: { cellWidth: 'auto' }, // Total Product Qty
-          8: { cellWidth: 'auto' }, // Total Amount
-          9: { cellWidth: 'auto' }, // Order Date
-          10: { cellWidth: 'auto' }, // Order Status
+          0: { cellWidth: 'wrap' }, // order id
+          1: { cellWidth: 'auto' }, // Customer Name
+          2: { cellWidth: 'wrap' }, // Phone Number
+          3: { cellWidth: 'auto' },// Address
+          4: { cellWidth: 'wrap' },  // Payment Method
+          5: { cellWidth: 'wrap' }, // Product
+          6: { cellWidth: 'auto' }, // Unit Price
+          7: { cellWidth: 'auto' }, // Quantity
+          8: { cellWidth: 'auto' }, // Total Product Qty
+          9: { cellWidth: 'auto' }, // Total Amount
+          10: { cellWidth: 'wrap' }, // Order Date
+          11: { cellWidth: 'wrap' },  // Order Status
          
       },
       // Optional: Adjust table width or handle page breaks
@@ -211,11 +268,42 @@ const generateReport = () => {
 
     return(
         <>
+        <div className='Online-ordeDB'>
         <h1>Online Order Dashboard</h1>
+        
+        
+        <div className="iconnotify" onClick={handleIconClick}>
+            <img className="iconnotifyimg" src={icon} alt="Cart Icon" />
+            <div className="totalQuantityOnline">{unreadCount}</div>
+        </div>
+
+        {showNotifications && ( // Render notifications only if visible
+      <div className="notification-list">
+        {notifications.length > 0 ? (
+          notifications.map((notification, index) => (
+            <div key={index} className="notification-item">
+            
+              <p>{notification}</p>
+        
+              
+              <button onClick={() => deleteNotification(index)} className="delete-button">
+                Delete
+              </button>
+            </div>
+          ))
+        ) : (
+          <p>No notifications available</p>
+        )}
+      </div>
+      )}
+        
+
         <div className="report-container">
        <button className="generate-report-button" onClick={generateReport}>Generate Report</button>
+       
         </div>
-<div className="search-container">
+       
+<div className="search-container-OB">
         <input
             type="text"
             className="search-input-online"
@@ -224,9 +312,10 @@ const generateReport = () => {
             onChange={handleSearchChange}
         
         />
-        <button className="search-button" onClick={handleSearchChange}>Search</button>
+        <button className="search-button-OB" onClick={handleSearchChange}>Search</button>
         
 </div>
+<div className='ordertb'>
 <table className='ordertable'>
 <thead className='ordertbheading'>
   <tr className='ordertbtr'>
@@ -330,6 +419,10 @@ const generateReport = () => {
 ))}
 </tbody>
 </table>
+</div>
+
+        </div>
+        
 
         </>
     );

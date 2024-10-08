@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CustomerView.css';
 
-function View(){
+function CustomerView(){
     const navigate = useNavigate();
     const [items, setItems] = useState([]);
 
@@ -19,7 +19,7 @@ function View(){
 
     useEffect(() => {
       // Fetch posts from the backend
-      axios.get('http://localhost:8001/posts')
+      axios.get('http://localhost:8000/posts')
           .then(response => {
               if (response.data.success) {
                   setItems(response.data.data);
@@ -33,7 +33,7 @@ function View(){
     }, []);
 
     const handleUpdate = (itemId) => {
-        axios.put(`http://localhost:8001/posts/update/${itemId}`, {
+        axios.put(`http://localhost:8000/posts/update/${itemId}`, {
             name: name,
             Address: address,
             Phone_number: phoneNumber,
@@ -53,7 +53,7 @@ function View(){
     };
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:8001/posts/delete/${id}`)
+        axios.delete(`http://localhost:8000/posts/delete/${id}`)
         .then(response => {
             if(response.data.success){
                 setItems(items.filter(item => item._id !== id));
@@ -70,9 +70,10 @@ function View(){
 
     return (
     <>
-        <div className="container1">
+        <div className="customercontainer1">
             <h3>Customer Details</h3>
-            <button className='add' onClick={() => navigate('/Customer')}>Add New Customer</button>
+            <button className='customeradd' onClick={() => navigate('/Customer')}>Add New Customer</button>
+            <div className='customerTable'>
             <table border="1" cellPadding="10" cellSpacing="0">
                 <thead>
                     <tr>
@@ -95,14 +96,13 @@ function View(){
                             <td>{item.customer.user_name}</td>
                             <td>{'*'.repeat(item.customer.password.length)}</td>
                             <td>
-                                <button className="edit" onClick={() => {
+                                <button className="customeredit" onClick={() => {
                                     setItemId(item._id);
                                     setDisplay(true);
                                 }}>Update</button>
-
-{display && (
-            <div className="popup-background">
-                <div className="popup-form">
+                                {display && (
+            <div className="customerpopup-background">
+                <div className="customerpopup-form">
                     <form onSubmit={(e) => {e.preventDefault(); handleUpdate(itemId);}}>
                       <p>{itemId}</p>
                         <label htmlFor="name">Name</label>
@@ -123,19 +123,20 @@ function View(){
                         <label htmlFor="password">Password</label>
                         <input type="password" id="password" value={item.password} onChange={(e) => setPassword(e.target.value)} />
                         <br/>
-                        <button type="submit" className="submit-button">Submit</button>
+                        <button type="submit" className="customersubmit-button">Submit</button>
                         <button type="button" onClick={() => setDisplay(false)}>Close</button>
                     </form>
                 </div>
             </div>
         )}
 
-                                <button className='delete' onClick={() => handleDelete(item._id)}>Delete</button>
+                                <button className='customerdelete' onClick={() => handleDelete(item._id)}>Delete</button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            </div>
         </div>
 
         {/* Popup Form */}
@@ -143,4 +144,4 @@ function View(){
     );
 }
 
-export default View;
+export default CustomerView;

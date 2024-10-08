@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Buttonrow from "./components/Buttonrow";
+import Buttonrow from "./Components/Buttonrow";
 import './tables.css';
 import { parse, format } from 'date-fns';
 
@@ -14,7 +14,7 @@ function Stables() {
 
     const fetchOnlineSales = async () => {
         try {
-            const response = await fetch('http://localhost:8000/onlineorder');
+            const response = await fetch('http://localhost:8000/onlineorders');
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
             setOnlineSales(data.data || []);
@@ -25,7 +25,7 @@ function Stables() {
 
     const fetchWholesaleSales = async () => {
         try {
-            const response = await fetch('http://localhost:8000/order');
+            const response = await fetch('http://localhost:8000/wholesaleorders');
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
             setWholesaleSales(data.ReadData || []);
@@ -67,9 +67,10 @@ function Stables() {
         <>
             <h1 className="salesmanag">Sales Records By Order Types</h1>
             <Buttonrow />
-            <hr />
+            <hr  className='saleshr'/>
 
             {/* Online Sales Table */}
+            <div className='salestables'>
             <div className="table1">
                 <h6 className="tableheading">Online Sales</h6>
 
@@ -100,7 +101,7 @@ function Stables() {
                                     <tr key={`${order._id}-${index}`}>
                                         <td>{item.productName}</td>
                                         <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                                        <td>{item.unitPrice}</td>
+                                        <td>Rs. {item.unitPrice}</td>
                                         <td>{item.quantity}</td>
                                     </tr>
                                 ))
@@ -112,9 +113,12 @@ function Stables() {
                         )}
                     </tbody>
                 </table>
+                </div>
             </div>
 
             {/* Wholesale Sales Table */}
+
+            <div className='salestables'>
             <div className="table2">
                 <h6 className="tableheading">Wholesale Sales</h6>
 
@@ -149,7 +153,7 @@ function Stables() {
                                     <tr key={`${sale._id}-${index}`}>
                                         <td>{product.product}</td>
                                         <td>{new Date(order.deliveryDate).toLocaleDateString()}</td>
-                                        <td>{product.unitPrice}</td>
+                                        <td>Rs. {product.unitPrice}</td>
                                         <td>{product.quantity}</td>
                                     </tr>
                                 ));
@@ -161,9 +165,11 @@ function Stables() {
                         )}
                     </tbody>
                 </table>
+                </div>
             </div>
 
             {/* Delivery Sales Table */}
+            <div className='salestables'>
             <div className="table3">
                 <h6 className="tableheading">Delivery Sales</h6>
                 <div className="search-container">
@@ -194,22 +200,27 @@ function Stables() {
                                     <tr key={`${sale._id}-${index}`}>
                                         <td>{product.product}</td>
                                         <td>{new Date(order.date).toLocaleDateString()}</td>
-                                        <td>{product.unitprice}</td>
+                                        <td>Rs. {product.unitprice}</td>
                                         <td>{product.quantity}</td>
+                                        
                                     </tr>
+                                    
                                 ));
+                                
                             })
                         ) : (
                             <tr>
                                 <td colSpan="4">No delivery sales data available for the selected date</td>
+                                <hr/>
                             </tr>
+                           
                         )}
                     </tbody>
                 </table>
+                </div>
             </div>
         </>
     );
 }
 
 export default Stables;
-

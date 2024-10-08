@@ -76,112 +76,112 @@ function View() {
   return (
     <>
       <header></header>
-
-      <div className="container1">
+      <div className="suppliercontainer1">
         <h3>Existing Suppliers</h3>
-        <button className='addbtn' onClick={() => navigate('/SupplierForm')}>Add New suppliers</button>
+        <button className='supplieraddbtn' onClick={() => navigate('/SupplierForm')}>Add New suppliers</button>
         <input
           type="text"
-          className="search-bar"
+          className="suppliersearch-bar"
           placeholder="Search by company name or supplier type"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)} // Update search term on input change
         />
-        <table border="1" cellPadding="10" cellSpacing="0">
-          <thead>
-            <tr>
-              <th>Company Name</th>
-              <th>Address</th>
-              <th>Email</th>
-              <th>Mobile Number</th>
-              <th>Business Registration Number</th>
-              <th>Supplier Type</th>
-              <th>Product Categories</th>
-              <th>Price</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredItems.length > 0 ? (
-              filteredItems.map((item) => (
-                <tr key={item._id}>
-                  <td>{item.supplierTable?.companyName}</td>
-                  <td>{item.supplierTable?.companyAddress}</td>
-                  <td>{item.supplierTable?.email}</td>
-                  <td>{item.supplierTable?.mobileNumber}</td>
-                  <td>{item.supplierTable?.businessRegistrationNumber}</td>
-                  <td>{item.supplierTable?.supplierType}</td>
-                  <td>{item.supplierTable?.productCategories}</td>
-                  <td>{item.supplierTable?.price}</td>
-                  <td>
-                    <button
-                      className='edit'
-                      onClick={() => {
-                        setDisplay(true);
-                        setItemId(item._id);
-                        setemail(item.supplierTable.email); // Populate email state
-                        setmobileNumber(item.supplierTable.mobileNumber); // Populate mobile number state
-                      }}
-                    >
-                      Edit
-                    </button><br></br><br></br>
-
-                    <button className='delete' onClick={() => handleDelete(item._id)}>Delete</button>
-                  </td>
-                </tr>
-              ))
-            ) : (
+        <div className='supplierTable'>
+          <table border="1" cellPadding="10" cellSpacing="0">
+            <thead>
               <tr>
-                <td colSpan="8">No suppliers found</td>
+                <th>Company Name</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Mobile Number</th>
+                <th>Business Registration Number</th>
+                <th>Supplier Type</th>
+                <th>Product Categories</th>
+                <th>Price</th>
+                <th>Actions</th>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {filteredItems.length > 0 ? (
+                filteredItems.map((item) => (
+                  <tr key={item._id}>
+                    <td>{item.supplierTable?.companyName}</td>
+                    <td>{item.supplierTable?.companyAddress}</td>
+                    <td>{item.supplierTable?.email}</td>
+                    <td>{item.supplierTable?.mobileNumber}</td>
+                    <td>{item.supplierTable?.businessRegistrationNumber}</td>
+                    <td>{item.supplierTable?.supplierType}</td>
+                    <td>{item.supplierTable?.productCategories}</td>
+                    <td>{item.supplierTable?.price}</td>
+                    <td>
+                      <button
+                        className='supplieredit'
+                        onClick={() => {
+                          setDisplay(true);
+                          setItemId(item._id);
+                          setemail(item.supplierTable.email); // Populate email state
+                          setmobileNumber(item.supplierTable.mobileNumber); // Populate mobile number state
+                        }}
+                      >
+                        Edit
+                      </button><br></br><br></br>
 
+                      <button className='supplierdelete' onClick={() => handleDelete(item._id)}>Delete</button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="8">No suppliers found</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>    
+      </div>
       {display && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={() => setDisplay(false)}>&times;</span>
-            <form onSubmit={(e) => { e.preventDefault(); handleUpdate(itemId); }}>
-              <p className='id'>{itemId}</p>
+        <div className="suppliermodal">
+          <div className="suppliermodal-content">
+            <span className="supplierclose" onClick={() => setDisplay(false)}>&times;</span>
+            <form className='supplierform' onSubmit={(e) => { e.preventDefault(); handleUpdate(itemId); }}>
+              <p className='supplierid'>{itemId}</p>
               <p>Email :</p>
-              <div className="input_box">
+              <div className="supplierinput_box">
                 <input
                   type="email"
                   placeholder="Enter your Email"
                   name="email"
-                  className="name"
+                  className="suppliername"
                   value={Email}
                   onChange={(e) => setemail(e.target.value)}
                 />
               </div>
               <br />
               <p>Mobile Number :</p>
-              <div className="input_box">
+              <div className="supplierinput_box">
                 <input
                   type="text"
                   placeholder="Enter your Mobile Number"
                   name="mobileNumber"
-                  className="name"
+                  className="suppliername"
                   value={MobileNumber}
                   onChange={(e) => setmobileNumber(e.target.value)}
                 />
               </div>
               <br />
               <p>Price :</p>
-              <div className="input_box">
+              <div className="supplierinput_box">
                 <input
                   type="text"
                   placeholder="Enter Price"
                   name="price"
-                  className="name"
+                  className="suppliername"
                   value={Price}
                   onChange={(e) => setprice(e.target.value)}
                 />
               </div>
               <br />
-                <button className='update' type="submit">Update</button>
+                <button className='supplierupdate' type="submit">Update</button>
             </form>
           </div>
         </div>
@@ -191,4 +191,3 @@ function View() {
 }
 
 export default View;
-

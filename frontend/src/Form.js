@@ -1,19 +1,17 @@
-/*chnage*/ 
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DeliveryForm.css';
 import axios from 'axios';
 import HeaderAdmin from './HeaderAdmin';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 function Form() {
   const navigate = useNavigate();
   const [oDelivery, setODelivery] = useState([]);
   const [showForm, setShowForm] = useState(false);
- 
+  const [isUpdate, setIsUpdate] = useState(false); // To differentiate between add and update
+  const [selectedDeliveryId, setSelectedDeliveryId] = useState(null); // To store the delivery ID being updated
   const [searchTerm, setSearchTerm] = useState('');
+
   const [newDelivery, setNewDelivery] = useState({
     vehicleid: '',
     vehicletype: '',
@@ -23,13 +21,12 @@ function Form() {
     driverconno: '',
   });
 
-  // Fetch existing deliveries on mount
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:8000/deliveryvehicle');
         if (response.data.success) {
-          setODelivery(response.data.vehicles); // Ensure this is the correct key
+          setODelivery(response.data.vehicles);
         } else {
           alert('Failed to fetch vehicles');
         }
@@ -38,7 +35,7 @@ function Form() {
       }
     };
     fetchData();
-  }, []); // Empty dependency array means this useEffect runs once on mount
+  }, []);
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -49,25 +46,17 @@ function Form() {
     });
   };
 
-  // Handle form submission
+  // Handle form submission for adding a new delivery
   const handleSubmit = async () => {
-   
+    
     try {
       const response = await axios.post('http://localhost:8000/deliveryvehicle/save', {
         VehicleDriver: newDelivery,
       });
       if (response.data.success) {
         setODelivery((prevDeliveries) => [...prevDeliveries, response.data.VehicleDriver]);
-        setNewDelivery({
-          vehicleid: '',
-          vehicletype: '',
-          vehiclenumber: '',
-          driverid: '',
-          drivername: '',
-          driverconno: '',
-        });
+        resetForm();
         alert('Success in adding new delivery');
-        setShowForm(false); // Hide the form after submission
       } else {
         alert('Failed to add new delivery');
       }
@@ -76,7 +65,30 @@ function Form() {
       alert('There was an error');
     }
   };
-  
+
+  // Handle update submission
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(`http://localhost:8000/deliveryvehicle/update/${selectedDeliveryId}`, {
+        VehicleDriver: newDelivery,
+      });
+      if (response.data.success) {
+        setODelivery((prevDeliveries) =>
+          prevDeliveries.map((delivery) =>
+            delivery._id === selectedDeliveryId ? { ...delivery, VehicleDriver: newDelivery } : delivery
+          )
+        );
+        resetForm();
+        alert('Successfully updated delivery');
+      } else {
+        alert('Failed to update delivery');
+      }
+    } catch (error) {
+      console.error('Error updating delivery:', error);
+      alert('There was an error');
+    }
+  };
 
   // Handle delete functionality
   const handleDelete = async (id) => {
@@ -93,17 +105,46 @@ function Form() {
     }
   };
 
+  // Handle the update button click
+  const handleUpdateClick = (delivery) => {
+    setNewDelivery({
+      vehicleid: delivery.VehicleDriver.vehicleid,
+      vehicletype: delivery.VehicleDriver.vehicletype,
+      vehiclenumber: delivery.VehicleDriver.vehiclenumber,
+      driverid: delivery.VehicleDriver.driverid,
+      drivername: delivery.VehicleDriver.drivername,
+      driverconno: delivery.VehicleDriver.driverconno,
+    });
+    setSelectedDeliveryId(delivery._id); // Store the id of the selected delivery
+    setIsUpdate(true); // Mark that we are updating
+    setShowForm(true); // Show the form with the existing values
+  };
+
+  // Reset form to default values after submission or cancellation
+  const resetForm = () => {
+    setNewDelivery({
+      vehicleid: '',
+      vehicletype: '',
+      vehiclenumber: '',
+      driverid: '',
+      drivername: '',
+      driverconno: '',
+    });
+    setIsUpdate(false);
+    setSelectedDeliveryId(null);
+    setShowForm(false);
+  };
+
   // Handle search functionality
   const filteredDeliveries = oDelivery.filter((delivery) =>
     delivery?.VehicleDriver?.vehiclenumber?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    
     <div className="das-delivery-form-container">
       <HeaderAdmin />
-      <br></br><br></br>
-      <h1>Fleet and Driver Management</h1>
+      <br /><br />
+      <h1 className='das-h1'>Fleet and Driver Management</h1>
 
       <div className="das-button-container1">
         <button className="das-btn1" onClick={() => navigate('/Form')}>View Vehicles and Drivers</button><br />
@@ -111,20 +152,20 @@ function Form() {
         <button className="das-btn1" onClick={() => navigate('/dailyroute')}>Daily Delivery Stocks</button>
       </div>
 
-      <hr />
+      <hr  className='das-hr'/>
 
       <div className="das-page-container1">
         <div className="das-left-side1">
           <button className="das-newbutton" onClick={() => setShowForm(true)}>Add new Vehicle</button>
-
-          {/* Search bar to search by vehicle number */}
+          <br></br>
           <input
             type="text"
             placeholder="Search by Vehicle Number"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-bar"
+            className="das-search-bar"
           />
+          
 
           <table className="das-vehicle-tablee">
             <thead>
@@ -140,7 +181,7 @@ function Form() {
             </thead>
             <tbody>
               {filteredDeliveries.map((delivery2) =>
-                delivery2 && delivery2._id ? ( // Check if delivery2 and _id are defined
+                delivery2 && delivery2._id ? (
                   <tr key={delivery2._id}>
                     <td><b>{delivery2?.VehicleDriver?.vehicleid || 'N/A'}</b></td>
                     <td><b>{delivery2?.VehicleDriver?.vehicletype || 'N/A'}</b></td>
@@ -149,98 +190,104 @@ function Form() {
                     <td><b>{delivery2?.VehicleDriver?.drivername || 'N/A'}</b></td>
                     <td><b>{delivery2?.VehicleDriver?.driverconno || 'N/A'}</b></td>
                     <td>
+                      <button className="das-update-button" onClick={() => handleUpdateClick(delivery2)}>Update</button>
+                      <br></br><br></br>
                       <button className="das-delete-button" onClick={() => handleDelete(delivery2._id)}>Delete</button>
                     </td>
                   </tr>
-                ) : null // Render nothing if delivery2 or _id is not defined
+                ) : null
               )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Form displayed  */}
       {showForm && (
         <div className="das-form-popup">
           <div className="das-container1">
-            <h2>Vehicle Registration & Driver Allocation</h2>
-            <form onSubmit={handleSubmit}>
-              <div className="das-form-group1">
-                <label htmlFor="vehicleid">Vehicle ID:</label>
-                <input
-                  type="text"
-                  id="vehicleid"
-                  name="vehicleid"
-                  pattern="[A-Za-z0-9\s]+"
-                  value={newDelivery.vehicleid}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="das-form-group1">
-                <label htmlFor="vehicletype">Vehicle Type:</label>
-                <select
-                  id="vehicletype"
-                  name="vehicletype"
-                  value={newDelivery.vehicletype}
-                  onChange={handleInputChange}
-                  required
-                >
-                   <option value="" disabled>Select a vehicle</option>
-                  <option value="three-wheeler">Three-Wheeler</option>
-                  <option value="bike">Bike</option>
-                  <option value="van">Van</option>
-                </select>
-              </div>
-              <div className="das-form-group1">
-                <label htmlFor="vehiclenumber">Vehicle Number:</label>
-                <input
-                  type="text"
-                  id="vehiclenumber"
-                  name="vehiclenumber"
-                  pattern="[A-Za-z0-9]+"
-                  value={newDelivery.vehiclenumber}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="das-form-group1">
-                <label htmlFor="driverid">Driver ID:</label>
-                <input
-                  type="text"
-                  id="driverid"
-                  name="driverid"
-                  pattern="[A-Za-z0-9]+"
-                  value={newDelivery.driverid}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="das-form-group1">
-                <label htmlFor="drivername">Driver Name:</label>
-                <input
-                  type="text"
-                  id="drivername"
-                  name="drivername"
-                  
-                  value={newDelivery.drivername}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="das-form-group1">
-                <label htmlFor="driverconno">Driver Contact No:</label>
-                <input
-                  type="text"
-                  id="driverconno"
-                  name="driverconno"
-                  pattern="0[0-9]{9}"  
-                  maxlength="10"        
-                   title="Phone number must be exactly 10 digits and start with 0"
-                  value={newDelivery.driverconno}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <button type="submit" className="das-button1">Submit</button>
-            </form>
+            <h2>{isUpdate ? 'Update Vehicle & Driver' : 'Vehicle Registration & Driver Allocation'}</h2>
+            <form onSubmit={isUpdate ? handleUpdate : handleSubmit}>
+  <label className="das-label">Vehicle ID:</label>
+  <input
+    type="text"
+    name="vehicleid"
+    className="das-input"
+     pattern="^[A-Za-z0-9]+$"
+  title="Driver ID must consist of numbers (1-9) and letters (A-Z, a-z)."
+    value={newDelivery.vehicleid}
+    onChange={handleInputChange}
+    required
+    readOnly={isUpdate} // Make it read-only during update
+  />
+
+  <label className="das-label">Vehicle Type:</label>
+  <input
+    type="text"
+    name="vehicletype"
+    className="das-input"
+    value={newDelivery.vehicletype}
+    onChange={handleInputChange}
+    required
+    readOnly={isUpdate} // Make it read-only during update
+  />
+
+  <label className="das-label">Vehicle Number:</label>
+  <input
+    type="text"
+    name="vehiclenumber"
+    className="das-input"
+    pattern="^[A-Za-z0-9]+$"
+  title="Driver ID must consist of numbers (1-9) and letters (A-Z, a-z)."
+    value={newDelivery.vehiclenumber}
+    onChange={handleInputChange}
+    required
+    readOnly={isUpdate} // Make it read-only during update
+  />
+
+  <label className="das-label">Driver ID:</label>
+  <input
+    type="text"
+    name="driverid"
+    className="das-input"
+    pattern="^[A-Za-z0-9]+$"
+  title="Driver ID must consist of numbers (0-9) and letters (A-Z, a-z)."
+    value={newDelivery.driverid}
+    onChange={handleInputChange}
+    required
+  />
+
+  <label className="das-label">Driver Name:</label>
+  <input
+    type="text"
+    name="drivername"
+    className="das-input"
+     pattern="^[A-Za-z0-9.-]+$"
+  title="Driver Name must consist of numbers (0-9) and letters (A-Z, a-z)."
+    value={newDelivery.drivername}
+    onChange={handleInputChange}
+    required
+  />
+
+  <label className="das-label">Driver Contact Number:</label>
+  <input
+    type="text"
+    name="driverconno"
+    className="das-input"
+     pattern="^(\+947[0-9]{8}|07[0-9]{8})$"
+  title="Driver contact number must be in the format: +947XXXXXXXX or 07XXXXXXXX."
+    value={newDelivery.driverconno}
+    onChange={handleInputChange}
+    required
+  />
+
+  <button className="das-admin-button" type="submit">
+    {isUpdate ? 'Update' : 'Submit'}
+  </button>
+  <button className="das-admin-button" type="button" onClick={resetForm}>
+    Cancel
+  </button>
+</form>
+
           </div>
         </div>
       )}

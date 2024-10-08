@@ -4,15 +4,15 @@ import React, { useEffect, useState } from 'react';
 import './CustomerView.css';
 import './Customer.css';
 
-function View() {
+function AdminInquiryView() {
   const [items, setItems] = useState([]);
-  // const [display, setDisplay] = useState(false);
-  // const [itemId, setItemId] = useState('');
-  // const [Status, setstatus] = useState('');
+  const[orders,setOrders] = useState([]); 
+  const [editingOrderId, setEditingOrderId] = useState(null);
+  const [temporaryStatus, setTemporaryStatus] = useState('');
 
   // Read
   useEffect(() => {
-    axios.get('http://localhost:8001/inquiry/read')
+    axios.get('http://localhost:8000/inquiry/read')
       .then(response => {
         if (response.data.success) {
           setItems(response.data.inquiry);
@@ -25,30 +25,56 @@ function View() {
       });
   }, []);
 
-  // Update
-  // const handleUpdate = (itemId) => {
-  //   axios.put(`http://localhost:8000/SupplierTable/update/${itemId}`, {
-  //       status: Status
-  //   })
-  //   .then(response => {
-  //       if (response.data.success) {
-  //           alert("Data updated successfully");
-  //           setDisplay(false); // Close the modal after updating
-  //       } else {
-  //           alert('Data not updated.');
-  //       }
-  //   })
-  //   .catch(error => {
-  //       alert('Error updating data.');
-  //   });
-  // };
+  //update
+  const updateOrderStatus = (itemId, newStatus) => { 
+    axios.put(`http://localhost:8000/inquiry/update/${itemId}`, { status: newStatus }) 
+      .then(response => { 
+        if (response.data.success) { 
+          // Update the local state with the new data 
+          setOrders(items.map(item =>  
+            item._id === itemId ? { ...item, inquiryTable: { ...item.inquiryTable, status: newStatus } } : item 
+          )); 
+          
+        } else { 
+          alert("Failed to update status"); 
+        } 
+      }) 
+      .catch(error => { 
+        alert('There was an error updating the status', error); 
+      }); 
+  }; 
+ 
+  const handleUpdateClick = (itemId) => { 
+    setEditingOrderId(itemId); // Set the editing order ID to show the dropdown 
+  }; 
+ 
+  const handleCancelClick = () => { 
+    setEditingOrderId(null); // Hide the dropdown without making any changes 
+  };
+
+  // Delete
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:8000/inquiry/delete/${id}`)
+      .then(response => {
+        if (response.data.success) {
+          setItems(items.filter(item => item._id !== id));
+          alert('Data deleted successfully.');
+        } else {
+          alert('Failed to delete data.');
+        }
+      })
+      .catch(error => {
+        alert('Error deleting item.');
+      });
+  };
 
   return (
     <>
       <header></header>
 
-      <div className="container1">
+      <div className="customercontainer1">
         <h3>Inquiry Details</h3>
+        <div className='customerTable'>
         <table border="1" cellPadding="10" cellSpacing="0">
           <thead>
             <tr>
@@ -69,51 +95,46 @@ function View() {
                   <td>{item.inquiryTable?.Phone_Number}</td>
                   <td>{item.inquiryTable?.PreferredMethodOfResponse}</td>
                   <td>{item.inquiryTable?.QuestionorConcerns}</td>
-                  <td>Pendding</td>
-                  <td>
-                    <button
-                      className='edit'
-                      // onClick={() => {
-                      //   setDisplay(true);
-                      //   setItemId(item._id);
-                      //   setstatus(item.supplierTable.status);
-                      // }}
-                    >
-                      Edit
-                    </button>
+
+                   <td>{editingOrderId === item._id ? ( 
+                  <select 
+                  name="status"
+                  value={item.inquiryTable?.status} 
+                    onChange={(e) => updateOrderStatus(item._id, e.target.value)} 
+                   > 
+                    <option value="Pending">Pending</option> 
+                    <option value="Confirmed">Confirmed</option> 
+                  </select> 
+               
+                ) : ( 
+                  <span>{item.inquiryTable?.status}</span> 
+                )}</td>
+
+                  <td> 
+                    {editingOrderId === item._id ? ( 
+                  <> 
+                  <button className="customeredit" onClick={() => { 
+                            updateOrderStatus(item._id, item.inquiryTable?.status); 
+                            alert('Data updated successfully'); 
+                            setEditingOrderId(null); 
+                          }}> Save </button> 
+                    <button className="customerdelete" onClick={() => {handleCancelClick();setTemporaryStatus(item.inquiryTable?.status); }}> 
+                      Cancel</button> 
+                  </> 
+                ) : ( 
+                  <button className="customeredit" onClick={() => handleUpdateClick(item._id)}>Update</button> 
+                )} 
+                 
+                 <button className='customerdelete' onClick={() => handleDelete(item._id)}>Delete</button>
                   </td>
                 </tr>
               ))}
           </tbody>
         </table>
-      </div>
-
-      {/* {display && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={() => setDisplay(false)}>&times;</span>
-            <form onSubmit={(e) => { e.preventDefault(); handleUpdate(itemId); }}>
-              <p className='id'>{itemId}</p>
-              <p>Status :</p>
-              <div className="input_box">
-                <input
-                  type="text"
-                  placeholder="Update Status"
-                  name="status"
-                  className="name"
-                  value={Price}
-                  onChange={(e) => setprice(e.target.value)}
-                />
-              </div>
-              <br />
-                <button className='update' type="submit">Update</button>
-            </form>
-          </div>
         </div>
-      )} */}
+      </div>
     </>
   );
 }
 
-export default View;
-
+export default AdminInquiryView;

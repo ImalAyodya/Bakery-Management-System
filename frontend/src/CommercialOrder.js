@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { UilFacebookF, UilInstagram, UilTwitter } from '@iconscout/react-unicons';
 import './CommercialOrder.css';
 import React, { useState } from 'react';
-// import DatePicker from "react-datepicker";
+import DatePicker from "react-datepicker";
 import  Header from './Header';
 import axios from 'axios';
 
@@ -127,7 +127,11 @@ const handleProductChange = (index, event) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const navigate = useNavigate ();
 
-  
+  const generateOrderId = () => {
+    const timestamp = Date.now(); // Current timestamp
+    const randomNum = Math.floor(Math.random() * 1000); // Random number between 0 and 999
+    return `WO-${timestamp}-${randomNum}`;
+  };
 
   {/*const handleSubmit = async (e) => {
     e.preventDefault();          //Prevents page refresh on form submission.
@@ -172,7 +176,12 @@ const handleProductChange = (index, event) => {
 const handleSubmit = (e) => {
   e.preventDefault();
 
+  
+  // Generate a new orderId
+  const generatedOrderId = generateOrderId();
+
   const orderData = {
+    orderId: generatedOrderId,
     customerID: newWholesaleOrder.customerID,
     customerName: newWholesaleOrder.customerName,
     products: products,
@@ -191,6 +200,7 @@ const handleSubmit = (e) => {
 
         // Reset the form fields
         setNewWholesaleOrder({
+          orderId: '',
           customerID: '',
           customerName: '',
           products: [{ product: '', quantity: 0, uom: '', unitPrice: 0, amount: 0 }],
@@ -297,7 +307,7 @@ const handleSubmit = (e) => {
        <Header/>
 
 
-      <div className="content">
+      <div className="content-wholesale">
         <h1 className="centered-heading">Place Your Orders</h1>
         <form className="order-form" onSubmit={handleSubmit} >   
           
@@ -336,7 +346,7 @@ const handleSubmit = (e) => {
 
 
                 </div>
-                <input type="number" name="quantity" value={product.quantity} onChange={(e) => handleCombinedChange(index, e)} placeholder="Quantity"  min="0"/>
+                <input type="number" className="number" name="quantity" value={product.quantity} onChange={(e) => handleCombinedChange(index, e)} placeholder="Quantity"  min="0"/>
                 <input type="text" className="autofillC" name="uom" value={product.uom} onChange={(e) => handleCombinedChange(index, e)} placeholder="UOM" readOnly />
                 <input type="text" className="autofillC" name="unitPrice"value={product.unitPrice} onChange={(e) => handleCombinedChange(index, e)} placeholder="Unit price" readOnly/>
                 <input type="text" className="autofillC" name="amount" value={product.amount} onChange={(e) => handleCombinedChange(index, e)} placeholder="Amount" readOnly/>
@@ -353,7 +363,8 @@ const handleSubmit = (e) => {
             <input type="text" placeholder="Daily" name="orderSchedule" value={newWholesaleOrder.orderSchedule} onChange={handleInputChange} />
             
             <label htmlFor="delivery-date" >Select Delivery Date: </label>
-            <input type="date" id="date" name="deliveryDate" required placeholder="date" value={newWholesaleOrder.deliveryDate} onChange={handleInputChange}  min={new Date().toISOString().split("T")[0]} />
+            <input type="date" id="date" name="deliveryDate" required placeholder="date" value={newWholesaleOrder.deliveryDate} onChange={handleInputChange}   min={new Date().toISOString().split("T")[0]} 
+  max={new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split("T")[0]}  />
                 {/*<DatePicker
                     id="delivery-date"
                     selected={selectedDate}

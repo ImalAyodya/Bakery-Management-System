@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../App.css';
 import '../ProductBackground.css'
-
 
 const UpdateProduct = () => {
   const { id } = useParams();
@@ -45,17 +43,17 @@ const UpdateProduct = () => {
     e.preventDefault();
     axios.put(`http://localhost:8000/products/update/${id}`, product).then(() => {
       alert("Product Updated Successfully");
-      navigate('/');
+      navigate('/products');
     }).catch(err => {
       console.log(err);
     });
   };
 
   return (
-    <div className="container">
-      <h2>Update Product</h2>
-      <form onSubmit={handleSubmit} className="update-form">
-        <div className="form-group">
+    <div className="ProductcontainerUpdate">
+      <h2 style={{ marginBottom: '20px' }}>Update Product</h2><br /><br />
+      <form onSubmit={handleSubmit} className="product-update-form">
+        <div className="product-update-form-group">
           <label htmlFor="productCode">Product Code</label>
           <input
             type="text"
@@ -66,7 +64,7 @@ const UpdateProduct = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="product-update-form-group">
           <label htmlFor="productName">Product Name</label>
           <input
             type="text"
@@ -77,7 +75,7 @@ const UpdateProduct = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="product-update-form-group">
           <label htmlFor="description">Description</label>
           <textarea
             id="description"
@@ -87,7 +85,7 @@ const UpdateProduct = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="product-update-form-group">
           <label htmlFor="category">Category</label>
           <input
             type="text"
@@ -98,7 +96,7 @@ const UpdateProduct = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="product-update-form-group">
           <label htmlFor="cost">Net Cost</label>
           <input
             type="number"
@@ -109,7 +107,7 @@ const UpdateProduct = () => {
             required
           />
         </div>
-        <button type="submit" className="submit-btn">Update Product</button>
+        <button type="submit" className="Product-submit-btn">Update Product</button>
       </form>
     </div>
   );

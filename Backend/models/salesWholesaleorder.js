@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');  //import kergnnva mongoose eke rquire keyword eke use kerela ek assign kerngnnva const kiela variable ekk hdela
 const schema = mongoose.Schema;
 
-const OrderSchema  = new schema({
+const SalesOrderSchema  = new schema({
     WholesaleOrder:{
         customerID: { type: String, required: true },
         customerName: { type: String, required: true },
@@ -23,15 +23,15 @@ const OrderSchema  = new schema({
    
 }, { timestamps: true });  //useful for keeping track of when records were created use degault date
  
-const Order = mongoose.model('order',OrderSchema)
-module.exports=Order;  //meke mongo db ekete giame api capital dila thibboth okkoma simple venva thv s ekk add venva
+const Saleswholesaleorders = mongoose.model('wholesaleorders',SalesOrderSchema)
+module.exports=Saleswholesaleorders;  //meke mongo db ekete giame api capital dila thibboth okkoma simple venva thv s ekk add venva
 
-   /*ProductList;[
-    {
-        ProductName: String,
-         Quantity: String,
-        UOM: String,
-        UnitPrice: String,
-        Amount: String,
-    }
-]*/
+//    /*ProductList;[
+//     {
+//         ProductName: String,
+//          Quantity: String,
+//         UOM: String,
+//         UnitPrice: String,
+//         Amount: String,
+//     }
+// ]*/

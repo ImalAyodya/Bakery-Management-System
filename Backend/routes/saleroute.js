@@ -8,6 +8,7 @@ const wholesaleorders = require('../models/salesWholesaleorder');
 const deliveryorders = require('../models/salesdeliveryorders');
 const Production = require('../models/productiondetails'); // Update the path to your model file
 const OnlineOrder = require('../models/onlineSales');
+const SalesUser = require('../models/SalesLogin')
 
 
 //create data
@@ -141,7 +142,7 @@ route.delete("/saleplan/delete/:id",async(req, res)=>{
 
 
 // Read data from wholesale orders
-route.get("/order", async (req, res) => {
+route.get("/wholesaleorders", async (req, res) => {
     try {
         const posts = await wholesaleorders.find().exec(); // Use the correct model name
         return res.status(200).json({
@@ -203,7 +204,7 @@ route.post('/productions', async (req, res) => {
   });
 
 // Route to create a new online order
-route.post('/onlineorder/create', async (req, res) => {
+route.post('/onlineorders/create', async (req, res) => {
     try {
         const newOrder = new OnlineOrder(req.body);
         await newOrder.save();
@@ -221,7 +222,7 @@ route.post('/onlineorder/create', async (req, res) => {
 });
 
   // Route to fetch all online orders
-route.get('/onlineorder', async (req, res) => {
+route.get('/onlineorders', async (req, res) => {
     try {
         const orders = await OnlineOrder.find(); // Fetch all data from the OnlineOrder model
         res.json({
@@ -238,7 +239,7 @@ route.get('/onlineorder', async (req, res) => {
 });
 
 // Route to add a new order
-route.post('/orders', async (req, res) => {
+route.post('/wholesaleorders', async (req, res) => {
     try {
         const order = new wholesaleorders({
             WholesaleOrder: {
@@ -296,7 +297,92 @@ route.post('/post2', async (req, res) => {
 });
 
 
+/*--------------------------Login-----------------------------*/
+// Routes
+
+/**
+ * @route   POST /SalesUser
+ * @desc    Create a new user
+ * @access  Public
+ */
+route.post('/SalesUser', async (req, res) => {
+    const { username, password } = req.body;
+  
+    // Simple validation
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Please enter both username and password' });
+    }
+  
+    try {
+      // Check if user already exists
+      const existingUser = await SalesUser.findOne({ username });
+      if (existingUser) {
+        return res.status(400).json({ message: 'Username already exists' });
+      }
+  
+      // Create new user
+      const newUser = new SalesUser({
+        username,
+        password
+      });
+  
+      // Save user to database
+      await newUser.save();
+  
+      res.status(201).json({ message: 'User created successfully' });
+  
+    } catch (error) {
+      console.error('Error creating user:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+  /**
+   * @route   POST /login
+   * @desc    Authenticate user and return success message
+   * @access  Public
+   */
+route.post('/Saleslogin', async (req, res) => {
+    const { username, password } = req.body;
+  
+    // Simple validation
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Please enter both username and password' });
+    }
+  
+    try {
+      // Check for existing user
+      const user = await SalesUser.findOne({ username });
+      if (!user) {
+        return res.status(401).json({ message: 'Invalid username or password' });
+      }
+  
+      // Validate password
+      const isMatch = await user.isValidPassword(password);
+      if (!isMatch) {
+        return res.status(401).json({ message: 'Invalid username or password' });
+      }
+  
+      // Successful login
+      res.status(200).json({ message: `Welcome, ${user.username}! You have successfully logged in.` });
+  
+    } catch (error) {
+      console.error('Login error:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+  /**
+   * @route   GET /inventory-data
+   * @desc    Retrieve inventory data (protected route)
+   * @access  Public for simplicity
+   */
+  route.get('/Sales-data', (req, res) => {
+    // For simplicity, we're not implementing authentication here
+    res.json({ data: 'Here is your Sales data!' });
+  });
+
+
 
 
 module.exports = route;
-
